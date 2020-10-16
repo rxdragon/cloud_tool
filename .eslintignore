@@ -1,0 +1,4 @@
+src/assets
+
+src/shims-vue.d.ts
+src/shims-tsx.d.ts
