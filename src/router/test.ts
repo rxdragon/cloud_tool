@@ -1,11 +1,10 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
+
 import Layout from '@/layout/index.vue'
 
-import reworkCenter from './modules/reworkCenter' // 营销中心
-
 export const asyncRoutes: Array<RouteConfig> = [
-  reworkCenter
+  // reworkCenter
 ]
 // 基础权限路由
 export const constantRoutes: Array<RouteConfig> = [
@@ -54,12 +53,10 @@ const createRouter = () => new VueRouter({
   routes: constantRoutes
 })
 
-const router: any = createRouter()
+export const router: any = createRouter()
 
 // url不变强制刷行
 export function resetRouter () {
   const newRouter: any = createRouter()
   router.matcher = newRouter.matcher
 }
-
-export default router

@@ -1,9 +1,18 @@
 import Vue from 'vue'
-import App from './App.vue'
+
+
+import store from '@/store'
+import router from '@/router/index'
+import App from '@/App.vue'
+
 import './registerServiceWorker'
-import router from './router'
-import store from './store'
+import './plugins/axios'
+import '@/components/Toast/index'
+
 import vuetify from './plugins/vuetify';
+import get from 'lodash/get'
+
+window._ = { get }
 
 Vue.config.productionTip = false
 
