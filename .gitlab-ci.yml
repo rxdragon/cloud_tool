@@ -28,7 +28,7 @@ install:
       - node_modules/
   artifacts:
     paths:
-      - src
+      - dist
     expire_in: 1 day
 
 build-master:
