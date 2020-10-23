@@ -56,6 +56,7 @@ module.exports = {
     if (config.plugins.has('progress') && process.env.CI_RUNNER_ID) {
       config.plugins.delete('progress')
     }
+    // config.plugin('workbox')
     config.plugin('define')
       .tap(args => {
         args[0].BUILD_TIME = +Date.now()
@@ -75,5 +76,33 @@ module.exports = {
   transpileDependencies: [
     /\/node_modules\/@mainto-ui-component\/vue\//,
     "vuetify"
-  ]
+  ],
+
+  pwa: {
+    name: 'Cloud Tool',
+    themeColor: '#4669FB',
+    msTileColor: '#fffff',
+    appleMobileWebAppCapable: 'yes',
+    appleMobileWebAppStatusBarStyle: 'black',
+    // configure the workbox plugin (GenerateSW or InjectManifest)
+    workboxPluginMode: 'generateSW',
+    manifestOptions: {
+      short_name: '云端助手',
+      display: 'standalone',
+      start_url: "/index.html",
+      background_color: "#131923",
+      icons: [
+        {
+          "src": "/img/icons/android-chrome-192x192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        },
+        {
+          "src": "/img/icons/android-chrome-512x512.png",
+          "sizes": "512x512",
+          "type": "image/png"
+        }
+      ],
+    }
+  }
 }

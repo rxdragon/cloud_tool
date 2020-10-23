@@ -19,6 +19,9 @@ import { SettingModule } from '@/store/modules/setting'
 
 @Component
 export default class AppBar extends Vue {
+  /**
+   * @description 关闭抽屉
+   */
   setDrawer () {
     const drawer = SettingModule.drawer
     SettingModule.setDrawer(!drawer)

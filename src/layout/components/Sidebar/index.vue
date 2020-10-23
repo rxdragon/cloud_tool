@@ -27,6 +27,7 @@ import UserTab from './UserTab.vue'
 @Component({
   components: { SidebarItem, UserTab }
 })
+
 export default class Sidebar extends Vue {
   private barImage: string = 'https://demos.creative-tim.com/material-dashboard/assets/img/sidebar-1.jpg'
   private barColor: string = 'rgba(0, 0, 0, .8), rgba(0, 0, 0, .8)'
@@ -42,10 +43,10 @@ export default class Sidebar extends Vue {
     return PermissionModule.routes
   }
 
-  get drawer () {
+  get drawer (): null | boolean {
     return SettingModule.drawer
   }
-  set drawer (val) {
+  set drawer (val: null | boolean) {
     SettingModule.setDrawer(val)
   }
 }

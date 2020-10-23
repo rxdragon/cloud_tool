@@ -2,17 +2,17 @@ import { VuexModule, Module, Mutation, Action, getModule } from 'vuex-module-dec
 import store from '@/store'
 
 export interface ISettingState {
-  drawer: boolean,
+  drawer: null | boolean,
   pageLoading: boolean
 }
 
 @Module({ dynamic: true, store, name: 'setting' })
 class Setting extends VuexModule implements ISettingState {
-  public drawer = true
+  public drawer: null | boolean = null
   public pageLoading = false
 
   @Mutation
-  private SET_DRAWER (data: boolean) {
+  private SET_DRAWER (data: null | boolean) {
     this.drawer = data
   }
 
@@ -22,7 +22,7 @@ class Setting extends VuexModule implements ISettingState {
   }
 
   @Action
-  public setDrawer (data: boolean) {
+  public setDrawer (data: null | boolean) {
     this.SET_DRAWER(data)
   }
 
