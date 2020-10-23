@@ -85,7 +85,7 @@ module.exports = {
     appleMobileWebAppCapable: 'yes',
     appleMobileWebAppStatusBarStyle: 'black',
     // configure the workbox plugin (GenerateSW or InjectManifest)
-    workboxPluginMode: 'generateSW',
+    // workboxPluginMode: 'generateSW',
     manifestOptions: {
       short_name: '云端助手',
       display: 'standalone',
