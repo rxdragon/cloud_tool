@@ -83,22 +83,22 @@ module.exports = {
     themeColor: '#4669FB',
     msTileColor: '#fffff',
     appleMobileWebAppCapable: 'yes',
-    appleMobileWebAppStatusBarStyle: 'black',
+    appleMobileWebAppStatusBarStyle: 'black-translucent',
     // configure the workbox plugin (GenerateSW or InjectManifest)
     workboxPluginMode: 'GenerateSW',
     manifestOptions: {
       short_name: '云端助手',
       display: 'standalone',
-      start_url: "/index.html",
+      start_url: dev ? '/index.html' : "/cloud_tool/index.html",
       background_color: "#131923",
       icons: [
         {
-          "src": "/img/icons/android-chrome-192x192.png",
+          "src": dev ? "/img/icons/android-chrome-192x192.png" : "/cloud_tool/img/icons/android-chrome-192x192.png",
           "sizes": "192x192",
           "type": "image/png"
         },
         {
-          "src": "/img/icons/android-chrome-512x512.png",
+          "src": dev ? "/img/icons/android-chrome-512x512.png" : "/cloud_tool/img/icons/android-chrome-512x512.png",
           "sizes": "512x512",
           "type": "image/png"
         }
