@@ -13,7 +13,7 @@ if (process.env.NODE_ENV === 'production') {
       )
     },
     registered (registration) {
-      console.log(registration)
+      console.log(registration, 'registration')
       console.log('Service worker has been registered.')
     },
     cached () {
@@ -24,6 +24,8 @@ if (process.env.NODE_ENV === 'production') {
     },
     updated () {
       console.log('New content is available; please refresh.')
+      window.location.reload()
+      
     },
     offline () {
       console.log('No internet connection found. App is running in offline mode.')
