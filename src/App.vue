@@ -17,12 +17,12 @@ export default class App extends Vue {
   }
 
   mounted () {
-    function sendMessageToSW (msg: string): void {
-      console.log(navigator.serviceWorker.controller)
-      if (!navigator.serviceWorker.controller) return
-      navigator.serviceWorker.controller.postMessage(msg)
-    }
-    sendMessageToSW('helloword')
+    // function sendMessageToSW (msg: string): void {
+    //   console.log(navigator.serviceWorker.controller)
+    //   if (!navigator.serviceWorker.controller) return
+    //   navigator.serviceWorker.controller.postMessage(msg)
+    // }
+    // sendMessageToSW('helloword')
   }
 }
 </script>
