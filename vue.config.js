@@ -88,7 +88,7 @@ module.exports = {
     workboxOptions: {
       swSrc: 'src/service-worker.js',
       importWorkboxFrom: 'disabled',
-      importScripts: 'http://cloud.hzmantu.com/cloud-tool/workbox-sw.js'
+      importScripts: 'https://cloud.hzmantu.com/cloud-tool/workbox-sw.js'
     },
     manifestOptions: {
       short_name: '云端助手',
