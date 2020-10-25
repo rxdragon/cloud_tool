@@ -6,7 +6,7 @@ const path = require('path')
 function resolve (dir) {
   return path.join(__dirname, dir)
 }
-const dev = process.env.NODE_ENV === 'local'
+const dev = process.env.NODE_ENV === 'development'
 
 const port = 8081 // dev port
 
@@ -84,8 +84,12 @@ module.exports = {
     msTileColor: '#fffff',
     appleMobileWebAppCapable: 'yes',
     appleMobileWebAppStatusBarStyle: 'black-translucent',
-    // configure the workbox plugin (GenerateSW or InjectManifest)
-    workboxPluginMode: 'GenerateSW',
+    workboxPluginMode: 'InjectManifest',
+    workboxOptions: {
+      swSrc: 'src/service-worker.js',
+      importWorkboxFrom: 'disabled',
+      importScripts: 'http://cloud.hzmantu.com/cloud-tool/workbox-sw.js'
+    },
     manifestOptions: {
       short_name: '云端助手',
       display: 'standalone',

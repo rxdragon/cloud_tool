@@ -9,7 +9,8 @@
     <template v-slot:img="props">
       <v-img :gradient="`to bottom, ${barColor}`" v-bind="props"/>
     </template>
-    <user-tab />
+    <!-- 用户信息 -->
+    <!-- <user-tab /> -->
     <v-list dense>
       <sidebar-item v-for="route in routes" :key="route.path" :item="route" :base-path="route.path"/>
     </v-list>
