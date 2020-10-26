@@ -1,5 +1,6 @@
 <template>
   <div class="dashboard">
+    <v-btn color="primary" @click="test">发送通知</v-btn>
     <v-container class="grey lighten-5">
       <v-row>
         <v-col
@@ -95,6 +96,14 @@ export default class Dashboard extends Vue {
       const sum: number = item.sum / 10000
       const sumFilter: number = Number(sum.toFixed(1))
       return sumFilter
+    })
+  }
+
+  test () {
+    Vue.prototype.$notification({
+      title: `测试`,
+      body: '测试body',
+      icon: `https://i2.hdslb.com/bfs/face/c50d8de65bbaad7ccd714d298854181c117863bb.jpg`
     })
   }
 }
