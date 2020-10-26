@@ -17,6 +17,16 @@ export default class App extends Vue {
   }
 
   mounted () {
+    // window.addEventListener('beforeinstallprompt', function (e: any) {
+    //   e.userChoice.then(function (choiceResult: any) {
+    //     console.log(choiceResult)
+    //     if (choiceResult.outcome === 'accept') {
+    //       // 用户将站点添加至桌面
+    //     } else {
+    //       // 用户取消安装
+    //     }
+    //   })
+    // })
     // function sendMessageToSW (msg: string): void {
     //   console.log(navigator.serviceWorker.controller)
     //   if (!navigator.serviceWorker.controller) return

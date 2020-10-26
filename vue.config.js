@@ -11,7 +11,7 @@ const dev = process.env.NODE_ENV === 'development'
 const port = 8081 // dev port
 
 module.exports = {
-  publicPath: dev ? `http://localhost:${port}/` : './',
+  publicPath: './',
   outputDir: 'dist',
   assetsDir: 'static',
   indexPath: 'index.html',
@@ -93,7 +93,7 @@ module.exports = {
     manifestOptions: {
       short_name: '云端助手',
       display: 'standalone',
-      start_url: dev ? '/index.html' : "/cloud-tool/index.html",
+      start_url: dev ? '.' : "/cloud-tool/index.html",
       background_color: "#131923",
       icons: [
         {
