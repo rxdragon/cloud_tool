@@ -14,6 +14,11 @@ import get from 'lodash/get'
 
 window._ = { get }
 
+navigator.serviceWorker.getRegistrations()
+  .then(regs => {
+    console.log(regs)
+  })
+
 Vue.config.productionTip = false
 
 new Vue({

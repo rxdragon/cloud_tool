@@ -7,28 +7,22 @@ console.log(process.env.BASE_URL)
 if (process.env.NODE_ENV === 'production') {
   register(`${process.env.BASE_URL}service-worker.js`, {
     ready () {
-      console.log(
-        'App is being served from cache by a service worker.\n' +
-        'For more details, visit https://goo.gl/AFskqB'
-      )
+      console.log('ready，app已从service worker 缓冲中启用')
     },
     registered (registration) {
-      console.log(registration, 'registration')
-      console.log('Service worker has been registered.')
+      console.log('registered，Service worker 已经注册')
     },
     cached () {
-      console.log('Content has been cached for offline use.')
+      console.log('cached，内容已经缓存在cache中')
     },
     updatefound () {
-      console.log('New content is downloading.')
+      console.log('updatefound，新的内容下载中。。。')
     },
     updated () {
-      console.log('New content is available; please refresh.')
-      window.location.reload()
-      
+      console.log('updated，新的内容已经激活，请刷新页面')
     },
     offline () {
-      console.log('No internet connection found. App is running in offline mode.')
+      console.log('offline，没有网络连接，App is running in offline mode.')
     },
     error (error) {
       console.error('Error during service worker registration:', error)
