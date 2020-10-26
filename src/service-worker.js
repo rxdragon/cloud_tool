@@ -1,12 +1,6 @@
 /* eslint-disable no-undef */
 if (workbox) {
   console.log(`Yay! Workbox is loaded!`);
-  const title = 'PWA-Book-Demo 测试 tag: error'
-  const options = {
-    body: '第一条 tag: error 通知',
-    tag: 'error'
-  }
-  const notification = new Notification(title, options)
 } else {
   console.log(`Boo! Workbox didn't load!`);
 }

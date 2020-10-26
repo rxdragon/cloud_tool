@@ -15,6 +15,7 @@ if (process.env.NODE_ENV === 'production') {
       console.log('ready，app已从service worker 缓冲中启用')
     },
     registered (registration) {
+      registration.showNotification('你好')
       console.log('registered，Service worker 已经注册')
     },
     cached () {
