@@ -8,7 +8,7 @@ if (process.env.NODE_ENV === 'production') {
   register(`${process.env.BASE_URL}service-worker.js`, {
     ready (registration) {
       setInterval(() => {
-        console.log(12)
+        console.log('registration.update')
         registration.update()
       }, 1 * 60 * 1000)
       console.log('ready，app已从service worker 缓冲中启用')
