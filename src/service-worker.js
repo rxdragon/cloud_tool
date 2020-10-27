@@ -15,7 +15,7 @@ workbox.core.setCacheNameDetails({
 // have our sw update and control a web page as soon as possible.
 self.addEventListener('message', (e) => {
   if (e.data && e.data === 'skipWaiting') {
-    workbox.core.skipWaiting() // 强制等待中的 Service Worker 被激活
+    self.skipWaiting() // 强制等待中的 Service Worker 被激活
   }
 })
 
