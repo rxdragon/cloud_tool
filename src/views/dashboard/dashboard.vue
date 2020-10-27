@@ -1,5 +1,6 @@
 <template>
   <div class="dashboard">
+    <button @click="test">test</button>
     <v-container class="grey lighten-5">
       <v-row>
         <v-col
@@ -99,11 +100,7 @@ export default class Dashboard extends Vue {
   }
 
   test () {
-    Vue.prototype.$notification({
-      title: `测试`,
-      body: '测试body',
-      icon: `https://i2.hdslb.com/bfs/face/c50d8de65bbaad7ccd714d298854181c117863bb.jpg`
-    })
+    window.location.href = 'dingtalk://dingtalkclient/page/link?url=https://www.baidu.com'
   }
 }
 </script>

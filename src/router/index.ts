@@ -2,9 +2,11 @@ import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 import Layout from '@/layout/index.vue'
 
-import reworkCenter from './modules/reworkCenter' // 营销中心
+import reworkCenter from './modules/reworkCenter' // 退单查询
+import pictureOnline from './modules/pictureOnline' // 退单查询
 
 export const asyncRoutes: Array<RouteConfig> = [
+  pictureOnline,
   reworkCenter
 ]
 // 基础权限路由

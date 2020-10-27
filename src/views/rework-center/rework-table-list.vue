@@ -1,6 +1,6 @@
 <template>
   <div class="rework-table-list">
-    <v-row class="search-box" align="center" >
+    <v-row class="search-box" align="end" >
       <v-col
         cols="12" class="no-padding"
         sm="6" md="4" lg="4" xl="4"
