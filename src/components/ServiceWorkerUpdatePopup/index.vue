@@ -9,7 +9,7 @@
         <!-- 弹框操作 -->
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary" text @click="refreshApp" >
+          <v-btn color="primary" :loading="loading" text @click="refreshApp" >
             更新
           </v-btn>
         </v-card-actions>
@@ -26,6 +26,7 @@ export default class ServiceWorkerUpdatePopup extends Vue {
   private dialog: boolean = false
   private refreshing: boolean = false
   private registration: ServiceWorkerRegistration | null = null
+  private loading: boolean = false
 
   created () {
     // Listen for swUpdated event and display refresh notification as required.
@@ -53,6 +54,7 @@ export default class ServiceWorkerUpdatePopup extends Vue {
     // Protect against missing registration.waiting.
     if (!this.registration || !this.registration.waiting) return
     this.registration.waiting.postMessage('skipWaiting')
+    this.loading = true
   }
 }
 </script>
