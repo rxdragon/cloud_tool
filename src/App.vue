@@ -3,14 +3,18 @@
     <transition name="app-transform" mode="out-in">
       <router-view />
     </transition>
+    <service-worker-update-popup />
   </v-app>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { PermissionModule } from '@/store/modules/permission'
+import ServiceWorkerUpdatePopup from '@/components/ServiceWorkerUpdatePopup/index.vue'
 
-@Component
+@Component({
+  components: { ServiceWorkerUpdatePopup }
+})
 export default class App extends Vue {
   created () {
     PermissionModule.SET_ROUTES([])

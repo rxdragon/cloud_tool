@@ -5,14 +5,10 @@ import * as uuid from 'uuid'
 
 import { NOTIFY_STATUS } from '@/utils/Enumerate'
 
-console.log(NOTIFY_STATUS)
-
-
 /**
  * @description 获取权限
  */
 async function getPermission () {
-  console.log('Notification' in window)
   if (!('Notification' in window)) {
     console.log('不存在')
     Vue.prototype.$message.warning('请使用Chrome浏览器或升级Chrome浏览器')
@@ -27,7 +23,6 @@ async function getPermission () {
 // 初始化权限
 async function initNotification () {
   const permission = await getPermission()
-  console.log(permission, 'permission')
   if (!permission) {
     Vue.prototype.$notification = () => {
       Vue.prototype.$message.warning('请开启通知权限')

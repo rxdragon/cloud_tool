@@ -1,6 +1,5 @@
 <template>
   <div class="dashboard">
-    <v-btn color="primary" @click="test">发送通知</v-btn>
     <v-container class="grey lighten-5">
       <v-row>
         <v-col
