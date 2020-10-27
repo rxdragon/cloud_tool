@@ -4,7 +4,7 @@
       <v-card>
         <v-card-title class="headline">有新的版本更新</v-card-title>
         <v-card-text>
-          更新内容。。。。
+          更新内容。。。
         </v-card-text>
         <!-- 弹框操作 -->
         <v-card-actions>
