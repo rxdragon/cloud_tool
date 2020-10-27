@@ -23,7 +23,7 @@ import { Component, Vue } from 'vue-property-decorator'
 
 @Component
 export default class ServiceWorkerUpdatePopup extends Vue {
-  private dialog: boolean = true
+  private dialog: boolean = false
   private refreshing: boolean = false
   private registration: ServiceWorkerRegistration | null = null
 
