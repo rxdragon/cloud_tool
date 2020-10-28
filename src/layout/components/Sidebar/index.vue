@@ -3,7 +3,7 @@
     app
     mobile-breakpoint="960"
     v-model="drawer"
-    :src="barImage"
+    color="#fff"
     :dark="barColor !== 'rgba(228, 226, 226, 1), rgba(255, 255, 255, 0.7)'"
   >
     <template v-slot:img="props">
@@ -11,6 +11,13 @@
     </template>
     <!-- 用户信息 -->
     <!-- <user-tab /> -->
+    <v-img :aspect-ratio="16/10" :src="require('../../../assets/back.jpg')">
+      <v-row align="end" class="lightbox white--text pa-2 fill-height">
+        <v-col>
+          <div class="subheading">Cloud Tool</div>
+        </v-col>
+      </v-row>
+    </v-img>
     <v-list dense>
       <sidebar-item v-for="route in routes" :key="route.path" :item="route" :base-path="route.path"/>
     </v-list>

@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard">
-    <button @click="test">test</button>
+    <v-btn color="blue lighten-1" text @click="test">跳转钉钉</v-btn>
     <v-container class="grey lighten-5">
       <v-row>
         <v-col
