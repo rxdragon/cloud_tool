@@ -17,8 +17,25 @@ export async function getPictureOnlineByOutsideNo (params: getPictureOnlineByOut
     const pictureOnlineOrderData = new PictureOnlineOrderModel(orderItem)
     return {
       ...pictureOnlineOrderData,
+      photoList: [],
       loading: false
     }
   })
   return createData
+}
+
+/**
+ * @description 获取照片列表
+ */
+type getPhotoListByRecordIdParams = {
+  recordId: string | number
+}
+export async function getPhotoListByRecordId (params: getPhotoListByRecordIdParams) {
+  const msg = await axios({
+    url: 'https://api-gateway.hzmantu.com/project_picture_online/my/photo/getPhotosByRecordId',
+    method: 'GET',
+    params
+  })
+
+  console.log(msg)
 }

@@ -1,13 +1,13 @@
 <template>
   <div class="dashboard">
     <v-btn color="blue lighten-1" text @click="test">跳转钉钉</v-btn>
-    <v-container class="grey lighten-5">
+    <v-container>
       <v-row>
         <v-col
           cols="12" sm="12" md="6"
           lg="6" xl="6"
         >
-          <v-card class="mx-auto text-center" color="#00b1b7" dark>
+          <v-card class="mx-auto text-center pa-0" color="#00b1b7" dark>
             <v-card-text>
               <v-sheet color="rgba(0, 0, 0, .12)">
                 <v-sparkline
@@ -27,7 +27,7 @@
             </v-card-text>
         
             <v-card-text>
-              <div class="display-1 font-weight-thin">修修兽近日收入走势</div>
+              <div class="display-1 font-weight-thin">修修兽日收入走势</div>
             </v-card-text>
             <v-divider></v-divider>
           </v-card>
@@ -36,7 +36,7 @@
           cols="12" sm="12" md="6"
           lg="6" xl="6"
         >
-          <v-card class="mx-auto text-center" color="#00b1b7" dark>
+          <v-card class="mx-auto text-center pa-0" color="#00b1b7" dark>
             <v-card-text>
               <v-sheet color="rgba(0, 0, 0, .12)">
                 <v-sparkline
@@ -83,6 +83,7 @@ export default class Dashboard extends Vue {
   created () {
     for (let index = 0; index < 7; index++) {
       this.neer7DaysValue.push(0)
+      this.monthInfoValue.push(0)
     }
     this.getSaleInfo()
   }
