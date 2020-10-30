@@ -18,7 +18,8 @@ export async function getPictureOnlineByOutsideNo (params: getPictureOnlineByOut
     return {
       ...pictureOnlineOrderData,
       photoList: [],
-      loading: false
+      loading: false,
+      tab: 'photo'
     }
   })
   return createData

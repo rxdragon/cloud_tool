@@ -40,3 +40,9 @@ export default class App extends Vue {
   }
 }
 </script>
+
+<style>
+.theme--light.v-application {
+  background-color: #f0f2f5 !important;
+}
+</style>

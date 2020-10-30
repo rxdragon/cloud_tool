@@ -7,7 +7,7 @@
     :dark="barColor !== 'rgba(228, 226, 226, 1), rgba(255, 255, 255, 0.7)'"
   >
     <template v-slot:img="props">
-      <v-img :gradient="`to bottom, ${barColor}`" v-bind="props"/>
+      <v-img class="back-img" :gradient="`to bottom, ${barColor}`" v-bind="props"/>
     </template>
     <!-- 用户信息 -->
     <!-- <user-tab /> -->
@@ -59,3 +59,11 @@ export default class Sidebar extends Vue {
   }
 }
 </script>
+
+<style lang="less" scoped>
+.back-img {
+  /deep/ .v-image__image--preload {
+    filter: blur(0);
+  }
+}
+</style>

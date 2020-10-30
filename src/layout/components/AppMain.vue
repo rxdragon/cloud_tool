@@ -24,3 +24,9 @@ export default class AppMain extends Vue {
   }
 }
 </script>
+
+<style lang="less" scoped>
+.module {
+  background-color: #f0f2f5;
+}
+</style>
