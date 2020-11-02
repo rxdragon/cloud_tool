@@ -72,20 +72,28 @@ export default class PictureSearch extends Vue {
   async created () {
     try {
       if (document.hidden) return
-      const clipboardText = await navigator.clipboard.readText()
-      if ((clipboardText.includes('T') || clipboardText.includes('X'))) {
-        let pointIndex = clipboardText.indexOf('T')
-        if (pointIndex < 0) pointIndex = clipboardText.indexOf('X')
-        
-        const realOrder = clipboardText.substring(pointIndex, (pointIndex + 17))
-        console.log(realOrder)
-        if (realOrder.length === 17) {
-          this.seachOrderNum = realOrder
-          this.seachData()
-        }
-      }
+      await this.initSeachData()
     } catch (error) {
       console.error(error)
+    }
+
+    window.onfocus = async () => {
+      await this.initSeachData()
+    }
+  }
+
+  async initSeachData () {
+    const clipboardText = await navigator.clipboard.readText()
+    if ((clipboardText.includes('T') || clipboardText.includes('X'))) {
+      let pointIndex = clipboardText.indexOf('T')
+      if (pointIndex < 0) pointIndex = clipboardText.indexOf('X')
+
+      const realOrder = clipboardText.substring(pointIndex, (pointIndex + 17))
+      const reg = /^[A-Z]\d{16}$/
+      if (reg.test(realOrder)) {
+        this.seachOrderNum = realOrder
+        this.seachData()
+      }
     }
   }
 

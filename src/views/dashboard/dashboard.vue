@@ -8,6 +8,16 @@
           lg="6" xl="6"
         >
           <v-card class="mx-auto text-center pa-0" color="#00b1b7" dark>
+            <v-card-text>待修流水数量：{{ waitRetouchStreamQueueLength }}</v-card-text>
+            <v-card-text>修图师排队数：{{ retoucherQueueLength }}</v-card-text>
+          </v-card>
+        </v-col>
+
+        <v-col
+          cols="12" sm="12" md="6"
+          lg="6" xl="6"
+        >
+          <v-card class="mx-auto text-center pa-0" color="#00b1b7" dark>
             <v-card-text>
               <v-sheet color="rgba(0, 0, 0, .12)">
                 <v-sparkline
@@ -72,6 +82,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 
 import * as ShowpicApi from '@/api/showpicApi'
+import * as CloudApi from '@/api/cloudApi'
 
 @Component
 export default class Dashboard extends Vue {
@@ -79,6 +90,8 @@ export default class Dashboard extends Vue {
   private neer7DaysValue: number[] = []
   private monthInfoLable: string[] = []
   private monthInfoValue: number[] = []
+  private waitRetouchStreamQueueLength: number = 0
+  private retoucherQueueLength: number = 0
 
   created () {
     for (let index = 0; index < 7; index++) {
@@ -86,6 +99,25 @@ export default class Dashboard extends Vue {
       this.monthInfoValue.push(0)
     }
     this.getSaleInfo()
+    this.getQueueLength()
+    this.getRetoucherQueueLength()
+  }
+
+  activated () {
+    this.getSaleInfo()
+    this.getQueueLength()
+    this.getRetoucherQueueLength()
+  }
+
+  /**
+   * @description 获取排队数量
+   */
+  async getQueueLength () {
+    this.waitRetouchStreamQueueLength = await CloudApi.getQueueLength()
+  }
+
+  async getRetoucherQueueLength () {
+    this.retoucherQueueLength = await CloudApi.getRetoucherQueueLength()
   }
 
   async getSaleInfo () {
