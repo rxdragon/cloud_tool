@@ -71,10 +71,18 @@ export default class PictureSearch extends Vue {
 
   async created () {
     try {
+      if (document.hidden) return
       const clipboardText = await navigator.clipboard.readText()
-      if (clipboardText.length === 17 && (clipboardText.includes('T') || clipboardText.includes('X'))) {
-        this.seachOrderNum = clipboardText
-        this.seachData()
+      if ((clipboardText.includes('T') || clipboardText.includes('X'))) {
+        let pointIndex = clipboardText.indexOf('T')
+        if (pointIndex < 0) pointIndex = clipboardText.indexOf('X')
+        
+        const realOrder = clipboardText.substring(pointIndex, (pointIndex + 17))
+        console.log(realOrder)
+        if (realOrder.length === 17) {
+          this.seachOrderNum = realOrder
+          this.seachData()
+        }
       }
     } catch (error) {
       console.error(error)
