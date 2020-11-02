@@ -21,6 +21,7 @@
         show-arrows
       >
         <v-window-item
+          eager
           v-for="(photoItem, photoKey) in photoCompressList"
           :key="photoKey"
         >

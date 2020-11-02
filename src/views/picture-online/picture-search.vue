@@ -77,9 +77,9 @@ export default class PictureSearch extends Vue {
       console.error(error)
     }
 
-    window.onfocus = async () => {
-      await this.initSeachData()
-    }
+    // window.onfocus = async () => {
+    //   await this.initSeachData()
+    // }
   }
 
   async initSeachData () {
