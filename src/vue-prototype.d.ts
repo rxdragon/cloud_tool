@@ -12,7 +12,8 @@ type message = Message
 
 declare module "vue/types/vue" {
   interface Vue {
-    $message: Message
+    $message: Message,
+    $delayLoading: Function
   }
 }
 

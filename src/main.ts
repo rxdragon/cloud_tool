@@ -9,7 +9,8 @@ import './plugins/axios'
 import '@/components/Toast/index'
 import './plugins/notificationApi'
 
-import vuetify from './plugins/vuetify';
+import vuetify from './plugins/vuetify'
+import { delayLoading } from '@/utils/index' // 延时加载
 import get from 'lodash/get'
 
 window._ = { get }
@@ -21,6 +22,7 @@ window._ = { get }
 //     })
 // }
 
+Vue.prototype.$delayLoading = delayLoading
 Vue.config.productionTip = false
 
 new Vue({

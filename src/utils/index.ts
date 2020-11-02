@@ -16,3 +16,14 @@ export function toCapitalHump (name: string) {
     return letter.toUpperCase()
   })
 }
+
+/**
+ * @description 获取现在时间
+ */
+export function delayLoading (time = 500): Promise <void> {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve()
+    }, time)
+  })
+}

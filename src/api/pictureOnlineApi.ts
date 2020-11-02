@@ -20,7 +20,7 @@ export async function getPictureOnlineByOutsideNo (params: getPictureOnlineByOut
       ...pictureOnlineOrderData,
       photoList: [],
       loading: false,
-      tab: 'photo'
+      tab: 'order'
     }
   })
   return createData

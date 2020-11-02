@@ -1,5 +1,9 @@
 <template>
   <div class="picture-search">
+    <v-overlay :value="loading">
+      <v-progress-circular indeterminate size="64"></v-progress-circular>
+    </v-overlay>
+
     <!-- 搜索区域 -->
     <v-row class="search-box" align="end" no-gutters>
       <v-col cols="9" sm="6" md="4" lg="4" xl="4">
@@ -20,7 +24,7 @@
     </v-row>
 
     <!-- 订单展示结果区域 -->
-    <div class="search-main mt-3">
+    <div class="search-main mt-3" v-if="orderList.length">
       <template v-for="orderItem in orderList">
         <v-tabs
           :key="orderItem.id"
@@ -42,6 +46,11 @@
         </v-tabs>
       </template>
     </div>
+
+    <!-- 暂无数据 -->
+    <div class="no-data" v-else>
+      <v-img :src="require('../../assets/no_data.png')"></v-img>
+    </div>
   </div>
 </template>
 
@@ -58,15 +67,37 @@ import PhotoCard from './components/PhotoCard.vue'
 export default class PictureSearch extends Vue {
   private seachOrderNum: string = ''
   private orderList: PictureOnlineOrderInterface[] = []
+  private loading: boolean = false
+
+  async created () {
+    try {
+      const clipboardText = await navigator.clipboard.readText()
+      if (clipboardText.length === 17 && (clipboardText.includes('T') || clipboardText.includes('X'))) {
+        this.seachOrderNum = clipboardText
+        this.seachData()
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   /**
    * @description 搜索数据
    */
   async seachData () {
-    const req = {
-      outsideNo: this.seachOrderNum
+    try {
+      if (this.seachOrderNum.length !== 17) return this.$message.warning('请输入正确的订单号')
+      if (!this.seachOrderNum.includes('T') && !this.seachOrderNum.includes('X')) return this.$message.warning('请输入正确的订单号')
+      const req = {
+        outsideNo: this.seachOrderNum
+      }
+      this.loading = true
+      this.orderList = await PictureOnlineApi.getPictureOnlineByOutsideNo(req)
+      if (!this.orderList.length) this.$message.warning('暂无数据')
+      await this.$delayLoading()
+    } finally {
+      this.loading = false
     }
-    this.orderList = await PictureOnlineApi.getPictureOnlineByOutsideNo(req)
   }
 }
 </script>
@@ -80,5 +111,11 @@ export default class PictureSearch extends Vue {
   .tabs-box {
     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
   }
+}
+
+.no-data {
+  width: 70vw;
+  max-width: 300px;
+  margin: 100px auto;
 }
 </style>
