@@ -15,7 +15,28 @@
           <span class="product-info">{{ photoData.productInfo.name }}</span>
         </v-alert>
       </div>
-      <v-img :src="compressDomain + photoData.updatePath"></v-img>
+      <v-window
+        v-model="window"
+        class="photo-window"
+        show-arrows
+      >
+        <v-window-item
+          v-for="(photoItem, photoKey) in photoCompressList"
+          :key="photoKey"
+        >
+          <v-img max-height="100%" contain :src="compressDomain + photoItem.path"></v-img>
+          <v-alert
+            class="photo-version"
+            color="#eee"
+            border="bottom"
+            height="28"
+            dense
+          >
+            <span class="state-box">{{ photoItem.label }}</span>
+          </v-alert>
+        </v-window-item>
+      </v-window>
+      <!-- <v-img :src="compressDomain + photoData.updatePath"></v-img> -->
     </div>
     
     <div :class="{ 'is-visible': showCard }" class="photo-detail">
@@ -138,6 +159,33 @@ export default class PhotoItemDetail extends Vue {
   private dialog: boolean = false
   private compressDomain: string = SettingModule.compressDomain
   private window: number = 0
+  private photoCompressList: { path: string, label: string }[] = []
+
+  created () {
+    this.initPhotoList()
+  }
+
+  initPhotoList () {
+    let photoList = [
+      {
+        path: this.photoData.finalPath,
+        label: '最终成片'
+      },
+      {
+        path: this.photoData.updatePath,
+        label: '最新成片'
+      },
+      {
+        path: this.photoData.approvedPath,
+        label: '外部成片'
+      },
+      {
+        path: this.photoData.originalPath,
+        label: '原片'
+      }
+    ]
+    this.photoCompressList = photoList.filter(item => item.path)
+  }
 
   toggleCard () {
     this.showCard = !this.showCard
@@ -160,7 +208,7 @@ export default class PhotoItemDetail extends Vue {
 
   .photo-bulletin {
     position: relative;
-    min-height: 200px;
+    min-height: 100px;
     transition: all 0.3s;
     background-color: #eee;
     border: 1px solid #eee;
@@ -191,6 +239,33 @@ export default class PhotoItemDetail extends Vue {
       & /deep/ .v-alert__icon.v-icon {
         font-size: 20px;
         margin-top: -2px;
+      }
+    }
+
+    .photo-window {
+      height: 100%;
+
+      .v-image {
+        height: 100%;
+      }
+
+      .v-window-item {
+        height: 100%;
+      }
+
+      .photo-version {
+        position: absolute;
+        width: 100%;
+        left: 0;
+        bottom: 0;
+        margin-bottom: 0;
+        opacity: 0.9;
+      }
+
+      & /deep/ .v-alert__content {
+        font-size: 14px;
+        margin-top: -8px;
+        text-align: center;
       }
     }
   }

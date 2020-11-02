@@ -56,12 +56,8 @@ import PhotoCard from './components/PhotoCard.vue'
   components: { OrderCard, PhotoCard }
 })
 export default class PictureSearch extends Vue {
-  private seachOrderNum: string = 'T2020102479945646'
+  private seachOrderNum: string = ''
   private orderList: PictureOnlineOrderInterface[] = []
-
-  created () {
-    this.seachData ()
-  }
 
   /**
    * @description 搜索数据
