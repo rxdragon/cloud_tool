@@ -14,6 +14,7 @@ class Setting extends VuexModule implements ISettingState {
   public drawer: null | boolean = null
   public pageLoading = false
   public notificationStatus = NOTIFY_STATUS.DEFAULT
+  public compressDomain: string = process.env.VUE_APP_COMPRESS_DOMAIN
 
   @Mutation
   private SET_DRAWER (data: null | boolean) {

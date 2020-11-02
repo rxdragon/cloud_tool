@@ -5,25 +5,32 @@
       <v-card-text>
         <v-row align="center" no-gutters class="mx-0">
           <v-col class="pa-0" cols="12" sm="6" md="4" lg="4" xl="4">
-            看片订单状态：{{ orderInfo.stateCN }}
+            <span class="label">看片订单状态：</span>
+            <span class="content">{{ orderInfo.stateCN }}</span>
           </v-col>
           <v-col class="pa-0" cols="12" sm="6" md="4" lg="4" xl="4">
-            看片类型：{{ orderInfo.watchType === watchType.ONLINE ? '在线看片' : '门店看片' }}
+            <span class="label">看片类型：</span>
+            <span class="content">{{ orderInfo.watchType === watchType.ONLINE ? '在线看片' : '门店看片' }}</span>
           </v-col>
           <v-col class="pa-0" cols="12" sm="6" md="4" lg="4" xl="4">
-            是否转线下看片：{{ orderInfo.toOffline ? '是' : '否' }}
+            <span class="label">是否转线下看片：</span>
+            <span class="content">{{ orderInfo.toOffline ? '是' : '否' }}</span>
           </v-col>
           <v-col class="pa-0" cols="12" sm="6" md="4" lg="4" xl="4">
-            创建时间：{{ orderInfo.createAt }}
+            <span class="label">创建时间：</span>
+            <span class="content">{{ orderInfo.createAt }}</span>
           </v-col>
           <v-col class="pa-0" cols="12" sm="6" md="4" lg="4" xl="4">
-            绑定时间：{{ orderInfo.bindAt }}
+            <span class="label">绑定时间：</span>
+            <span class="content">{{ orderInfo.bindAt }}</span>
           </v-col>
           <v-col class="pa-0" cols="12" sm="6" md="4" lg="4" xl="4">
-            最后一次反馈时间：{{ orderInfo.recordLastAt }}
+            <span class="label">最后一次反馈时间：</span>
+            <span class="content">{{ orderInfo.recordLastAt }}</span>
           </v-col>
           <v-col class="pa-0" v-if="orderInfo.deletedAt" cols="12" sm="6" md="4" lg="4" xl="4">
-            删除时间：{{ orderInfo.deletedAt }}
+            <span class="label">删除时间：</span>
+            <span class="content">{{ orderInfo.deletedAt }}</span>
           </v-col>
         </v-row>
       </v-card-text>
@@ -34,10 +41,12 @@
       <v-card-text>
         <v-row align="center" no-gutters class="mx-0">
           <v-col class="pa-0" cols="12" sm="6" md="4" lg="4" xl="4">
-            门店id：{{ orderInfo.storeInfo.id }}
+            <span class="label">门店id：</span>
+            <span class="content">{{ orderInfo.storeInfo.id }}</span>
           </v-col>
           <v-col class="pa-0" cols="12" sm="6" md="4" lg="4" xl="4">
-            门店：{{ orderInfo.storeInfo.name }}
+            <span class="label">门店：</span>
+            <span class="content">{{ orderInfo.storeInfo.name }}</span>
           </v-col>
         </v-row>
       </v-card-text>
@@ -48,13 +57,16 @@
       <v-card-text>
         <v-row align="center" no-gutters class="mx-0">
           <v-col class="pa-0" cols="12" sm="6" md="4" lg="4" xl="4">
-            看片审核人：{{ orderInfo.checkerInfo.id }} - {{ orderInfo.checkerInfo.name }}
+            <span class="label">看片审核人：</span>
+            <span class="content">{{ orderInfo.checkerInfo.id }} - {{ orderInfo.checkerInfo.name }}</span>
           </v-col>
           <v-col class="pa-0" cols="12" sm="6" md="4" lg="4" xl="4">
-            用户姓名：{{ orderInfo.userInfo.name }}
+            <span class="label">用户姓名：</span>
+            <span class="content">{{ orderInfo.userInfo.name }}</span>
           </v-col>
           <v-col class="pa-0" cols="12" sm="6" md="4" lg="4" xl="4">
-            用户手机：{{ orderInfo.userInfo.phone }}
+            <span class="label">用户手机：</span>
+            <span class="content">{{ orderInfo.userInfo.phone }}</span>
           </v-col>
         </v-row>
       </v-card-text>
@@ -85,3 +97,10 @@ export default class PictureSearch extends Vue {
   
 }
 </script>
+
+<style lang="less" scoped>
+.label {
+  display: inline-block;
+  width: 127px;
+}
+</style>

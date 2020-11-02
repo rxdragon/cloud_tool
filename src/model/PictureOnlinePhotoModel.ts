@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /**
- * @description 看片类型
+ * @description 照片状态
  */
 export enum PHOTO_STATE {
   /** 待反馈 */
@@ -81,7 +81,7 @@ export interface PictureOnlinePhotoInterface {
   state: PHOTO_STATE, // 状态
   stateCN: string,
   productInfo: { id: number | string, name: string }, // 产品信息
-  trimNote: string, // 摄于备注
+  trimNote: string, // 摄影备注
   skipCrop: boolean, // 是否跳过裁剪
   retoucherInfo: retoucherInfoType, // 修图信息
   cropTemplate: CROP_TEMPLATE, // 裁剪类型
@@ -115,12 +115,15 @@ export default class PictureOnlinePhotoModel implements PictureOnlinePhotoInterf
   constructor (photoData: any) {
     this.base = photoData
     this.id = photoData.id
+
     this.originalPath = photoData.original_path || ''
     this.approvedPath = photoData.update_path || ''
     this.finalPath = photoData.approved_path || ''
     this.updatePath = photoData.final_path || ''
+
     this.state = photoData.state || ''
     this.stateCN = photoStateToCN[this.state]
+
     this.productInfo = _.get(photoData, 'extends.product_info') || { id: '-', name: '-' }
     this.trimNote = _.get(photoData, 'extends.trim_note') || '-'
     this.skipCrop = _.get(photoData, 'extends.skip_crop')
@@ -141,9 +144,11 @@ export default class PictureOnlinePhotoModel implements PictureOnlinePhotoInterf
         this.cropTemplate = CROP_TEMPLATE.NONE
         break
     }
+
     this.cropTemplateCN = cropTemplateToCN[this.cropTemplate]
     this.cropInfo = _.get(photoData, 'extends.crop_info')
-    this.otherPhotos = _.get(photoData, 'extends.other_photos')
+
+    this.otherPhotos = _.get(photoData, 'extends.other_photos') || []
     this.needOtherPhoto = _.get(photoData, 'extends.need_other_photo')
     this.cloudStreamNum = _.get(photoData, 'extends.cloud_stream_num')
   }
