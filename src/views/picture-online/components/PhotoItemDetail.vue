@@ -5,7 +5,6 @@
       <!-- 状态 -->
       <div class="photo-state">
         <v-alert
-          border="top"
           height="28"
           dense
           :icon="photoData.needOtherPhoto ? 'mdi-alert' : false"
@@ -29,7 +28,6 @@
           <v-alert
             class="photo-version"
             color="#eee"
-            border="bottom"
             height="28"
             dense
           >
