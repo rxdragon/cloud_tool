@@ -3,20 +3,22 @@
     <v-btn color="blue lighten-1" text @click="test">跳转钉钉</v-btn>
     <v-container>
       <v-row>
-        <v-col
-          cols="12" sm="12" md="6"
-          lg="6" xl="6"
-        >
+        <!-- 待修流水数量 -->
+        <v-col cols="12" sm="12" md="6" lg="6" xl="6">
           <v-card class="mx-auto text-center pa-0" color="#00b1b7" dark>
             <v-card-text>待修流水数量：{{ waitRetouchStreamQueueLength }}</v-card-text>
+          </v-card>
+        </v-col>
+
+        <!-- 修图师排队数 -->
+        <v-col cols="12" sm="12" md="6" lg="6" xl="6">
+          <v-card class="mx-auto text-center pa-0" color="#00b1b7" dark>
             <v-card-text>修图师排队数：{{ retoucherQueueLength }}</v-card-text>
           </v-card>
         </v-col>
 
-        <v-col
-          cols="12" sm="12" md="6"
-          lg="6" xl="6"
-        >
+        <!-- 修修兽日收入走势 -->
+        <v-col cols="12" sm="12" md="6" lg="6" xl="6">
           <v-card class="mx-auto text-center pa-0" color="#00b1b7" dark>
             <v-card-text>
               <v-sheet color="rgba(0, 0, 0, .12)">
@@ -42,10 +44,9 @@
             <v-divider></v-divider>
           </v-card>
         </v-col>
-        <v-col
-          cols="12" sm="12" md="6"
-          lg="6" xl="6"
-        >
+
+        <!-- 修修兽月收入走势 -->
+        <v-col cols="12" sm="12" md="6" lg="6" xl="6">
           <v-card class="mx-auto text-center pa-0" color="#00b1b7" dark>
             <v-card-text>
               <v-sheet color="rgba(0, 0, 0, .12)">

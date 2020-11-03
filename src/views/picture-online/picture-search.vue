@@ -21,6 +21,18 @@
       >
         <v-btn class="search-box" color="primary" @click="seachData">查询</v-btn>
       </v-col>
+      <v-col cols="12" class="button-box pl-0">
+        <v-chip-group active-class="primary--text">
+          <v-chip
+            v-for="(tag, tagIndex) in orderTags" :key="tagIndex"
+            @click:close="onCleanTag(tagIndex)"
+            @click="onSelectTag(tag)"
+            close
+          >
+            {{ tag }}
+          </v-chip>
+        </v-chip-group>
+      </v-col>
     </v-row>
 
     <!-- 订单展示结果区域 -->
@@ -68,6 +80,7 @@ export default class PictureSearch extends Vue {
   private seachOrderNum: string = ''
   private orderList: PictureOnlineOrderInterface[] = []
   private loading: boolean = false
+  private orderTags: string[] = []
 
   async created () {
     try {
@@ -77,9 +90,13 @@ export default class PictureSearch extends Vue {
       console.error(error)
     }
 
-    // window.onfocus = async () => {
-    //   await this.initSeachData()
-    // }
+    window.onfocus = async () => {
+      await this.initSeachData()
+    }
+  }
+
+  destroyed () {
+    window.onfocus = null
   }
 
   async initSeachData () {
@@ -91,8 +108,8 @@ export default class PictureSearch extends Vue {
       const realOrder = clipboardText.substring(pointIndex, (pointIndex + 17))
       const reg = /^[A-Z]\d{16}$/
       if (reg.test(realOrder)) {
-        this.seachOrderNum = realOrder
-        this.seachData()
+        const findSameTag = this.orderTags.find(item => item === realOrder)
+        if (!findSameTag) this.orderTags.unshift(realOrder)
       }
     }
   }
@@ -114,6 +131,21 @@ export default class PictureSearch extends Vue {
     } finally {
       this.loading = false
     }
+  }
+
+  /**
+   * @description 监听删除节点
+   */
+  onCleanTag (tagIndex: number) {
+    this.orderTags.splice(tagIndex, 1)
+  }
+
+  /**
+   * @description 监听选中标签
+   */
+  onSelectTag (tag: string) {
+    this.seachOrderNum = tag
+    this.seachData()
   }
 }
 </script>
