@@ -10,3 +10,5 @@ declare module 'xlsx'
 declare module 'moment'
 
 declare module 'lodash/get'
+
+declare module 'animejs'

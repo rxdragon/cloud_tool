@@ -6,14 +6,24 @@
         <!-- 待修流水数量 -->
         <v-col cols="12" sm="12" md="6" lg="6" xl="6">
           <v-card class="mx-auto text-center pa-0" color="#00b1b7" dark>
-            <v-card-text>待修流水数量：{{ waitRetouchStreamQueueLength }}</v-card-text>
+            <v-card-text>
+              <div class="number-label">待修流水数量</div>
+              <div class="number-font">
+                <count-to :end-value="waitRetouchStreamQueueLength" />
+              </div>
+            </v-card-text>
           </v-card>
         </v-col>
 
         <!-- 修图师排队数 -->
         <v-col cols="12" sm="12" md="6" lg="6" xl="6">
           <v-card class="mx-auto text-center pa-0" color="#00b1b7" dark>
-            <v-card-text>修图师排队数：{{ retoucherQueueLength }}</v-card-text>
+            <v-card-text>
+              <div class="number-label">修图师排队数</div>
+              <div class="number-font">
+                <count-to :end-value="retoucherQueueLength" />
+              </div>
+            </v-card-text>
           </v-card>
         </v-col>
 
@@ -81,11 +91,14 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import CountTo from '@/components/CountTo/index.vue'
 
 import * as ShowpicApi from '@/api/showpicApi'
 import * as CloudApi from '@/api/cloudApi'
 
-@Component
+@Component({
+  components: { CountTo }
+})
 export default class Dashboard extends Vue {
   private neer7DaysLabel: string[] = []
   private neer7DaysValue: number[] = []
@@ -140,5 +153,15 @@ export default class Dashboard extends Vue {
 </script>
 
 <style lang="less" scoped>
+.number-label {
+  font-size: 1rem;
+}
 
+.number-font {
+  font-family: number;
+  font-size: 6rem;
+  line-height: 1;
+  transform: rotateX(30deg);
+  transform-origin: bottom;
+}
 </style>

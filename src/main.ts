@@ -9,6 +9,8 @@ import './plugins/axios'
 import '@/components/Toast/index'
 import './plugins/notificationApi'
 
+import './assets/font.less'
+
 import vuetify from './plugins/vuetify'
 import { delayLoading } from '@/utils/index' // 延时加载
 import get from 'lodash/get'
