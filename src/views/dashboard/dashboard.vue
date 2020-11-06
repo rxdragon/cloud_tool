@@ -1,6 +1,7 @@
 <template>
   <div class="dashboard">
     <v-btn color="blue lighten-1" text @click="test">跳转钉钉</v-btn>
+    <v-btn color="blue lighten-1" text @click="initPage">刷新</v-btn>
     <v-container>
       <v-row>
         <!-- 待修流水数量 -->
@@ -96,6 +97,8 @@ import CountTo from '@/components/CountTo/index.vue'
 import * as ShowpicApi from '@/api/showpicApi'
 import * as CloudApi from '@/api/cloudApi'
 
+let pollingInit: number| null = null
+
 @Component({
   components: { CountTo }
 })
@@ -108,16 +111,30 @@ export default class Dashboard extends Vue {
   private retoucherQueueLength: number = 0
 
   created () {
-    for (let index = 0; index < 7; index++) {
-      this.neer7DaysValue.push(0)
-      this.monthInfoValue.push(0)
-    }
+    this.initPage()
+    if (pollingInit) return
+    pollingInit = setInterval(() => {
+      this.initPage()
+    }, 30000)
+  }
+
+  activated () {
     this.getSaleInfo()
     this.getQueueLength()
     this.getRetoucherQueueLength()
   }
 
-  activated () {
+  destroyed () {
+    console.log('销毁')
+    if (pollingInit) clearInterval(pollingInit)
+    pollingInit = null
+  }
+
+  initPage () {
+    for (let index = 0; index < 7; index++) {
+      this.neer7DaysValue.push(0)
+      this.monthInfoValue.push(0)
+    }
     this.getSaleInfo()
     this.getQueueLength()
     this.getRetoucherQueueLength()
