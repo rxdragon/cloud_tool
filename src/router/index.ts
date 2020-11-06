@@ -4,10 +4,12 @@ import Layout from '@/layout/index.vue'
 
 import reworkCenter from './modules/reworkCenter' // 退单查询
 import pictureOnline from './modules/pictureOnline' // 退单查询
+import cloudCenter from './modules/cloudCenter' // 退单查询
 
 export const asyncRoutes: Array<RouteConfig> = [
   pictureOnline,
-  reworkCenter
+  reworkCenter,
+  cloudCenter
 ]
 // 基础权限路由
 export const constantRoutes: Array<RouteConfig> = [
