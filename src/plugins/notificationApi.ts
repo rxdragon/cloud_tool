@@ -10,8 +10,9 @@ import { NOTIFY_STATUS } from '@/utils/Enumerate'
  */
 async function getPermission () {
   if (!('Notification' in window)) {
-    console.log('不存在')
-    Vue.prototype.$message.warning('请使用Chrome浏览器或升级Chrome浏览器')
+    if (!Vue.prototype.$isIphone) {
+      Vue.prototype.$message.warning('请使用Chrome浏览器或升级Chrome浏览器')
+    }
     return false
   }
   const status: any = await Notification.requestPermission()

@@ -56,12 +56,37 @@ export async function getPhotoListByRecordId (params: getPhotoListByRecordIdPara
     return acc
   }, 0)
 
-  console.log(photoUnFinishedCount)
-
   return {
     photoList,
     watcherInfo,
     photoCount: photoList.length,
     photoUnFinishedCount
   }
+}
+
+/**
+ * @description 查询是否支持在线看片
+ * @param params 
+ */
+export async function checkPictureOnlineOrder (orderId: string | number) {
+  const params = {
+    "params": {
+      SENDER_ID: "$:LWCP_v1:$M7Nc865b9IPyLsltLre4INiUX+v0/Nln",
+      SENDER_NICK: "泰德",
+      IS_ADMIN: "false",
+      SENDER_STAFF_ID: "232334545924185126",
+      MEMBER_TYPE: "",
+      TOKEN: "",
+      FROM: "single_chat",
+      FROM_SITE: "cidEZpUzyTAaE/64BG4nz7V33y/7ZGRO+7TbJCwClmSHCQ="
+    },
+    content: `检查在线看片${orderId}`
+  }
+
+  const msg: any = await axios({
+    url: 'https://cf3.run.hzmantu.com/',
+    method: 'POST',
+    data: params
+  })
+  console.log(msg)
 }

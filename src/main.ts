@@ -4,6 +4,8 @@ import store from '@/store'
 import router from '@/router/index'
 import App from '@/App.vue'
 
+import VConsole from 'vconsole'
+
 import './registerServiceWorker'
 import './plugins/axios'
 import '@/components/Toast/index'
@@ -17,12 +19,28 @@ import get from 'lodash/get'
 
 window._ = { get }
 
-// if (navigator.serviceWorker) {
-//   navigator.serviceWorker.getRegistrations()
-//     .then(regs => {
-//       console.log(regs)
-//     })
-// }
+/**
+ * @description 判断设备类型
+ */
+function judgeIsMobile () {
+  console.log(navigator)
+  const ua = navigator.userAgent
+  console.log(ua)
+  const ipad = ua.match(/(iPad).*OS\s([\d_]+)/)
+  const isIphone = !ipad && ua.match(/(iPhone\sOS)\s([\d_]+)/)
+  const isAndroid = ua.match(/(Android)\s+([\d.]+)/)
+  const isMobile = isIphone || isAndroid
+
+  if (isMobile && process.env.NODE_ENV !== 'production') {
+    new VConsole()
+  }
+
+  Vue.prototype.$isMobile = Boolean(isMobile)
+  Vue.prototype.$isIphone = Boolean(isIphone)
+}
+
+// 判断是否是移动设备
+judgeIsMobile()
 
 Vue.prototype.$delayLoading = delayLoading
 Vue.config.productionTip = false

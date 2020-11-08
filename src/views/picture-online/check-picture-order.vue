@@ -24,14 +24,19 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import * as PictureOnlineApi from '@/api/pictureOnlineApi'
+
 @Component
 export default class CheckPictureOrder extends Vue {
-  private himoOrder: number | string = ''
+  private himoOrder: number | string = '2019050388060596'
 
   /**
    * @description 检查是否可以进入在线看片
    */
-  searchHimoOrder () {
+  async searchHimoOrder () {
+    if (!this.himoOrder) return this.$message.warning('请输入正确的订单号信息')
+    const orderId = this.himoOrder
+    await PictureOnlineApi.checkPictureOnlineOrder(orderId)
     console.log('test')
   }
 }
