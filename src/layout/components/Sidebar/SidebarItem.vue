@@ -26,7 +26,7 @@
             <v-list-item-title v-text="item.meta.title"></v-list-item-title>
           </v-list-item-content>
         </template>
-        <SidebarItem
+        <sidebar-item
           v-for="child in item.children"
           :key="child.path"
           :is-nest="true"
@@ -46,7 +46,9 @@ import path from 'path'
 
 import { Component, Vue, Prop } from 'vue-property-decorator'
 
-@Component
+@Component({
+  name: 'SidebarItem'
+})
 export default class SidebarItem extends Vue {
   @Prop({ type: Object, required: true }) readonly item!: RouteConfig
   @Prop({ type: Boolean, default: false }) readonly isNest!: boolean
