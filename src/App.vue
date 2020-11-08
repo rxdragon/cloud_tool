@@ -21,9 +21,6 @@ export default class App extends Vue {
   }
 
   mounted () {
-    document.body.addEventListener('touchmove', function (e) {
-      e.preventDefault()
-    }, { passive: false })
     // window.addEventListener('beforeinstallprompt', function (e: any) {
     //   e.userChoice.then(function (choiceResult: any) {
     //     console.log(choiceResult)
