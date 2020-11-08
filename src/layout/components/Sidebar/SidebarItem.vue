@@ -26,7 +26,7 @@
             <v-list-item-title v-text="item.meta.title"></v-list-item-title>
           </v-list-item-content>
         </template>
-        <sidebar-item
+        <SidebarItem
           v-for="child in item.children"
           :key="child.path"
           :is-nest="true"
