@@ -13,6 +13,12 @@ const PictureOnline: RouteConfig = {
       name: 'PictureSearch',
       component: () => import('@/views/picture-online/picture-search.vue'),
       meta: { title: '在线看片订单查询', icon: '' }
+    },
+    {
+      path: 'checkPictureOrder',
+      name: 'CheckPictureOrder',
+      component: () => import('@/views/picture-online/check-picture-order.vue'),
+      meta: { title: '检车是否可以进入在线看片', icon: '' }
     }
   ]
 }
