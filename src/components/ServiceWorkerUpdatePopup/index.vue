@@ -28,10 +28,11 @@ export default class ServiceWorkerUpdatePopup extends Vue {
   private registration: ServiceWorkerRegistration | null = null
   private loading: boolean = false
 
-  created () {
+  mounted () {
     // Listen for swUpdated event and display refresh notification as required.
     document.addEventListener('swUpdated', this.showRefreshUI, { once: true })
     // Refresh all open app tabs when a new service worker is installed.
+    if (!navigator.serviceWorker) return
     navigator.serviceWorker.addEventListener('controllerchange', () => {
       if (this.refreshing) return
       this.refreshing = true

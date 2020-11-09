@@ -11,6 +11,8 @@
 import { Component, Vue } from 'vue-property-decorator'
 import { PermissionModule } from '@/store/modules/permission'
 import ServiceWorkerUpdatePopup from '@/components/ServiceWorkerUpdatePopup/index.vue'
+// import * as SessionTool from '@/utils/sessionTool'
+// import * as UserApi from '@/api/userApi'
 
 @Component({
   components: { ServiceWorkerUpdatePopup }
@@ -21,6 +23,14 @@ export default class App extends Vue {
   }
 
   mounted () {
+    // window.onpageshow = () => {
+    //   console.log('onpageshow')
+    //   const uuid = SessionTool.getUserUUID()
+    //   if (!uuid) return
+    //   const req = { uuid }
+    //   const xStreamId = UserApi.getXstreamId(req)
+    //   alert(xStreamId)
+    // }
     // window.addEventListener('beforeinstallprompt', function (e: any) {
     //   e.userChoice.then(function (choiceResult: any) {
     //     console.log(choiceResult)

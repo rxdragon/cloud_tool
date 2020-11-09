@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard">
-    <v-btn color="blue lighten-1" text @click="test">跳转钉钉</v-btn>
+    <v-btn color="blue lighten-1" text @click="login">跳转钉钉</v-btn>
     <v-btn color="blue lighten-1" text @click="initPage">刷新</v-btn>
     <v-container>
       <v-row>
@@ -94,8 +94,11 @@
 import { Component, Vue } from 'vue-property-decorator'
 import CountTo from '@/components/CountTo/index.vue'
 
+import * as uuid from 'uuid'
 import * as ShowpicApi from '@/api/showpicApi'
 import * as CloudApi from '@/api/cloudApi'
+import * as UserApi from '@/api/userApi'
+import * as SessionTool from '@/utils/sessionTool'
 
 let pollingInit: number| null = null
 
@@ -163,8 +166,23 @@ export default class Dashboard extends Vue {
     })
   }
 
-  test () {
-    window.location.href = 'dingtalk://dingtalkclient/page/link?url=https://www.baidu.com'
+  async login () {
+    const uuidText = uuid.v4()
+    const req = { uuid: uuidText }
+    await UserApi.createUuid(req)
+    SessionTool.setUserUUID(uuidText)
+    
+    window.onfocus = async () => {
+      const uuid = SessionTool.getUserUUID()
+      if (!uuid) return
+      const req = { uuid }
+      const xStreamId = await UserApi.getXstreamId(req)
+      if (!xStreamId) return false
+      // 持久化登入储存
+    }
+
+    const gotoUrl = `https://ding-app-test.run.hzmantu.com/login.html?uuid=${uuidText}`
+    window.location.href = `dingtalk://dingtalkclient/page/link?url=${gotoUrl}`
   }
 }
 </script>
