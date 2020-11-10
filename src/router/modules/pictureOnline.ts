@@ -18,7 +18,7 @@ const PictureOnline: RouteConfig = {
       path: 'checkPictureOrder',
       name: 'CheckPictureOrder',
       component: () => import('@/views/picture-online/check-picture-order.vue'),
-      meta: { title: '检车是否可以进入在线看片', icon: '' }
+      meta: { title: '检测是否可以进入在线看片', icon: '' }
     }
   ]
 }
