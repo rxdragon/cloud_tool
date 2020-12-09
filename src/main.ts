@@ -9,10 +9,10 @@ import VConsole from 'vconsole'
 import './registerServiceWorker'
 import './plugins/axios'
 import '@/components/Toast/index'
-import './plugins/notificationApi'
 
 import './assets/font.less'
 
+import initNotification from './plugins/notificationApi'
 import vuetify from './plugins/vuetify'
 import { delayLoading } from '@/utils/index' // 延时加载
 import get from 'lodash/get'
@@ -38,9 +38,10 @@ function judgeIsMobile () {
   Vue.prototype.$isMobile = Boolean(isMobile)
   Vue.prototype.$isIphone = Boolean(isIphone)
 }
-
 // 判断是否是移动设备
 judgeIsMobile()
+initNotification()
+
 
 Vue.prototype.$delayLoading = delayLoading
 Vue.config.productionTip = false

@@ -82,7 +82,7 @@
               </v-col>
               <v-col class="pa-0" cols="12" sm="6" md="4" lg="4" xl="4">
                 <span class="label">是否达标：</span>
-                <span class="content text--darken-1" :class="staffInfo.isRetouchTimeSuccess ? 'green--text' : 'red--text'">{{ staffInfo.isStaffReturnRateSuccess ? 'success' : 'fail' }}</span>
+                <span class="content text--darken-1" :class="staffInfo.isStaffReturnRateSuccess ? 'green--text' : 'red--text'">{{ staffInfo.isStaffReturnRateSuccess ? 'success' : 'fail' }}</span>
               </v-col>
             </v-row>
           </v-card-text>
