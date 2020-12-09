@@ -9,7 +9,7 @@ export async function createUuid (params: any) {
     method: 'GET',
     params
   })
-  console.log(msg)
+  console.log(msg, 'msg')
   return msg
 }
 
@@ -22,6 +22,8 @@ export async function getXstreamId (params: any) {
     method: 'GET',
     params
   })
-  if (res.success) return res.msg
-  return ''
+  const time = new Date()
+  console.log(res, 'api Xstream', String(time))
+  if (res.success === false) return ''
+  return res
 }

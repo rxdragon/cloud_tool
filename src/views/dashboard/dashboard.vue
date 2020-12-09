@@ -177,11 +177,15 @@ export default class Dashboard extends Vue {
       if (!uuid) return
       const req = { uuid }
       const xStreamId = await UserApi.getXstreamId(req)
+      console.log(xStreamId, 'xStreamId')
+
       if (!xStreamId) return false
+      SessionTool.cleanUserUUID()
+      SessionTool.setXStreamId(xStreamId)
       // 持久化登入储存
     }
 
-    const gotoUrl = `https://ding-app-test.run.hzmantu.com/login.html?uuid=${uuidText}`
+    const gotoUrl = `https://s3.code.hzmantu.com/temp-html/login/cfLogin.html?uuid=${uuidText}`
     window.location.href = `dingtalk://dingtalkclient/page/link?url=${gotoUrl}`
   }
 }

@@ -23,7 +23,6 @@ async function getPermission () {
 
 // 初始化权限
 export default async function initNotification () {
-  console.log(Vue.prototype.$isIphone, '1')
   const permission = await getPermission()
   if (!permission) {
     Vue.prototype.$notification = () => {

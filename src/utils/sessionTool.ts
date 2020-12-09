@@ -19,3 +19,26 @@ export function getUserUUID () {
     return null
   }
 }
+
+/**
+ * @description
+ * @param {*} code
+ */
+export function cleanUserUUID () {
+  sessionStorage.removeItem('userUUID')
+}
+
+/**
+ * @description 存储xStreamId
+ * @param {*} xStreamId
+ */
+export function setXStreamId (xStreamId: string) {
+  sessionStorage.setItem('xStreamId', xStreamId)
+}
+
+/**
+ * @description 获取XStreamId
+ */
+export function getXStreamId () {
+  return sessionStorage.getItem('xStreamId')
+}

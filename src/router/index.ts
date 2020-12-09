@@ -23,11 +23,13 @@ export const constantRoutes: Array<RouteConfig> = [
         component: () => import('@/views/redirect/index.vue')
       }
     ]
-  }, {
+  },
+  {
     path: '/login',
     component: () => import('@/views/login/login.vue'),
     meta: { hidden: true }
-  }, {
+  },
+  {
     path: '/',
     component: Layout,
     redirect: '/dashboard',
@@ -39,11 +41,13 @@ export const constantRoutes: Array<RouteConfig> = [
         meta: { title: '面板', icon: 'mdi-equalizer', affix: true }
       }
     ]
-  }, {
+  },
+  {
     path: '/401',
     meta: { hidden: true },
     component: () => import('@/views/error-page/401.vue')
-  }, {
+  },
+  {
     path: '*',
     meta: { hidden: true },
     component: () => import('@/views/error-page/404.vue'),
