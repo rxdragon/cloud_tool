@@ -1,6 +1,5 @@
 <template>
   <div class="dashboard">
-    <v-btn color="blue lighten-1" text @click="login">跳转钉钉</v-btn>
     <v-btn color="blue lighten-1" text @click="initPage">刷新</v-btn>
     <v-container>
       <v-row>
@@ -94,11 +93,8 @@
 import { Component, Vue } from 'vue-property-decorator'
 import CountTo from '@/components/CountTo/index.vue'
 
-import * as uuid from 'uuid'
 import * as ShowpicApi from '@/api/showpicApi'
 import * as CloudApi from '@/api/cloudApi'
-import * as UserApi from '@/api/userApi'
-import * as SessionTool from '@/utils/sessionTool'
 
 let pollingInit: number| null = null
 
@@ -164,29 +160,6 @@ export default class Dashboard extends Vue {
       const sumFilter: number = Number(sum.toFixed(1))
       return sumFilter
     })
-  }
-
-  async login () {
-    const uuidText = uuid.v4()
-    const req = { uuid: uuidText }
-    await UserApi.createUuid(req)
-    SessionTool.setUserUUID(uuidText)
-    
-    window.onfocus = async () => {
-      const uuid = SessionTool.getUserUUID()
-      if (!uuid) return
-      const req = { uuid }
-      const xStreamId = await UserApi.getXstreamId(req)
-      console.log(xStreamId, 'xStreamId')
-
-      if (!xStreamId) return false
-      SessionTool.cleanUserUUID()
-      SessionTool.setXStreamId(xStreamId)
-      // 持久化登入储存
-    }
-
-    const gotoUrl = `https://s3.code.hzmantu.com/temp-html/login/cfLogin.html?uuid=${uuidText}`
-    window.location.href = `dingtalk://dingtalkclient/page/link?url=${gotoUrl}`
   }
 }
 </script>
