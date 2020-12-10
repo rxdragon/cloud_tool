@@ -28,7 +28,6 @@ export default class Login extends Vue {
    * @@description 登录
    */
   async login () {
-    return
     const uuidText = uuid.v4()
     const req = { uuid: uuidText }
     await UserApi.createUuid(req)
