@@ -47,7 +47,7 @@ export default class Login extends Vue {
       // 持久化登入储存
       SessionTool.cleanUserUUID()
       SessionTool.setXStreamId(xStreamId)
-      this.$router.push(this.historyRoute)
+      this.$router.replace(this.historyRoute)
     }
 
     const gotoUrl = `https://s3.code.hzmantu.com/temp-html/login/cfLogin.html?uuid=${uuidText}`

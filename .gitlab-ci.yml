@@ -74,7 +74,6 @@ build-release:
     
 deploy-master:
   extends: .deploy
-  when: manual
   environment:
     name: master
   only:

@@ -10,11 +10,11 @@
       <v-img class="back-img" :gradient="`to bottom, ${barColor}`" v-bind="props"/>
     </template>
     <!-- 用户信息 -->
-    <!-- <user-tab /> -->
-    <v-img :aspect-ratio="16/10" :src="require('../../../assets/back.jpg')">
-      <v-row align="end" class="lightbox white--text pa-2 fill-height">
+    <v-img :aspect-ratio="16/16" :src="require('../../../assets/back.jpg')">
+      <v-row align="end" class="lightbox white--text fill-height">
         <v-col>
-          <div class="subheading">Cloud Tool</div>
+          <user-tab />
+          <div class="subheading pa-2 pl-4">Cloud Tool</div>
         </v-col>
       </v-row>
     </v-img>
@@ -65,5 +65,9 @@ export default class Sidebar extends Vue {
   /deep/ .v-image__image--preload {
     filter: blur(0);
   }
+}
+
+.lightbox {
+
 }
 </style>

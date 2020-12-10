@@ -2,21 +2,28 @@
   <v-list dense nav>
     <v-list-item>
       <v-list-item-avatar class="align-self-center" color="white" contain>
-        <v-img
-          src="https://static-legacy.dingtalk.com/media/lADPDgQ9s-nwb1DNAW7NAXI_370_366.jpg"
-          max-height="40"
-        />
+        <v-img v-if="userAvatar" :src="userAvatar" max-height="40" />
+        <v-icon v-else color="grey darken-2" dark>mdi-account</v-icon>
       </v-list-item-avatar>
-
       <v-list-item-content>
-        <v-list-item-title v-text="'崔佛'"/>
+        <v-list-item-title v-if="userName" v-text="userName"/>
+        <v-btn v-else color="grey" text @click="goLogin">登录</v-btn>
       </v-list-item-content>
     </v-list-item>
   </v-list>
 </template>
 
-<script>
-export default {
-  name: 'UserTab'
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator'
+
+@Component
+export default class UserTab extends Vue {
+  private userName: string = ''
+  private userAvatar: string = ''
+
+  goLogin () {
+    this.$router.push('/login')
+  }
+
 }
 </script>
