@@ -17,7 +17,6 @@ router.beforeEach(async (to: Route, from: Route, next: any) => {
   const hasXStreamId = getXStreamId() // 获取token
   // 没有过期时的操作
   async function noExpire () {
-    console.log(to.path, 'noExpire')
     if (to.path === '/login') {
       next({ path: '/' })
       NProgress.done()
@@ -45,7 +44,6 @@ router.beforeEach(async (to: Route, from: Route, next: any) => {
   }
 
   if (hasXStreamId) {
-    console.log(hasXStreamId)
     // 下次的过期时间
     const expireTime = getStreamIdExpireTime() * 1000
     const nowTime = new Date().getTime()

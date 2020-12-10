@@ -10,7 +10,6 @@ export async function createUuid (params: any) {
     method: 'GET',
     params
   })
-  console.log(msg, 'msg')
   return msg
 }
 

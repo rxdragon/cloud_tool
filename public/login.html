@@ -65,13 +65,9 @@
   const getToken = () => {
     let hash = decodeURIComponent(window.location.hash)
     let pos = hash.indexOf("token=/")
-    console.log(pos, 'pos')
     if (pos !== -1) { // has token
       let authCode = hash.substr(pos + 7)
-      console.log(authCode, 'authCode')
-      console.log(window.parent, 'window.parent')
       if (window.self != window.top && window.parent) {
-        console.log(1)
         window.parent.postMessage({type: "dd-token", msg: authCode}, "*")
       } else {
         window.location = '/'

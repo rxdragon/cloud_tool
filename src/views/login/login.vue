@@ -111,7 +111,6 @@ export default class Login extends Vue {
   }
 
   created () {
-    console.log(document.body.style)
     // 如果登录跳转到首页
     if (SessionTool.getXStreamId()) {
       this.$router.replace({ path: `/` })
@@ -147,17 +146,16 @@ export default class Login extends Vue {
       // 登录成功 
       // 持久化登入储存
       SessionTool.cleanUserUUID()
+      sessionStorage.removeItem('xStreamId')
       SessionTool.setXStreamId(xStreamId)
+      await UserApi.userExpire()
 
       const info: any = await UserStoreModule.getUserInfo()
 
-      console.log(info, 'info')
       if (!info.name) {
         this.$router.push({ path: `/401` })
       }
-      console.log(this.historyRoute, 'this.historyRoute')
-      this.$router.push({ path: `/` })
-      // this.$router.replace(this.historyRoute)
+      this.$router.replace({ path: this.historyRoute })
     }
 
     const gotoUrl = `https://s3.code.hzmantu.com/temp-html/login/cfLogin.html?uuid=${uuidText}`
@@ -169,7 +167,6 @@ export default class Login extends Vue {
    * @param {*} e
    */
   onMessage (e: any) {
-    console.log('onMessage')
     if (typeof e.data === 'object' && 'type' in e.data && 'msg' in e.data) {
       if (e.data.type === 'dd-token') {
         this.tokenLogin(e.data.msg)
@@ -224,7 +221,6 @@ export default class Login extends Vue {
       title: 'CLOUD TOOL',
       redirect: `${window.location.origin}${redirectPath}#/?token=`
     })
-    console.log(`${window.location.origin}${redirectPath}#/?token=`)
     this.ssoUrl = process.env.VUE_APP_LOGIN_API + Base64.encode(query)
   }
 }

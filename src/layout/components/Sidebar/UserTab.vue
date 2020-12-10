@@ -21,13 +21,11 @@ import { UserStoreModule } from '@/store/modules/userStore'
 export default class UserTab extends Vue {
   // 用户名字
   get userName (): string {
-    console.log(UserStoreModule)
     return UserStoreModule.nickname || UserStoreModule.name
   }
 
   // 用户头像
   get userAvatar (): string {
-    console.log(UserStoreModule)
     return UserStoreModule.avatarImg
   }
 

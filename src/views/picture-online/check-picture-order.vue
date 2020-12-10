@@ -37,7 +37,6 @@ export default class CheckPictureOrder extends Vue {
     if (!this.himoOrder) return this.$message.warning('请输入正确的订单号信息')
     const orderId = this.himoOrder
     await PictureOnlineApi.checkPictureOnlineOrder(orderId)
-    console.log('test')
   }
 }
 </script>

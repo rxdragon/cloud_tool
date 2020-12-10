@@ -29,7 +29,6 @@ axios.interceptors.request.use(
   config => {
     let xstreamId = SessionTool.getXStreamId()
     const isCloudAppUrl = config.baseURL === process.env.VUE_APP_BASE_API
-    console.log(config.baseURL)
     if (xstreamId && isCloudAppUrl) {
       config.headers['x-stream-id'] = xstreamId
     } else {
