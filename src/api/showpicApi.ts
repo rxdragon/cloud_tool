@@ -9,9 +9,13 @@ export function getSaleInfo () {
     type: 'json'
   }
   return axios({
-    url: '/asd',
+    url: 'https://cf.run.hzmantu.com/asd',
     method: 'POST',
-    data: params
+    data: params,
+    transformRequest: [function (data, headers) {
+      delete headers['x-stream-id']
+      return JSON.stringify(data)
+    }],
   }).then((msg: any) => {
     const { paidFeeGroupByDays } = msg
     const neer7Days: any[] = []

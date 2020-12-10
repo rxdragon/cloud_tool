@@ -14,7 +14,7 @@ export function getOrderList (params: any) {
     "type": "json"
   }
   return axios({
-    url: '',
+    url: 'https://cf.run.hzmantu.com',
     method: 'POST',
     data: req
   }).then((res: any) => {

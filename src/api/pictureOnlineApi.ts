@@ -10,7 +10,7 @@ type getPictureOnlineByOutsideNoParams = {
 }
 export async function getPictureOnlineByOutsideNo (params: getPictureOnlineByOutsideNoParams): Promise<PictureOnlineOrderInterface[]> {
   const msg = await axios({
-    url: 'https://api-gateway.hzmantu.com/project_picture_online/my/watchRecord/getWatchRecordsByPhoneWithCode',
+    url: '/project_picture_online/my/watchRecord/getWatchRecordsByPhoneWithCode',
     method: 'PUT',
     data: params
   })
@@ -34,7 +34,7 @@ type getPhotoListByRecordIdParams = {
 }
 export async function getPhotoListByRecordId (params: getPhotoListByRecordIdParams) {
   const msg: any = await axios({
-    url: 'https://api-gateway.hzmantu.com/project_picture_online/my/photo/getPhotosByRecordId',
+    url: '/project_picture_online/my/photo/getPhotosByRecordId',
     method: 'GET',
     params
   })

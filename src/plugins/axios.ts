@@ -3,6 +3,7 @@
 import axios from 'axios'
 import Message from '@/components/Toast/index'
 import { errorCode } from './errorCode'
+import * as SessionTool from '@/utils/sessionTool'
 
 // axios 配置
 
@@ -26,9 +27,13 @@ const whiteRequest = [
 // 设置请求头信息
 axios.interceptors.request.use(
   config => {
-    let xstreamId = sessionStorage.getItem('xStreamId')
-    if (xstreamId) {
+    let xstreamId = SessionTool.getXStreamId()
+    const isCloudAppUrl = config.baseURL === process.env.VUE_APP_BASE_API
+    console.log(config.baseURL)
+    if (xstreamId && isCloudAppUrl) {
       config.headers['x-stream-id'] = xstreamId
+    } else {
+      delete config.headers['x-stream-id']
     }
     return config
   },

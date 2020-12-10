@@ -52,6 +52,12 @@ export default class App extends Vue {
 </script>
 
 <style>
+html {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
 .theme--light.v-application {
   background-color: #f0f2f5 !important;
 }

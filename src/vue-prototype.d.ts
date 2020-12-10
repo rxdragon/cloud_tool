@@ -13,7 +13,9 @@ type message = Message
 declare module "vue/types/vue" {
   interface Vue {
     $message: Message,
-    $delayLoading: Function
+    $delayLoading: Function,
+    $isMobile: Boolean,
+    $isIphone: Boolean
   }
 }
 

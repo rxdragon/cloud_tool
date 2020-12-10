@@ -15,11 +15,21 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import { UserStoreModule } from '@/store/modules/userStore'
 
 @Component
 export default class UserTab extends Vue {
-  private userName: string = ''
-  private userAvatar: string = ''
+  // 用户名字
+  get userName (): string {
+    console.log(UserStoreModule)
+    return UserStoreModule.nickname || UserStoreModule.name
+  }
+
+  // 用户头像
+  get userAvatar (): string {
+    console.log(UserStoreModule)
+    return UserStoreModule.avatarImg
+  }
 
   goLogin () {
     this.$router.push('/login')

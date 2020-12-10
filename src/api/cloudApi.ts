@@ -25,7 +25,7 @@ export const identityToCN = {
  */
 export async function getQueueLength () {
   const msg: any = await axios({
-    url: 'https://api-gateway.hzmantu.com/project_cloud/temple/getQueueLength?queueName=waitRetouchStreamQueue',
+    url: '/project_cloud/temple/getQueueLength?queueName=waitRetouchStreamQueue',
     method: 'GET'
   })
   return msg[0].waitRetouchStreamQueueLength || 0
@@ -36,7 +36,7 @@ export async function getQueueLength () {
  */
 export async function getRetoucherQueueLength () {
   const msg: any = await axios({
-    url: 'https://api-gateway.hzmantu.com/project_cloud/temple/getQueueLength?queueName=retoucherQueue',
+    url: '/project_cloud/temple/getQueueLength?queueName=retoucherQueue',
     method: 'GET'
   })
   return msg[0].retoucherQueueLength || 0
