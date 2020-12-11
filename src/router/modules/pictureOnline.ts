@@ -19,6 +19,12 @@ const PictureOnline: RouteConfig = {
       name: 'CheckPictureOrder',
       component: () => import('@/views/picture-online/check-picture-order.vue'),
       meta: { title: '检测是否可以进入在线看片', icon: '' }
+    },
+    {
+      path: 'addOnlineWatchers',
+      name: 'AddOnlineWatchers',
+      component: () => import('@/views/picture-online/add-online-watchers.vue'),
+      meta: { title: '添加在线看片师', icon: '' }
     }
   ]
 }

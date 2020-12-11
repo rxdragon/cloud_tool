@@ -8,7 +8,7 @@
     <v-row class="search-box" align="end" no-gutters>
       <v-col cols="9" sm="6" md="4" lg="4" xl="4">
         <v-text-field
-          label="流水号"
+          label="海马体订单号"
           hideDetails
           clearable
           v-model.trim="seachOrderNum"

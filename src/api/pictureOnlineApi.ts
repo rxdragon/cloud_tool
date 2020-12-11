@@ -27,6 +27,21 @@ export async function getPictureOnlineByOutsideNo (params: getPictureOnlineByOut
 }
 
 /**
+ * @description 获取订单号
+ */
+type addOnlineWatchersParams = {
+  staffIds: string [],
+  xid: string
+}
+export async function addOnlineWatchers (params: addOnlineWatchersParams) {
+  await axios({
+    url: 'https://cf2.run.hzmantu.com/temple/addOnlineWatchers',
+    method: 'PUT',
+    data: params
+  })
+}
+
+/**
  * @description 获取照片列表
  */
 type getPhotoListByRecordIdParams = {

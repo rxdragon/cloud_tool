@@ -66,6 +66,8 @@ class UserStore extends VuexModule implements IUserStoreState {
       try {
         const saveInfo = SessionTool.getUserInfo()
         const info = saveInfo || await UserApi.info()
+        const xStreamID: string = SessionTool.getXStreamId() as string
+        this.SET_XStreamID(xStreamID)
         SessionTool.setUserInfo(info)
         this.SET_USERINFO(info)
         resolve(info)
