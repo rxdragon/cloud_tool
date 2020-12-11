@@ -72,4 +72,5 @@ export async function logout () {
     url: '/manage_auth/logout',
     method: 'GET'
   })
+  SessionTool.removeSession()
 }

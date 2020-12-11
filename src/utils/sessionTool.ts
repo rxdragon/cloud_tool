@@ -4,7 +4,7 @@
  */
 export function setUserUUID (uuid: string) {
   const data = uuid
-  sessionStorage.setItem('userUUID', data)
+  localStorage.setItem('userUUID', data)
 }
 
 /**
@@ -13,7 +13,7 @@ export function setUserUUID (uuid: string) {
  */
 export function getUserUUID () {
   try {
-    const data = sessionStorage.getItem('userUUID')
+    const data = localStorage.getItem('userUUID')
     return data
   } catch (error) {
     return null
@@ -25,7 +25,7 @@ export function getUserUUID () {
  * @param {*} code
  */
 export function cleanUserUUID () {
-  sessionStorage.removeItem('userUUID')
+  localStorage.removeItem('userUUID')
 }
 
 /**
@@ -33,14 +33,14 @@ export function cleanUserUUID () {
  * @param {*} xStreamId
  */
 export function setXStreamId (xStreamId: string) {
-  sessionStorage.setItem('xStreamId', xStreamId)
+  localStorage.setItem('xStreamId', xStreamId)
 }
 
 /**
  * @description 获取XStreamId
  */
 export function getXStreamId () {
-  return sessionStorage.getItem('xStreamId')
+  return localStorage.getItem('xStreamId')
 }
 
 /**
@@ -48,7 +48,7 @@ export function getXStreamId () {
  * @param {*} time
  */
 export function setXStreamIdExpireTime (time: any) {
-  sessionStorage.setItem('xStreamIdExpireTime', time)
+  localStorage.setItem('xStreamIdExpireTime', time)
 }
 
 /**
@@ -56,7 +56,7 @@ export function setXStreamIdExpireTime (time: any) {
  * @param {*} time
  */
 export function getStreamIdExpireTime (): number {
-  const returnTime = sessionStorage.getItem('xStreamIdExpireTime')
+  const returnTime = localStorage.getItem('xStreamIdExpireTime')
   return Number(returnTime)
 }
 
@@ -66,7 +66,7 @@ export function getStreamIdExpireTime (): number {
  */
 export function setUserInfo (info: any) {
   const data: any = JSON.stringify(info)
-  sessionStorage.setItem('cloud-tool-userInfo', data)
+  localStorage.setItem('cloud-tool-userInfo', data)
 }
 
 /**
@@ -74,9 +74,17 @@ export function setUserInfo (info: any) {
  */
 export function getUserInfo () {
   try {
-    const data: any = sessionStorage.getItem('cloud-tool-userInfo')
+    const data: any = localStorage.getItem('cloud-tool-userInfo')
     return JSON.parse(data)
   } catch (error) {
     return null
   }
+}
+
+/**
+ * @description 清空全部localStorage缓存
+ */
+export function removeSession () {
+  sessionStorage.clear()
+  localStorage.clear()
 }
