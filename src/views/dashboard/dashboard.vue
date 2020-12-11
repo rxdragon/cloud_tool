@@ -1,7 +1,6 @@
 <template>
   <div class="dashboard">
-    <v-btn color="blue lighten-1" text @click="initPage">刷新</v-btn>
-    <v-container>
+    <v-container class="pa-0">
       <v-row>
         <!-- 待修流水数量 -->
         <v-col cols="12" sm="12" md="6" lg="6" xl="6">

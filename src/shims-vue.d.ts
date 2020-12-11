@@ -16,3 +16,5 @@ declare module 'lodash/get'
 declare module 'animejs'
 
 declare module 'nprogress'
+
+declare module 'pulltorefreshjs'
