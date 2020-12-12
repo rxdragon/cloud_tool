@@ -7,7 +7,7 @@
           <v-card class="mx-auto text-center pa-0 rounded-xl" :color="waitRetouchStreamQueueLength > warningWaitRetouchQueue ? '#EB6166' : 'hsl(214, 68%, 58%)'" dark>
             <v-card-text>
               <div class="number-label">待修流水数量</div>
-              <div class="number-font">
+              <div class="number-font text-lg-h2 text-xl-h2">
                 <count-to :end-value="waitRetouchStreamQueueLength" />
               </div>
             </v-card-text>
@@ -19,7 +19,7 @@
           <v-card class="mx-auto text-center pa-0 rounded-xl" color="hsl(214, 68%, 58%)" dark>
             <v-card-text>
               <div class="number-label">修图师排队数</div>
-              <div class="number-font">
+              <div class="number-font text-lg-h2 text-xl-h2">
                 <count-to :end-value="retoucherQueueLength" />
               </div>
             </v-card-text>
@@ -31,7 +31,7 @@
           <v-card class="mx-auto text-center pa-0 rounded-xl" color="hsl(39, 97%, 62%)" dark>
             <v-card-text>
               <div class="number-label">待审流水数量</div>
-              <div class="number-font">
+              <div class="number-font text-lg-h2 text-xl-h2">
                 <count-to :end-value="waitReviewStreamQueueLength" />
               </div>
             </v-card-text>
@@ -43,7 +43,7 @@
           <v-card class="mx-auto text-center pa-0 rounded-xl" color="hsl(39, 97%, 62%)" dark>
             <v-card-text>
               <div class="number-label">审核人排队数</div>
-              <div class="number-font">
+              <div class="number-font text-lg-h2 text-xl-h2">
                 <count-to :end-value="reviewerQueueLength" />
               </div>
             </v-card-text>
@@ -211,5 +211,10 @@ export default class Dashboard extends Vue {
   line-height: 1;
   transform: rotateX(30deg);
   transform-origin: bottom;
+
+  &.text-lg-h2,
+  &.text-xl-h2 {
+    font-family: number !important;
+  }
 }
 </style>

@@ -1,7 +1,31 @@
 <template>
   <div class="login">
-    <div v-if="$isMobile" class="mobile-login d-flex justify-center align-center">
-      <v-btn class="test-btn blue--text text--lighten-5" color="blue" @click="login">登录</v-btn>
+    <div
+      v-if="$isMobile"
+      class="mobile-login"
+      @mousedown="onTouchStart"
+      @touchstart="onTouchStart"
+      @mouseup="onTouchEnd"
+      @touchend="onTouchEnd"
+    >
+      <div ref="center" class="center">
+        <h1>Login With Touch ID</h1>
+        <svg ref="fingerprint" class="fingerprint" xmlns="http://www.w3.org/2000/svg" viewBox="-1.5 -1.5 136.63 136.56" width="136.63" height="136.56">
+          <path class="original" d="M74.79 8.76C34.79 5.41 8.15 33.6 8.2 67.06c.02 9.4 4.71 18.2-3.08 26.3M95.66 6.84C64.75-6.62 35.16-.37 12.83 27.07m92.5-14.8c18.89 14.55 28.33 31.7 28.3 55.56M7.33 36.48C-.21 51.34-1.78 65.35 1.96 82.91m15.46-24.84c11.03-56.46 92.3-55.76 99.67 4.91M49 29.02c16.4-7.37 31.33-5.39 44.7 5.88m-9.5-23.96c34.23 11.28 46.91 41.4 41.55 86.97M19.31 114.08c5.28-4.5 10.26-10.33 12.77-17.5m-5.93 22.53c15.22-12.49 18.45-31.24 16.52-44.59-5.3-27.22 16.68-33.82 26.82-32.75m-60.06 59c13.42-12.83 7.13-24.08 7.23-32.41m-2.3 39.33C42.6 79.8 7.64 65.8 40.34 34.52m.44 93.96a60.94 60.94 0 0 0 14.6-22.67M33.32 124.1c13.22-12.7 20.85-31.39 17.7-50.9m18.23 60.37c7.88-12.08 13-25.79 15.32-41.2m.55-9.96c2.77-42.91-32.4-36.83-34.59-18.61m63.56 50.8c3.44-14.48 5.28-28.43 4.18-41.01m-27.51 55.7c3.05-6.22 6.01-13.64 7.48-20.15m3.93 14.49c11.26-26.47 9.82-68.08-1.45-81.57m-51.14 89.23c15.1-16.79 21.81-39.44 17.4-64.39m-8.1 66.06c21.14-28.19 18.43-54.84 16.26-66.68-2.17-11.83-16.63-9.3-16.27 1.18.37 10.48 2.53 14.1-.36 27.83m21.1 37.03c20.46-36.82 16.97-79.29-.42-87.57m20.9 55.5c15.34-83.72-60.42-79.88-66.48-38.07-1.34 12.78 2.22 14.56.76 25.71" fill="none" stroke-width="3" stroke="#ddd" stroke-linecap="round" stroke-miterlimit="3"/>
+          <linearGradient id="a" x1="49.4%" y1="-3.33%" x2="49.87%" y2="102.85%">
+            <stop offset="0%" stop-color="#b279f7"/>
+            <stop offset="90%" stop-color="#4b52db"/>
+          </linearGradient>
+          <path class="clone" d="M74.79 8.76C34.79 5.41 8.15 33.6 8.2 67.06c.02 9.4 4.71 18.2-3.08 26.3M95.66 6.84C64.75-6.62 35.16-.37 12.83 27.07m92.5-14.8c18.89 14.55 28.33 31.7 28.3 55.56M7.33 36.48C-.21 51.34-1.78 65.35 1.96 82.91m15.46-24.84c11.03-56.46 92.3-55.76 99.67 4.91M49 29.02c16.4-7.37 31.33-5.39 44.7 5.88m-9.5-23.96c34.23 11.28 46.91 41.4 41.55 86.97M19.31 114.08c5.28-4.5 10.26-10.33 12.77-17.5m-5.93 22.53c15.22-12.49 18.45-31.24 16.52-44.59-5.3-27.22 16.68-33.82 26.82-32.75m-60.06 59c13.42-12.83 7.13-24.08 7.23-32.41m-2.3 39.33C42.6 79.8 7.64 65.8 40.34 34.52m.44 93.96a60.94 60.94 0 0 0 14.6-22.67M33.32 124.1c13.22-12.7 20.85-31.39 17.7-50.9m18.23 60.37c7.88-12.08 13-25.79 15.32-41.2m.55-9.96c2.77-42.91-32.4-36.83-34.59-18.61m63.56 50.8c3.44-14.48 5.28-28.43 4.18-41.01m-27.51 55.7c3.05-6.22 6.01-13.64 7.48-20.15m3.93 14.49c11.26-26.47 9.82-68.08-1.45-81.57m-51.14 89.23c15.1-16.79 21.81-39.44 17.4-64.39m-8.1 66.06c21.14-28.19 18.43-54.84 16.26-66.68-2.17-11.83-16.63-9.3-16.27 1.18.37 10.48 2.53 14.1-.36 27.83m21.1 37.03c20.46-36.82 16.97-79.29-.42-87.57m20.9 55.5c15.34-83.72-60.42-79.88-66.48-38.07-1.34 12.78 2.22 14.56.76 25.71" fill="none" stroke-width="3" stroke="url(#a)" stroke-linecap="round" stroke-miterlimit="3" stroke-dasharray="178" stroke-dashoffset="178"/>
+        </svg>
+
+        <svg class="icon-success" viewBox="0 0 76 76">
+          <circle cx="38" cy="38" r="36" fill="#66bb6a"></circle>
+          <path fill="none" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="56" stroke-dashoffset="56" d="M17.7,40.9l10.9,10.9l28.7-28.7"></path>
+        </svg>
+        <div class="scan">Click and hold to scan your finger</div>
+        <div class="scan-success">SUCCESS</div>
+      </div>
     </div>
     <div v-else class="pc-login">
       <iframe ref="login" title="login index" class="login_iframe" :src="ssoUrl" />
@@ -103,6 +127,9 @@ export default class Login extends Vue {
   private ssoUrl: string = ''
   private animationFinish: boolean = false
   private loginFinish: boolean = false
+  private timer: any = null
+  private isMobileLogin: boolean = false
+
 
   beforeRouteEnter (to: Route, from: Route, next: (vm: any) => void) {
     next((vm: any) => {
@@ -145,6 +172,8 @@ export default class Login extends Vue {
 
       // 登录成功 
       // 持久化登入储存
+      this.onSuccess()
+      await this.$delayLoading()
       SessionTool.cleanUserUUID()
       sessionStorage.removeItem('xStreamId')
       SessionTool.setXStreamId(xStreamId)
@@ -223,6 +252,32 @@ export default class Login extends Vue {
     })
     this.ssoUrl = process.env.VUE_APP_LOGIN_API + Base64.encode(query)
   }
+
+  onSuccess () {
+    this.isMobileLogin = true
+    const fingerprint = this.$refs['fingerprint'] as HTMLDivElement
+    const center = this.$refs['center'] as HTMLDivElement
+    if (!fingerprint || !center) return
+    fingerprint.classList.remove('active')
+    center.classList.add('login-success')
+  }
+
+  onTouchStart () {
+    this.onSuccess()
+    if (this.isMobileLogin) return
+    const fingerprint = this.$refs['fingerprint'] as HTMLDivElement
+    if (!fingerprint) return
+    fingerprint.classList.add('active')
+    this.timer = setTimeout(this.login, 2000)
+  }
+
+  onTouchEnd () {
+    const fingerprint = this.$refs['fingerprint'] as HTMLDivElement
+    if (!fingerprint) return
+    fingerprint.classList.remove('active')
+    clearTimeout(this.timer)
+  }
+  
 }
 </script>
 
@@ -234,6 +289,99 @@ export default class Login extends Vue {
   .mobile-login {
     width: 100%;
     height: 100%;
+
+    .center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(1.3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 400px;
+      
+      svg.fingerprint {
+        path.clone {
+          transition: stroke-dashoffset 2s ease-out;
+        }
+
+        &.active {
+          transform: scale(0.97);
+          path.clone {
+            stroke-dashoffset: 0
+          }
+        }
+      }
+        
+    }
+      
+
+    h1 {
+      font-size: 30px;
+      transform: translateY(-50px);
+    }
+      
+    .scan,
+    .scan-success {
+      font-size: 15px;
+      transform: translateY(50px);
+      color: #666;
+    }
+
+    .scan-success {
+      display: none
+    }
+      
+    .center {
+      .fingerprint,
+      .icon-success {
+        width: 135px;
+        height: 135px;
+        overflow: visible;
+      }
+        
+      .icon-success {
+        position: absolute;
+        top: 40px;
+
+        circle {
+          transform-origin: 50% 50%;
+          transform: scale(0);
+          transition: transform 200ms cubic-bezier(0.18, 0.89, 0.32, 1.28);
+        }
+
+        path {
+          opacity: 0;
+          transition: stroke-dashoffset 350ms 100ms ease;
+        }
+      }
+      
+      &.login-success {
+        .fingerprint {
+          transform: scale(0);
+        }
+          
+        .icon-success {
+          circle {
+            transform: scale(1);
+          }
+
+          path {
+            stroke-dashoffset: 0;
+            opacity: 1;
+            transition: opacity 0s, stroke-dashoffset 0.5s;
+          }
+        }
+            
+        .scan {
+          display: none;
+        }
+
+        .scan-success {
+          display: block;
+        }
+      }
+    }
   }
 
   iframe {
