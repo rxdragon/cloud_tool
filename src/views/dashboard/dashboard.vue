@@ -3,8 +3,8 @@
     <v-container class="pa-0">
       <v-row>
         <!-- 待修流水数量 -->
-        <v-col cols="12" sm="12" md="6" lg="6" xl="6">
-          <v-card class="mx-auto text-center pa-0" color="#00b1b7" dark>
+        <v-col cols="12" sm="12" md="6" lg="3" xl="3">
+          <v-card class="mx-auto text-center pa-0 rounded-xl" :color="waitRetouchStreamQueueLength > warningWaitRetouchQueue ? '#EB6166' : 'hsl(214, 68%, 58%)'" dark>
             <v-card-text>
               <div class="number-label">待修流水数量</div>
               <div class="number-font">
@@ -15,12 +15,36 @@
         </v-col>
 
         <!-- 修图师排队数 -->
-        <v-col cols="12" sm="12" md="6" lg="6" xl="6">
-          <v-card class="mx-auto text-center pa-0" color="#00b1b7" dark>
+        <v-col cols="12" sm="12" md="6" lg="3" xl="3">
+          <v-card class="mx-auto text-center pa-0 rounded-xl" color="hsl(214, 68%, 58%)" dark>
             <v-card-text>
               <div class="number-label">修图师排队数</div>
               <div class="number-font">
                 <count-to :end-value="retoucherQueueLength" />
+              </div>
+            </v-card-text>
+          </v-card>
+        </v-col>
+        
+        <!-- 修图师排队数 -->
+        <v-col cols="12" sm="12" md="6" lg="3" xl="3">
+          <v-card class="mx-auto text-center pa-0 rounded-xl" color="hsl(39, 97%, 62%)" dark>
+            <v-card-text>
+              <div class="number-label">待审流水数量</div>
+              <div class="number-font">
+                <count-to :end-value="waitReviewStreamQueueLength" />
+              </div>
+            </v-card-text>
+          </v-card>
+        </v-col>
+
+        <!-- 审核人排队数 -->
+        <v-col cols="12" sm="12" md="6" lg="3" xl="3">
+          <v-card class="mx-auto text-center pa-0 rounded-xl" color="hsl(39, 97%, 62%)" dark>
+            <v-card-text>
+              <div class="number-label">审核人排队数</div>
+              <div class="number-font">
+                <count-to :end-value="reviewerQueueLength" />
               </div>
             </v-card-text>
           </v-card>
@@ -106,7 +130,10 @@ export default class Dashboard extends Vue {
   private monthInfoLable: string[] = []
   private monthInfoValue: number[] = []
   private waitRetouchStreamQueueLength: number = 0
+  private warningWaitRetouchQueue: number = 1000
   private retoucherQueueLength: number = 0
+  private waitReviewStreamQueueLength: number = 0
+  private reviewerQueueLength: number = 0
 
   created () {
     this.initPage()
@@ -136,6 +163,8 @@ export default class Dashboard extends Vue {
     this.getSaleInfo()
     this.getQueueLength()
     this.getRetoucherQueueLength()
+    this.getWaitReviewStreamQueue()
+    this.getReviewerQueue()
   }
 
   /**
@@ -147,6 +176,14 @@ export default class Dashboard extends Vue {
 
   async getRetoucherQueueLength () {
     this.retoucherQueueLength = await CloudApi.getRetoucherQueueLength()
+  }
+
+  async getWaitReviewStreamQueue () {
+    this.waitReviewStreamQueueLength = await CloudApi.getWaitReviewStreamQueue()
+  }
+
+  async getReviewerQueue () {
+    this.reviewerQueueLength = await CloudApi.getReviewerQueue()
   }
 
   async getSaleInfo () {

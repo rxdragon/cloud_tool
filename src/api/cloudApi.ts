@@ -43,6 +43,28 @@ export async function getRetoucherQueueLength () {
 }
 
 /**
+ * @description 获取待审核数量
+ */
+export async function getWaitReviewStreamQueue () {
+  const msg: any = await axios({
+    url: '/project_cloud/temple/getQueueLength?queueName=waitReviewStreamQueue',
+    method: 'GET'
+  })
+  return msg[0].waitReviewStreamQueueLength || 0
+}
+
+/**
+ * @description 获取审核人队列
+ */
+export async function getReviewerQueue () {
+  const msg: any = await axios({
+    url: '/project_cloud/temple/getQueueLength?queueName=reviewerQueue',
+    method: 'GET'
+  })
+  return msg[0].reviewerQueueLength || 0
+}
+
+/**
  * @description 获取排队流水数量
  */
 

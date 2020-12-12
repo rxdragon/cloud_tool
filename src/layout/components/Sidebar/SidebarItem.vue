@@ -3,15 +3,19 @@
     <v-list v-if="!item.meta || !item.meta.hidden" nav class="menu-wrapper">
       <!-- 单个菜单 -->
       <template v-if="!alwaysShowRootMenu && theOnlyOneChild && !theOnlyOneChild.children">
-        <v-list-item v-if="theOnlyOneChild.meta" :to="resolvePath(theOnlyOneChild.path)"  active-class="primary">
-          <v-list-item-icon >
+        <v-list-item
+          v-if="theOnlyOneChild.meta" :to="resolvePath(theOnlyOneChild.path)"
+          color="white"
+          active-class="active-list"
+        >
+          <v-list-item-icon class="mr-4 menu-icon">
             <v-icon>{{ theOnlyOneChild.meta.icon || (item.meta && item.meta.icon) }}</v-icon>
           </v-list-item-icon>
+
           <v-list-item-content>
-            <v-list-item-title>
-              {{ theOnlyOneChild.meta.title }}
-            </v-list-item-title>
+            <v-list-item-title>{{ theOnlyOneChild.meta.title }}</v-list-item-title>
           </v-list-item-content>
+
         </v-list-item>
       </template>
 
@@ -19,7 +23,7 @@
         v-else
         :prepend-icon="item.meta.icon"
         no-action
-        :color="barColor !== 'rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.7)' ? 'white' : 'grey darken-1'"
+        color="grey darken-1'"
       >
         <template v-slot:activator>
           <v-list-item-content>
@@ -104,3 +108,22 @@ export default class SidebarItem extends Vue {
   }
 }
 </script>
+
+<style lang="less" scoped>
+.active-list {
+  background-color: #2169f6 !important;
+  border-color: #2169f6 !important;
+}
+
+.menu-icon .v-icon {
+  font-size: 1.125rem;
+}
+
+& /deep/ .v-list-group__header__prepend-icon {
+  margin-right: 16px !important;
+
+  .v-icon {
+    font-size: 1.125rem;
+  }
+}
+</style>

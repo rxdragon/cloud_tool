@@ -33,6 +33,10 @@ html {
 }
 
 .theme--light.v-application {
-  background-color: #f0f2f5 !important;
+  background-color: #eaecf0 !important;
+}
+
+.theme--light.v-list-item:not(.v-list-item--active):not(.v-list-item--disabled) {
+  color: #7c8b97 !important;
 }
 </style>

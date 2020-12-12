@@ -19,7 +19,7 @@ export function getSaleInfo () {
   }).then((msg: any) => {
     const { paidFeeGroupByDays } = msg
     const neer7Days: any[] = []
-    const monthInfo: { month: any; sum: any }[] = []
+    let monthInfo: { month: any; sum: any }[] = []
     paidFeeGroupByDays.forEach((dayItem: any, dayIndex: number) => {
       dayItem.sum = Number(dayItem.Sum)
       dayItem.month = moment(dayItem.Day).get('month') + 1
@@ -39,6 +39,7 @@ export function getSaleInfo () {
         })
       }
     })
+    monthInfo = monthInfo.slice(monthInfo.length - 5)
     const createData = {
       neer7Days,
       monthInfo

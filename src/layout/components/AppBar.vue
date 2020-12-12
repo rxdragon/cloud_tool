@@ -6,7 +6,7 @@
         mdi-cloud
       </v-icon>
       <v-toolbar-title class="mr-12 align-center">
-        <span class="title">云端Tool</span>
+        <span class="title white--text">CLOUD TOOL</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
     </v-app-bar>

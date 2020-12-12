@@ -6,7 +6,7 @@ const CloudCenter: RouteConfig = {
   component: Layout,
   name: 'CloudCenter',
   redirect: '/cloud-center/level-search',
-  meta: { title: '云端系统模块', icon: 'mdi-image-edit' },
+  meta: { title: '云端系统模块', icon: 'mdi-account-search' },
   children: [
     {
       path: 'levelSearch',

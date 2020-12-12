@@ -4,17 +4,15 @@
     mobile-breakpoint="960"
     v-model="drawer"
     color="#fff"
-    :dark="barColor !== 'rgba(228, 226, 226, 1), rgba(255, 255, 255, 0.7)'"
   >
     <template v-slot:img="props">
-      <v-img class="back-img" :gradient="`to bottom, ${barColor}`" v-bind="props"/>
+      <v-img class="back-img" v-bind="props"/>
     </template>
     <!-- 用户信息 -->
     <v-img :aspect-ratio="16/16" :src="require('../../../assets/back.jpg')">
       <v-row align="end" class="lightbox white--text fill-height">
         <v-col>
           <user-tab />
-          <div class="subheading pa-2 pl-4">Cloud Tool</div>
         </v-col>
       </v-row>
     </v-img>
