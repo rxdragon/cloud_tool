@@ -263,7 +263,6 @@ export default class Login extends Vue {
   }
 
   onTouchStart () {
-    this.onSuccess()
     if (this.isMobileLogin) return
     const fingerprint = this.$refs['fingerprint'] as HTMLDivElement
     if (!fingerprint) return
