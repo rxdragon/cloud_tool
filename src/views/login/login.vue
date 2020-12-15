@@ -289,6 +289,8 @@ export default class Login extends Vue {
   .mobile-login {
     width: 100%;
     height: 100%;
+    -webkit-user-select: none;
+    user-select: none;
 
     .center {
       position: absolute;

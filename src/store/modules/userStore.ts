@@ -50,6 +50,31 @@ class UserStore extends VuexModule implements IUserStoreState {
   }
 
   @Mutation
+  private CLEAR_USER_INFO () {
+    this.xStreamID = ''
+    this.id = ''
+    this.name = ''
+    this.nickname = ''
+    this.avatarImg = ''
+  }
+
+  /**
+   * @description 登出账号
+   */
+  @Action
+  public loginOut () {
+    return new Promise(async (resolve, reject) => {
+      try {
+        UserApi.logout()
+        this.CLEAR_USER_INFO()
+        resolve()
+      } catch (err) {
+        reject(err)
+      }
+    })
+  }
+
+  @Mutation
   private SET_USERINFO (info: any) {
     this.id = info.id
     this.name = info.name
