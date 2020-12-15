@@ -13,6 +13,12 @@ const CloudCenter: RouteConfig = {
       name: 'LevelSearch',
       component: () => import('@/views/cloud-center/level-search.vue'),
       meta: { title: '升级等级查询', icon: '' }
+    },
+    {
+      path: 'CloudDashboard',
+      name: 'CloudDashboard',
+      component: () => import('@/views/cloud-center/cloud-dashboard.vue'),
+      meta: { title: '云端指标', icon: '' }
     }
   ]
 }

@@ -39,7 +39,7 @@ export function getSaleInfo () {
         })
       }
     })
-    monthInfo = monthInfo.slice(monthInfo.length - 5)
+    monthInfo = monthInfo.slice(monthInfo.length - 7)
     const createData = {
       neer7Days,
       monthInfo

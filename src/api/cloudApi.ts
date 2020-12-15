@@ -95,3 +95,17 @@ export async function getStaffLevel (params: getStaffLevelParams) {
   console.log(msg)
   return msg
 }
+
+/**
+ * @description 获取总体绩效
+ * @param params
+ */
+export async function getWholeQuota (params: any) {
+  const msg: any = await axios({
+    url: '/project_cloud/operator/getWholeQuota',
+    method: 'GET',
+    params
+  })
+  const { photographyUploadPhotoNum } = msg
+  console.log(photographyUploadPhotoNum)
+}

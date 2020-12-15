@@ -267,7 +267,7 @@ export default class Login extends Vue {
     const fingerprint = this.$refs['fingerprint'] as HTMLDivElement
     if (!fingerprint) return
     fingerprint.classList.add('active')
-    this.timer = setTimeout(this.login, 2000)
+    this.timer = setTimeout(this.login, 1500)
   }
 
   onTouchEnd () {
@@ -303,7 +303,7 @@ export default class Login extends Vue {
       
       svg.fingerprint {
         path.clone {
-          transition: stroke-dashoffset 2s ease-out;
+          transition: stroke-dashoffset 1.5s ease-out;
         }
 
         &.active {
