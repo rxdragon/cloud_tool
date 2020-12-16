@@ -100,7 +100,6 @@ export default class CloudDashboard extends Vue {
 
   showEvent ({ nativeEvent, event }: any) {
     const open = () => {
-      console.log(event)
       this.selectedEvent = event
       this.selectedElement = nativeEvent.target
       setTimeout(() => {
@@ -119,7 +118,6 @@ export default class CloudDashboard extends Vue {
   }
 
   async updateRange ({ start, end }: any) {
-    console.log(1)
     const checkDate = new Date(end.date)
     const year = checkDate.getFullYear()
     const nowMonth = checkDate.getMonth() + 1
@@ -128,10 +126,10 @@ export default class CloudDashboard extends Vue {
     const photoEvent = []
     const retouchEvent = []
     for (let index = 1; index <= nowDay; index++) {
-      const createDate = new Date(`${year}-${nowMonth}-${index}`)
+      const createDate = new Date(`${year}/${nowMonth}/${index}`)
       const createData = {
         start: createDate,
-        end: new Date(`${year}-${nowMonth}-${index} 23:59:59`),
+        end: new Date(`${year}/${nowMonth}/${index} 23:59:59`),
         name: '...',
         details: '...',
         year,
@@ -148,8 +146,6 @@ export default class CloudDashboard extends Vue {
       photoEvent.push(createData)
       retouchEvent.push(retouchCreateData)
     }
-
-    this.events = photoEvent
 
     this.events = [...photoEvent, ...retouchEvent]
 
@@ -186,8 +182,8 @@ export default class CloudDashboard extends Vue {
    */
   async getOneDayInfo (checkDate: Date) {
     const req = {
-      startAt: joinTimeSpan(checkDate),
-      endAt: joinTimeSpan(checkDate, 1)
+      startAt: joinTimeSpan(checkDate).replace(/\//g, '-'),
+      endAt: joinTimeSpan(checkDate, 1).replace(/\//g, '-')
     }
     const res = await CloudApi.getWholeQuota(req)
     return res
