@@ -28,7 +28,6 @@
           ref="calendar"
           color="primary"
           type="month"
-          category-show-all
           v-model="focus"
           :events="events"
           :event-color="getEventColor"
@@ -43,12 +42,14 @@
           :activator="selectedElement"
           offset-x
         >
-          <v-card color="grey lighten-4" min-width="350px" flat>
+          <v-card color="grey lighten-4" min-width="200px" flat>
             <!-- 标题 -->
             <v-toolbar :color="selectedEvent.color" dark>
-              <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
+              <v-toolbar-title>
+                {{ selectedEvent.type === 'uploadPhoto' ? '摄影上传张数' : '修图张数' }} {{ selectedEvent.name }}
+              </v-toolbar-title>
               <v-spacer></v-spacer>
-              <v-btn icon><v-icon>mdi-dots-vertical</v-icon></v-btn>
+              <!-- <v-btn icon><v-icon>mdi-dots-vertical</v-icon></v-btn> -->
             </v-toolbar>
 
             <v-card-text>
@@ -81,10 +82,6 @@ export default class CloudDashboard extends Vue {
   private selectedOpen: boolean = false // 是否显示弹出框
   private events: any[] = [] // 日期内数据
 
-  mounted () {
-    this.getOneDayInfo()
-  }
-
   getEventColor (event: any) {
     return event.color
   }
@@ -103,6 +100,7 @@ export default class CloudDashboard extends Vue {
 
   showEvent ({ nativeEvent, event }: any) {
     const open = () => {
+      console.log(event)
       this.selectedEvent = event
       this.selectedElement = nativeEvent.target
       setTimeout(() => {
@@ -120,50 +118,79 @@ export default class CloudDashboard extends Vue {
     nativeEvent.stopPropagation()
   }
 
-  updateRange ({ start, end }: any) {
+  async updateRange ({ start, end }: any) {
     console.log(1)
-    const events = []
+    const checkDate = new Date(end.date)
+    const year = checkDate.getFullYear()
+    const nowMonth = checkDate.getMonth() + 1
+    const nowDay = checkDate.getDate()
 
-    const min = new Date(`${start.date}T00:00:00`)
-    const max = new Date(`${end.date}T23:59:59`)
-    const days = (max.getTime() - min.getTime()) / 86400000
-    const eventCount = this.rnd(days, days + 20)
-
-
-    for (let i = 0; i < eventCount; i++) {
-      const allDay = this.rnd(0, 3) === 0
-      const firstTimestamp = this.rnd(min.getTime(), max.getTime())
-      const first = new Date(firstTimestamp - (firstTimestamp % 900000))
-
-      const secondTimestamp = this.rnd(2, allDay ? 288 : 8) * 900000
-      const second = new Date(first.getTime() + secondTimestamp)
-
-      events.push({
-        name: '测试', // 任务名称
-        start: first, // 开始时间
-        end: second, // 结束时间
-        color: 'cyan', // 颜色
-        details: '1', // 详情
-        timed: false,
-      })
+    const photoEvent = []
+    const retouchEvent = []
+    for (let index = 1; index <= nowDay; index++) {
+      const createDate = new Date(`${year}-${nowMonth}-${index}`)
+      const createData = {
+        start: createDate,
+        end: new Date(`${year}-${nowMonth}-${index} 23:59:59`),
+        name: '...',
+        details: '...',
+        year,
+        month: nowMonth,
+        day: index,
+        color: 'indigo',
+        type: 'uploadPhoto'
+      }
+      const retouchCreateData = JSON.parse(JSON.stringify(createData))
+      retouchCreateData.start = createDate
+      retouchCreateData.end = createDate
+      retouchCreateData.color = 'green accent-4'
+      retouchCreateData.type = 'retouchPhoto'
+      photoEvent.push(createData)
+      retouchEvent.push(retouchCreateData)
     }
 
-    console.log(events)
+    this.events = photoEvent
 
-    this.events = events
+    this.events = [...photoEvent, ...retouchEvent]
+
+    for (const item of this.events) {
+      const res: any = await this.getOneDayInfo(item.start)
+      const allUploadPhoto = Number(res.photographyUploadPhotoNum.single) + Number(res.photographyUploadPhotoNum.multi)
+      const allRetouchPhoto = Number(res.allRetouchPhoto.single) + Number(res.allRetouchPhoto.multi)
+
+      if (item.type === 'uploadPhoto') {
+        item.name = String(allUploadPhoto)
+        item.details = `
+          <p>摄影单人：${res.photographyUploadPhotoNum.single}</p>
+          <p>摄影多人：${res.photographyUploadPhotoNum.multi}</p>
+          <p>修图单人：${res.allRetouchPhoto.single}</p>
+          <p>修图多人：${res.allRetouchPhoto.multi}</p>
+          <p>摄影上传单量：${res.photographOrgUploadStreamNum}</p>
+        `
+      } else {
+        item.name = String(allRetouchPhoto)
+        item.details = `
+          <p>摄影单人：${res.photographyUploadPhotoNum.single}</p>
+          <p>摄影多人：${res.photographyUploadPhotoNum.multi}</p>
+          <p>修图单人：${res.allRetouchPhoto.single}</p>
+          <p>修图多人：${res.allRetouchPhoto.multi}</p>
+          <p>摄影上传单量：${res.photographOrgUploadStreamNum}</p>
+        `
+      }
+    }
+
   }
 
-  rnd (a: number, b: number) {
-    return Math.floor((b - a + 1) * Math.random()) + a
-  }
-
-  async getOneDayInfo () {
-    const nowDate = new Date()
+  /**
+   * @description 获取单日订单信息
+   */
+  async getOneDayInfo (checkDate: Date) {
     const req = {
-      startAt: joinTimeSpan(nowDate),
-      endAt: joinTimeSpan(nowDate, 1)
+      startAt: joinTimeSpan(checkDate),
+      endAt: joinTimeSpan(checkDate, 1)
     }
-    await CloudApi.getWholeQuota(req)
+    const res = await CloudApi.getWholeQuota(req)
+    return res
   }
 }
 </script>

@@ -88,3 +88,24 @@ export function removeSession () {
   sessionStorage.clear()
   localStorage.clear()
 }
+
+/**
+ * @description 缓存指标信息
+ * @param date 
+ * @param msg 
+ */
+export function saveCloudWholeQuota (date: string, msg: any) {
+  const data: any = JSON.stringify(msg)
+  const prefix = 'cloud-quota'
+  localStorage.setItem(`${prefix}-${date}`, data)
+}
+
+/**
+ * @description 获取指标
+ * @param date 
+ */
+export function getCloudWholeQuota (date: string) {
+  const prefix = 'cloud-quota'
+  const data: any = localStorage.getItem(`${prefix}-${date}`)
+  return JSON.parse(data)
+}

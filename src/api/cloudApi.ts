@@ -1,6 +1,9 @@
 /* eslint-disable no-unused-vars */
 
 import axios from '@/plugins/axios'
+import moment from 'moment'
+import * as SessionTool from '@/utils/sessionTool'
+
 
 /**
  * @description 身份枚举
@@ -101,11 +104,56 @@ export async function getStaffLevel (params: getStaffLevelParams) {
  * @param params
  */
 export async function getWholeQuota (params: any) {
-  const msg: any = await axios({
-    url: '/project_cloud/operator/getWholeQuota',
-    method: 'GET',
-    params
-  })
-  const { photographyUploadPhotoNum } = msg
-  console.log(photographyUploadPhotoNum)
+  const checkDateMoment = moment(params.startAt)
+  const nowDateMoment = moment()
+  const nowDate = nowDateMoment.format('YYYY-MM-DD')
+  const isBeforeDate = checkDateMoment.isBefore(nowDate)
+  const isAfterDate = checkDateMoment.isAfter(nowDate + ' 23:59:59')
+
+  const checkData = checkDateMoment.format('YYYY-MM-DD')
+
+  // 如果超过今日天数 返回 0
+  if (isAfterDate) {
+    return {
+      photographyUploadPhotoNum: {
+        single: 0,
+        multi: 0
+      },
+      allRetouchPhoto: {
+        single: 0,
+        multi: 0
+      },
+      photographOrgUploadStreamNum: 0
+    }
+  }
+
+  let msg: any = null
+
+  const cacheIngo = SessionTool.getCloudWholeQuota(checkData)
+
+  // 如果在今日之前，且有缓存数据读取缓存数据
+  if (isBeforeDate && cacheIngo) {
+    msg = cacheIngo
+  } else {
+    msg = await axios({
+      url: '/project_cloud/operator/getWholeQuota',
+      method: 'GET',
+      params
+    })
+    if (isBeforeDate) {
+      SessionTool.saveCloudWholeQuota(checkData, msg)
+    }
+  }
+
+  const { photographyUploadPhotoNum, cloudRetouchPhotoNum, outerRetouchPhotoNum } = msg
+  const allRetouchPhoto = {
+    single: Number(cloudRetouchPhotoNum.single) + Number(outerRetouchPhotoNum.single),
+    multi: Number(cloudRetouchPhotoNum.multi) + Number(outerRetouchPhotoNum.multi)
+  }
+
+  return {
+    photographyUploadPhotoNum,
+    allRetouchPhoto,
+    photographOrgUploadStreamNum: Number(msg.photographOrgUploadStreamNum)
+  }
 }
