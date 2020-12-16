@@ -3,6 +3,7 @@ import Vue from 'vue'
 import store from '@/store'
 import router from '@/router/index'
 import App from '@/App.vue'
+import '@vant/touch-emulator'
 
 import '@/router/guards' // 路由守护
 
