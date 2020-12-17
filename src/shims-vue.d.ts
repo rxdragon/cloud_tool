@@ -18,3 +18,4 @@ declare module 'animejs'
 declare module 'nprogress'
 
 declare module 'pulltorefreshjs'
+

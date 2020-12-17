@@ -19,6 +19,12 @@ const CloudCenter: RouteConfig = {
       name: 'CloudDashboard',
       component: () => import('@/views/cloud-center/cloud-dashboard.vue'),
       meta: { title: '云端指标', icon: '' }
+    },
+    {
+      path: 'cloudQueue',
+      name: 'CloudQueue',
+      component: () => import('@/views/cloud-center/cloud-queue.vue'),
+      meta: { title: '云端队列修复', icon: '' }
     }
   ]
 }

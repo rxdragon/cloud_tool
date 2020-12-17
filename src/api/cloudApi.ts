@@ -105,12 +105,17 @@ export async function getStaffLevel (params: getStaffLevelParams) {
  */
 export async function getWholeQuota (params: any) {
   const checkDateMoment = moment(params.startAt)
+  const checkDateMomentEnd = moment(params.endAt)
   const nowDateMoment = moment()
+
   const nowDate = nowDateMoment.format('YYYY-MM-DD')
-  const isBeforeDate = checkDateMoment.isBefore(nowDate)
+  
+  const isBeforeDate = checkDateMomentEnd.isBefore(nowDate)
   const isAfterDate = checkDateMoment.isAfter(nowDate + ' 23:59:59')
 
+
   const checkData = checkDateMoment.format('YYYY-MM-DD')
+  console.log(isBeforeDate, checkData)
 
   // 如果超过今日天数 返回 0
   if (isAfterDate) {
@@ -156,4 +161,14 @@ export async function getWholeQuota (params: any) {
     allRetouchPhoto,
     photographOrgUploadStreamNum: Number(msg.photographOrgUploadStreamNum)
   }
+}
+
+/**
+ * @description 修复队列
+ */
+export function fix2Queue () {
+  return axios({
+    url: '/project_cloud/temple/fix2Queue',
+    method: 'GET'
+  })
 }
