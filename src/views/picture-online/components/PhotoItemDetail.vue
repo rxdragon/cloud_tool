@@ -67,7 +67,7 @@
         <!-- 修图师信息 -->
         <div class="content-row">
           <span class="label">修图师：</span>
-          <span class="content">{{ photoData.retoucherInfo.nickname || photoData.retoucherInfo.name || '-' }} - {{ photoData.retoucherInfo.id || '-' }}</span>
+          <span class="content">{{ retouchName }} - {{ (photoData.retoucherInfo && photoData.retoucherInfo.id) || '-' }}</span>
         </div>
         <div class="content-row">
           <span class="label">修图组信息：</span>
@@ -138,8 +138,9 @@ import { PictureOnlinePhotoInterface, PHOTO_STATE } from '@/model/PictureOnlineP
 @Component({
   filters: {
     filterStateClass (state: PHOTO_STATE) {
+      console.log(state)
       const changeColor = {
-        [PHOTO_STATE.WAIT_FEEDBACK]: '',
+        [PHOTO_STATE.WAIT_FEEDBACK]: 'blue-grey',
         [PHOTO_STATE.SENT]: 'red',
         [PHOTO_STATE.UPDATED]: 'green',
         [PHOTO_STATE.WAIT_CUT]: 'red',
@@ -159,6 +160,14 @@ export default class PhotoItemDetail extends Vue {
   private compressDomain: string = SettingModule.compressDomain
   private window: number = 0
   private photoCompressList: { path: string, label: string }[] = []
+
+  get retouchName () {
+    if (this.photoData.retoucherInfo) {
+      return this.photoData.retoucherInfo.nickname || this.photoData.retoucherInfo.name || '-'
+    } else {
+      return '暂无修图信息 可能外包'
+    }
+  }
 
   created () {
     this.initPhotoList()
@@ -225,8 +234,13 @@ export default class PhotoItemDetail extends Vue {
 
       .product-info {
         float: right;
+        text-align: right;
         margin-right: 12px;
         color: #333;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 60%;
+        white-space: pre;
       }
 
       & /deep/ .v-alert__content {

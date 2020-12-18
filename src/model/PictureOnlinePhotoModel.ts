@@ -127,7 +127,19 @@ export default class PictureOnlinePhotoModel implements PictureOnlinePhotoInterf
     this.productInfo = _.get(photoData, 'extends.product_info') || { id: '-', name: '-' }
     this.trimNote = _.get(photoData, 'extends.trim_note') || '-'
     this.skipCrop = _.get(photoData, 'extends.skip_crop')
-    this.retoucherInfo = _.get(photoData, 'extends.retoucher_info')
+    const retoucherInfo = _.get(photoData, 'extends.retoucher_info')
+    if (!retoucherInfo.length) {
+      this.retoucherInfo = {
+        id: '',
+        name: '',
+        nickname: '',
+        retouch_group: { id: '', name: '' },
+        retoucher_leader: { id: '', name: '', nickname: '' }
+      }
+    } else {
+      this.retoucherInfo = _.get(photoData, 'extends.retoucher_info')
+    }
+
     const cropTemplateId = _.get(photoData, 'extends.crop_template_id')
 
     switch (cropTemplateId) {

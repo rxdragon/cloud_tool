@@ -38,7 +38,6 @@ export default class AppMain extends Vue {
         return scrollTop <= 10
       },
       onRefresh: () => {
-        console.log(1)
         this.refresh()
       }
     })
