@@ -18,7 +18,7 @@
     <div class="input-box">
       <div class="time-date">{{ timeDate }}</div>
       <div class="history-code" v-for="(item, index) in historyValue" :key="index">➜ ~ {{ item.code }} {{ `\n` }}{{ item.result }}</div>
-      <div class="row-code">➜ ~ <input type="text" v-model.trim="inputValue" @keydown.enter="submitDate" /></div>
+      <div class="row-code">➜ ~ <input type="text" contenteditable v-model.trim="inputValue" @keydown.enter="submitDate" /></div>
     </div>
   </div>
 </template>
@@ -218,8 +218,6 @@ export default class CloudQueue extends Vue {
   background-size: 100px;
   color: #ff6666;
   text-align: center;
-
-  height: 100%;
   display: grid;
   overflow: hidden;
 }
@@ -308,6 +306,7 @@ export default class CloudQueue extends Vue {
 
   input {
     color: #ff6666;
+    caret-color: #ff6666;
     text-shadow: 0 0 5px red;
     width: 100%;
     outline: none;

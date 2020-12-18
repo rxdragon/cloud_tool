@@ -61,7 +61,7 @@ export default class AppMain extends Vue {
 .module {
   background-color: #eaecf0;
   height: calc(100vh - 48px);
-  padding-bottom: 80px;
   overflow-y: scroll;
+  padding: 12px 12px 0 12px;
 }
 </style>
