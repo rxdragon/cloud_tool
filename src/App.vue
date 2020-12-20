@@ -30,6 +30,7 @@ html {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
+  user-select: none;
 }
 
 .theme--light.v-application {
