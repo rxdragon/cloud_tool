@@ -21,6 +21,7 @@
       >
         <v-btn class="search-box" color="primary" @click="seachData">查询</v-btn>
       </v-col>
+      
       <v-col cols="12" class="button-box pl-0">
         <v-chip-group active-class="primary--text">
           <v-chip

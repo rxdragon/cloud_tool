@@ -76,7 +76,7 @@ type getStaffLevelParams = {
 }
 export async function getStaffLevel (params: getStaffLevelParams) {
   const msg: any = await axios({
-    url: 'https://cf2.run.hzmantu.com/project_cloud/temple/getStaffLevel',
+    url: 'https://cfcf2.run.hzmantu.com/project_cloud/temple/getStaffLevel',
     method: 'PUT',
     data: params
   })

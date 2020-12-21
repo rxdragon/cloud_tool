@@ -27,7 +27,7 @@ export async function getPictureOnlineByOutsideNo (params: getPictureOnlineByOut
 }
 
 /**
- * @description 获取订单号
+ * @description 增加在线看片师
  */
 type addOnlineWatchersParams = {
   staffIds: string [],
@@ -35,7 +35,7 @@ type addOnlineWatchersParams = {
 }
 export async function addOnlineWatchers (params: addOnlineWatchersParams) {
   await axios({
-    url: 'https://cf2.run.hzmantu.com/temple/addOnlineWatchers',
+    url: 'https://cfcf2.run.hzmantu.com/temple/addOnlineWatchers',
     method: 'PUT',
     data: params
   })
@@ -83,25 +83,22 @@ export async function getPhotoListByRecordId (params: getPhotoListByRecordIdPara
  * @description 查询是否支持在线看片
  * @param params 
  */
-export async function checkPictureOnlineOrder (orderId: string | number) {
-  const params = {
-    "params": {
-      SENDER_ID: "$:LWCP_v1:$M7Nc865b9IPyLsltLre4INiUX+v0/Nln",
-      SENDER_NICK: "泰德",
-      IS_ADMIN: "false",
-      SENDER_STAFF_ID: "232334545924185126",
-      MEMBER_TYPE: "",
-      TOKEN: "",
-      FROM: "single_chat",
-      FROM_SITE: "cidEZpUzyTAaE/64BG4nz7V33y/7ZGRO+7TbJCwClmSHCQ="
-    },
-    content: `检查在线看片${orderId}`
-  }
-
+export async function checkPictureOnlineOrder (params: any) {
   const msg: any = await axios({
-    url: 'https://cf3.run.hzmantu.com/',
-    method: 'POST',
-    data: params
+    url: 'https://cfcf2.run.hzmantu.com/project_cloud/temple/checkSendOnline',
+    method: 'GET',
+    params
   })
-  console.log(msg)
+
+  const watchRecords = msg.onlineStream.watch_records.map((item: any) => {
+    return new PictureOnlineOrderModel(item)
+  })
+
+  console.log(watchRecords)
+
+  return {
+    isOnline: msg.is_online,
+    onlineStream: watchRecords,
+    cloudStream: msg.cloudStreams
+  }
 }

@@ -72,6 +72,8 @@ export default class PictureOnlineOrderModel implements PictureOnlineOrderInterf
   bindAt = '' // 绑定时间
   recordLastAt = '' // 最后一次反馈时间
   deletedAt = '' // 删除时间
+  offlineBindAt = '' // 线下绑定时间
+  offlineFinishAt = '' // 线下完成时间
 
   constructor (pictureOnlineOrderData: any) {
     this.base = pictureOnlineOrderData
@@ -102,5 +104,7 @@ export default class PictureOnlineOrderModel implements PictureOnlineOrderInterf
     this.bindAt = pictureOnlineOrderData.bind_at || ''
     this.recordLastAt = pictureOnlineOrderData.record_last_at || ''
     this.deletedAt = pictureOnlineOrderData.deleted_at || ''
+    this.offlineBindAt = _.get(pictureOnlineOrderData, 'extends.offline_bind_at') || ''
+    this.offlineFinishAt = _.get(pictureOnlineOrderData, 'extends.offline_finish_at') || ''
   }
 }
