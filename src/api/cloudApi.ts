@@ -172,3 +172,25 @@ export function fix2Queue () {
     method: 'GET'
   })
 }
+
+/**
+ * @description 修复外包订单卡单问题
+ */
+export function apiSubmitStream (params: any) {
+  return axios({
+    url: '/project_cloud/retoucher/retoucher_stream/apiSubmitStream',
+    method: 'POST',
+    data: params
+  })
+}
+
+/**
+ * @description 修复外包订单卡单问题
+ */
+export function fixShowPicStream (params: any) {
+  return axios({
+    url: '/project_cloud/temple/fixXiuData',
+    method: 'GET',
+    params
+  })
+}

@@ -25,6 +25,12 @@ const CloudCenter: RouteConfig = {
       name: 'CloudQueue',
       component: () => import('@/views/cloud-center/cloud-queue.vue'),
       meta: { title: '云端队列修复', icon: '' }
+    },
+    {
+      path: 'epibolyFix',
+      name: 'EpibolyFix',
+      component: () => import('@/views/cloud-center/epiboly-fix.vue'),
+      meta: { title: '卡单修复', icon: '' }
     }
   ]
 }
