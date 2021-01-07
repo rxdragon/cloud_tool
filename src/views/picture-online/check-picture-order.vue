@@ -50,7 +50,13 @@
             </span>
           </v-card-title>
 
-          <v-card-title class="subtitle-1 pb-0">在线看片订单信息：</v-card-title>
+          <v-card-title v-if="!isOnline" class="subtitle-1 d-flex align-baseline justify-space-between pb-0">
+            <span>
+              错误信息：<span class="red--text text--light-4">{{ errInfo }}</span>
+            </span>
+          </v-card-title>
+
+          <v-card-title class="subtitle-1 pb-0" v-if="isOnline">在线看片订单信息：</v-card-title>
           <v-card-text>
             <v-row align="center" no-gutters class="mx-0" v-for="(wathcRecordItem, wathcRecordIndex) in onlineInfo" :key="wathcRecordIndex">
               <v-col class="pa-0" cols="12" sm="6" md="4" lg="4" xl="4">
@@ -110,6 +116,7 @@ export default class CheckPictureOrder extends Vue {
   private isOnline: boolean = false
   private loading: boolean = false
   private orderTags: string[] = []
+  private errInfo: string = ''
 
   async created () {
     try {
@@ -154,6 +161,7 @@ export default class CheckPictureOrder extends Vue {
       this.isOnline = res.isOnline
       this.onlineInfo = res.onlineStream
       this.cloudInfo = res.cloudStream
+      this.errInfo = res.errInfo
     } finally {
       this.loading = false
     }

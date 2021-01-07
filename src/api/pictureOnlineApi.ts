@@ -90,7 +90,8 @@ export async function checkPictureOnlineOrder (params: any) {
     params
   })
 
-  const watchRecords = msg.onlineStream.watch_records.map((item: any) => {
+  const watchRecordsInfo = _.get(msg, 'onlineStream.watch_records') || []
+  const watchRecords = watchRecordsInfo.map((item: any) => {
     return new PictureOnlineOrderModel(item)
   })
 
@@ -99,6 +100,7 @@ export async function checkPictureOnlineOrder (params: any) {
   return {
     isOnline: msg.is_online,
     onlineStream: watchRecords,
-    cloudStream: msg.cloudStreams
+    cloudStream: msg.cloudStreams,
+    errInfo: msg.errInfo
   }
 }
