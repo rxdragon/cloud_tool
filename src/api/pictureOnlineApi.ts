@@ -35,7 +35,7 @@ type addOnlineWatchersParams = {
 }
 export async function addOnlineWatchers (params: addOnlineWatchersParams) {
   await axios({
-    url: 'https://cfcf2.run.hzmantu.com/temple/addOnlineWatchers',
+    url: 'https://cfcf2.run.hzmantu.com/project_cloud/temple/addOnlineWatchers',
     method: 'PUT',
     data: params
   })
