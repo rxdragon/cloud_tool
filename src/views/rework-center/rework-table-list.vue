@@ -41,57 +41,60 @@
       <template v-slot:expanded-item="{ headers, item }">
         <td :colspan="headers.length">
           <v-timeline class="time-line" align-top dense>
-            <v-timeline-item v-for="(reworkItem, index) in item.punishLogsInfo" :key="index" color="#1876D2">
+            <v-timeline-item v-for="(reworkItem, index) in item.reworkTimeInfo" :key="index" color="#1876D2">
               <template v-slot:opposite>
                 <span>第{{ index + 1 }}次退回</span>
               </template>
               <!-- 惩罚信息 -->
               <v-card class="elevation">
-                <v-card-title class="headline subtitle-1">惩罚信息</v-card-title>
-                <v-card-text class="flex-item">
-                  <span>触发机制</span>
-                  <span>{{ reworkItem.event }}</span>
-                </v-card-text>
-                <v-card-text class="flex-item">
-                  <span>扣除海草</span>
-                  <span>{{ reworkItem.punishExp }}</span>
-                </v-card-text>
-                <v-card-text class="flex-item">
-                  <span>扣除金额</span>
-                  <span>{{ reworkItem.punishMoney }}</span>
-                </v-card-text>
-                <v-card-text class="flex-item">
-                  <span>扣除伙伴</span>
-                  <span>{{ reworkItem.punishStaff }}</span>
-                </v-card-text>
-                <v-card-text class="flex-item">
-                  <span>被退流水</span>
-                  <span>{{ reworkItem.streamNum }}</span>
-                </v-card-text>
+                <template v-if="item.punishLogsInfo[index]">
+                  <v-card-title class="headline subtitle-1">惩罚信息</v-card-title>
+                  <v-card-text class="flex-item">
+                    <span>触发机制</span>
+                    <span>{{ item.punishLogsInfo[index] && item.punishLogsInfo[index].event }}</span>
+                  </v-card-text>
+                  <v-card-text class="flex-item">
+                    <span>扣除海草</span>
+                    <span>{{ item.punishLogsInfo[index].punishExp }}</span>
+                  </v-card-text>
+                  <v-card-text class="flex-item">
+                    <span>扣除金额</span>
+                    <span>{{ item.punishLogsInfo[index].punishMoney }}</span>
+                  </v-card-text>
+                  <v-card-text class="flex-item">
+                    <span>扣除伙伴</span>
+                    <span>{{ item.punishLogsInfo[index].punishStaff }}</span>
+                  </v-card-text>
+                  <v-card-text class="flex-item">
+                    <span>被退流水</span>
+                    <span>{{ item.punishLogsInfo[index].streamNum }}</span>
+                  </v-card-text>
+                </template>
+
                 <v-divider class="divider-box"></v-divider>
                 <v-card-text class="flex-item">
                   <span>生成新流水</span>
-                  <span>{{ item.reworkTimeInfo[index].newStreamNum }}</span>
+                  <span>{{ reworkItem.newStreamNum }}</span>
                 </v-card-text>
                 <v-card-text class="flex-item">
                   <span>重修类型</span>
-                  <span>{{ item.reworkTimeInfo[index].reworkPhotoTypeCN }}</span>
+                  <span>{{ reworkItem.reworkPhotoTypeCN }}</span>
                 </v-card-text>
                 <v-card-text class="flex-item">
                   <span>是否在线</span>
-                  <span>{{ item.reworkTimeInfo[index].isOnline }}</span>
+                  <span>{{ reworkItem.isOnline }}</span>
                 </v-card-text>
                 <v-card-text class="flex-item">
                   <span>退回照片信息</span>
-                  <span>{{ item.reworkTimeInfo[index].reworkPhotoIds }}</span>
+                  <span>{{ reworkItem.reworkPhotoIds }}</span>
                 </v-card-text>
                 <v-card-text class="flex-item">
                   <span>重修扣除海草</span>
-                  <span>{{ item.reworkTimeInfo[index].exp }}</span>
+                  <span>{{ reworkItem.exp }}</span>
                 </v-card-text>
                 <v-card-text class="flex-item">
                   <span>重修扣除流水</span>
-                  <span>{{ item.reworkTimeInfo[index].money }}</span>
+                  <span>{{ reworkItem.money }}</span>
                 </v-card-text>
               </v-card>
             </v-timeline-item>
@@ -134,6 +137,7 @@ export default class ReworkTableList extends Vue {
     try {
       SettingModule.loading(true)
       const data = await OrderApi.getOrderList(this.seachOrder)
+      console.log(data)
       this.desserts = data
       this.seachOrderArr = [this.seachOrder]
     } finally {

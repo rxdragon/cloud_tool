@@ -24,6 +24,7 @@ export default class StreamModel implements StreamInterface {
   reworkTimes = 0 // 门店退回次数
 
   constructor (data: any) {
+    console.log(data)
     const streamData = data.origStream
     this.base = data.origStream
     this.id = streamData.Id
@@ -34,7 +35,7 @@ export default class StreamModel implements StreamInterface {
     this.type = streamData.Type
     this.RetoucherId = _.get(streamData, 'RetoucherId.Int32') || '-'
 
-    const punishLogs = data.punishLogs || []
-    this.reworkTimes = punishLogs.length
+    const reworkPhotoLogs = data.reworkPhotoLogs || []
+    this.reworkTimes = reworkPhotoLogs.length
   }
 }
