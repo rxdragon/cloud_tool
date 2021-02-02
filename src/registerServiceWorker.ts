@@ -7,7 +7,7 @@ if (process.env.NODE_ENV === 'production') {
       setInterval(() => {
         console.log('registration.update')
         registration.update()
-      }, 60 * 60 * 1000)
+      }, 60 * 1000)
       console.log('ready，app已从service worker 缓冲中启用')
     },
     registered (registration) {
