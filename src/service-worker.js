@@ -6,6 +6,7 @@ if (workbox) {
 }
 
 
+// workbox 控制缓存内容
 // 设置缓存前缀和后缀，请根据实际项目名修改
 workbox.core.setCacheNameDetails({
   prefix: 'cloud_tool',

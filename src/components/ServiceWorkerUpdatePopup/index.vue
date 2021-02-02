@@ -45,7 +45,6 @@ export default class ServiceWorkerUpdatePopup extends Vue {
    */
   showRefreshUI (e: Event) {
     this.registration = (e as CustomEvent).detail
-    console.log(this.registration)
     this.dialog = true
   }
 
