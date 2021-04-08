@@ -3,6 +3,7 @@
 import axios from '@/plugins/axios'
 import moment from 'moment'
 import * as SessionTool from '@/utils/sessionTool'
+import LevelConfig from '@/views/cloud-center/levelConfig'
 
 
 /**
@@ -72,31 +73,68 @@ export async function getReviewerQueue () {
  */
 
 type getStaffLevelParams = {
-  staffId: number
+  staffId: number,
+  date: string
 }
 export async function getStaffLevel (params: getStaffLevelParams) {
-  const msg: any = await axios({
-    url: 'https://cfcf2.run.hzmantu.com/project_cloud/temple/getStaffLevel',
-    method: 'PUT',
-    data: params
-  })
+  // TODO 调试接口
+  // const msg: any = await axios({
+  //   // url: '/staff/levelCheckLog',
+  //   url: 'https://cfcf2.run.hzmantu.com/project_cloud/temple/getStaffLevel',
+  //   method: 'GET',
+  //   params
+  // })
+  const msg: any = {
+    log: {
+      id: 14,
+      staff_id: 613911,
+      before_level: 5,
+      after_level: 6,
+      checked_exp: "15000.00",
+      checked_level_up_avg_score: "85.00",
+      checked_level_up_num: 30,
+      checked_level_down_avg_score: "85.00",
+      checked_level_down_num: 30,
+      created_at: "1998-01-01 12:00:00",
+      updated_at: "1998-01-01 12:00:00"
+    },
+    staff_info: {
+      id: 613911,
+      retoucher_class_id: 15,
+      role: 460,
+      level: 6,
+      exp: "0.00",
+      promote_at: null,
+      identity: "blue",
+      entry_tag: "staffEntryTagOneMonth",
+      name: "ABC",
+      nickname: "好兄弟"
+    }
+  }
 
-  const staffReturnRate = (msg.staffReturnRate * 100).toFixed(3)
-  msg.staffReturnRate = Number(staffReturnRate)
-  const needReturnQuota = (msg.needReturnQuota * 100).toFixed(3)
-  msg.needReturnQuota = Number(needReturnQuota)
+  const checkLevel = _.get(msg, 'log.before_level') || 1
+  msg.log.checkLevel = checkLevel
+  const matchLevel = LevelConfig[checkLevel]
 
-  msg.staffRetouchTime = Number(msg.staffRetouchTime).toFixed(3)
-  msg.exp = Number(msg.exp)
+  msg.log.isExpSuccess = Number(msg.log.checked_exp) >= Number(matchLevel.needExp)
+  msg.log.reachUpdateCheckCount = Number(msg.log.checked_level_up_num) >= Number(matchLevel.upDateSpotCount)
+  msg.log.reachDownCheckCount = Number(msg.log.checked_level_down_num) >= Number(matchLevel.downDateSpotCount)
+  msg.log.canGradeUpdate = Number(msg.log.checked_level_up_avg_score) >= Number(matchLevel.upNeedCheckScore)
+  msg.log.canGradeDown = Number(msg.log.checked_level_down_avg_score) < Number(matchLevel.downCheckScore)
 
-  msg.identityCN = identityToCN[msg.identity as IDENTIFY]
-  
-  msg.isExpSuccess = msg.exp >= msg.needExp
-  msg.isRetouchTimeSuccess = msg.staffRetouchTime <= msg.needRetouchTime
-  msg.isStaffReturnRateSuccess = msg.staffReturnRate <= msg.needReturnQuota
+  msg.log.canUpdate = msg.log.isExpSuccess && msg.log.reachUpdateCheckCount && msg.log.canGradeUpdate
+  msg.log.canDown = msg.log.reachDownCheckCount && msg.log.canGradeDown
 
-  console.log(msg)
-  return msg
+  const identity: IDENTIFY = _.get(msg, 'staff_info.identity') || ''
+  msg.staff_info.identityToCN = identityToCN[identity] || '异常'
+
+  console.log(msg.log.isExpSuccess)
+  const createData = {
+    checkLog: msg.log,
+    staffInfo: msg.staff_info,
+    matchLevel
+  }
+  return createData
 }
 
 /**
