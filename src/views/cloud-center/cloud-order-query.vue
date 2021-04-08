@@ -6,7 +6,7 @@
     <!-- 搜索区域 -->
     <v-container fluid>
       <v-row class="search-title" align="end" dense>
-        <v-col cols="9" sm="4" md="2" lg="2" xl="2">
+        <v-col cols="12" sm="6" md="3" lg="3" xl="3">
           <v-text-field
             label="顾客姓名"
             hideDetails
@@ -15,7 +15,7 @@
             @keyup.native.enter="seachData"
           />
         </v-col>
-        <v-col cols="9" sm="6" md="4" lg="4" xl="4">
+        <v-col cols="12" sm="6" md="3" lg="3" xl="3">
           <v-text-field
             label="订单号"
             hideDetails
@@ -24,16 +24,16 @@
             @keyup.native.enter="seachData"
           />
         </v-col>
-        <v-col cols="9" sm="6" md="4" lg="4" xl="4">
+        <v-col cols="12" sm="6" md="3" lg="3" xl="3">
           <v-text-field
             label="流水号"
             hideDetails
             clearable
-            v-model.trim="seachWater"
+            v-model.trim="seachStream"
             @keyup.native.enter="seachData"
           />
         </v-col>
-        <v-col cols="9" sm="1" md="1" lg="1" xl="1">
+        <v-col cols="12" sm="1" md="3" lg="3" xl="3">
           <v-btn color="primary" @click="seachData">查询</v-btn>
         </v-col>
       </v-row>
@@ -41,45 +41,49 @@
 
     <!-- 查询结果区域 -->
     <v-data-table
-      v-if="seachOrderArr.length"
+      v-if="tableData.length"
       :headers="headers"
-      :items="desserts"
-      :loading="tableLoading"
+      :items="tableData"
       hide-default-footer
       disable-pagination
       disable-sort
     >
+      <template v-slot:item.location="{ item }">
+        <div class="index-box">
+            <span>{{ item.queue_index || '-' }}</span>
+            <div class="icon-box">
+              <span v-if="item.staticsUrgent" type="danger" size="mini">急</span>
+              <span v-if="item.isReturn" type="danger" size="mini">审核退回</span>
+            </div>
+          </div>
+      </template>
       <template v-slot:item.orderInfo="{ item }">
         <div>
-          <span class="s1">订单号:</span>{{ item.orderInfo.orderNum }}<br />
-          <span class="s1">流水号:</span>{{ item.orderInfo.waterNum }}<br />
-          <span class="s2">拍摄产品:</span>{{ item.orderInfo.photoProduct
-          }}<br />
-          <span class="s2">照片数量:</span>{{ item.orderInfo.photoCount }}
+          <span class="s1">订单号:</span>{{ item.order && item.order.external_num || '-' }}<br />
+          <span class="s1">流水号:</span>{{ item.stream_num || '-' }}<br />
+          <!-- <span class="s2">拍摄产品:</span>{{ item.orderInfo.photoProduct }}<br /> -->
+          <!-- <span class="s2">照片数量:</span>{{ item.orderInfo.photoCount }} -->
         </div>
       </template>
-      <template v-slot:item.picFixer="{ item }">
+      <!-- <template v-slot:item.picFixer="{ item }">
         {{ "修图师：" + item.picFixer.fixer }}
         <br />
         {{ "组长：" + item.picFixer.fixerLeader }}
-      </template>
+      </template> -->
     </v-data-table>
   </div>
 </template>
 
 <script lang="ts">
 import * as SearchOrderApi from '@/api/searchOrderApi'
-import UploadExcel from "@/components/UploadExcel/index.vue"
-import { SearchOrderInterface } from '@/model/SearchOrderModel'
 import { Component, Vue } from "vue-property-decorator"
-import { SettingModule } from "@/store/modules/setting"
 
-@Component({
-  components: { UploadExcel },
-})
+@Component
 export default class ReworkTableList extends Vue {
   private loading: boolean = false
   private seachOrder: string = ""
+  private seachName: string = ""
+  private seachStream: string = ""
   private seachResult: boolean = false
   private headerKeys: string[] = ["streamNum"]
   private headers: object[] = [
@@ -95,69 +99,31 @@ export default class ReworkTableList extends Vue {
     { text: "操作", value: "operation" },
     { text: "", value: "data-table-expand" },
   ]
-  private desserts: any = [
-    {
-      location: 1,
-      picStandard: "大师",
-      orderInfo: {
-        orderNum: "T2021032562818481",
-        waterNum: "C2021032569704458",
-        photoProduct: "文艺照 - 单人",
-        photoCount: 10,
-      },
-      picFixer: {
-        fixer: "-",
-        fixerLeader: "-",
-      },
-      auditor: "-",
-      photographyStudio: "海马体",
-      fixTime: "-",
-      waitTime: "17355min",
-      status: "待修图",
-      operation: "-",
-    },
-    {
-      location: 2,
-      picStandard: "大师",
-      orderInfo: {
-        orderNum: "T2021021934563448",
-        waterNum: "C2021032569704458",
-        photoProduct: "文艺照 - 单人",
-        photoCount: 20,
-      },
-      picFixer: {
-        fixer: "-",
-        fixerLeader: "-",
-      },
-      auditor: "-",
-      photographyStudio: "海马体",
-      fixTime: "-",
-      waitTime: "17355min",
-      status: "待修图",
-      operation: "-",
-    },
-  ]
-  private seachOrderArr: SearchOrderInterface[] = []
+  private tableData: any = []
 
   /**
    * @description 搜索表格
    */
   async seachData () {
-    if (!this.seachOrder) return this.$message.warning('请输入订单号')
-    if (this.seachOrder.length !== 17) return this.$message.warning('请输入正确的订单号')
-    if (!this.seachOrder.includes('T') && !this.seachOrder.includes('X')) return this.$message.warning('请输入正确的订单号')
+    if (!this.seachOrder && !this.seachName && !this.seachStream) return this.$message.warning('请输入参数')
+
     try {
-      SettingModule.loading(true)
-      const req = {
-        outsideNo: this.seachOrder
+      this.loading = true
+      const req: any = {
+        page: 1,
+        pageSize: 99
       }
-      const data = await await SearchOrderApi.searchOrderByOutsideNo(req)
+      if (this.seachOrder) req.orderNum = this.seachOrder
+      if (this.seachName) req.customerName = this.seachName
+      if (this.seachStream) req.streamNum = this.seachStream
+
+      const data = await SearchOrderApi.searchOrderByOutsideNo(req)
+
       console.log(data)
       if (!data.length) this.$message.warning('暂无数据')
-      this.desserts = data
-      this.seachOrderArr = data
+      this.tableData = data
     } finally {
-      SettingModule.loadingClose()
+      this.loading = false
     }
   }
 }
