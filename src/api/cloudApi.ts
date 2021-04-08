@@ -128,7 +128,6 @@ export async function getStaffLevel (params: getStaffLevelParams) {
   const identity: IDENTIFY = _.get(msg, 'staff_info.identity') || ''
   msg.staff_info.identityToCN = identityToCN[identity] || '异常'
 
-  console.log(msg.log.isExpSuccess)
   const createData = {
     checkLog: msg.log,
     staffInfo: msg.staff_info,
