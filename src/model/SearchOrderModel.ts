@@ -4,23 +4,23 @@
  */
 export enum PICTURE_ONLINE_ORDER_STATE {
   /** 待修图 */
-  WAIT_FIX = 'wait_fix',
+  WAIT_RETOUCH = 'wait_retouch',
   /** 修图中 */
-  FIXING = 'fixing',
+  RETOUCHING = 'retouching',
   /** 待审核 */
-  WAIT_AUDIT = 'wait_audit',
+  WAIT_REVIEW = 'wait_review',
   /** 审核中 */
-  AUDITING = 'auditing',
+  REVIEWING = 'reviewing',
 }
 
 /**
  * @description 订单中文
  */
 export const pictureOnlineStateToCN = {
-  [PICTURE_ONLINE_ORDER_STATE.WAIT_FIX]: '待修图',
-  [PICTURE_ONLINE_ORDER_STATE.FIXING]: '修图中',
-  [PICTURE_ONLINE_ORDER_STATE.WAIT_AUDIT]: '待审核',
-  [PICTURE_ONLINE_ORDER_STATE.AUDITING]: '审核中',
+  [PICTURE_ONLINE_ORDER_STATE.WAIT_RETOUCH]: '待修图',
+  [PICTURE_ONLINE_ORDER_STATE.RETOUCHING]: '修图中',
+  [PICTURE_ONLINE_ORDER_STATE.WAIT_REVIEW]: '等待审核',
+  [PICTURE_ONLINE_ORDER_STATE.REVIEWING]: '审核中',
 }
 
 export interface SearchOrderInterface {

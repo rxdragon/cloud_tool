@@ -12,6 +12,7 @@
             hideDetails
             clearable
             v-model.trim="seachName"
+            :disabled='disableName'
             @keyup.native.enter="seachData"
           />
         </v-col>
@@ -21,6 +22,7 @@
             hideDetails
             clearable
             v-model.trim="seachOrder"
+            :disabled='disableOrder'
             @keyup.native.enter="seachData"
           />
         </v-col>
@@ -30,6 +32,7 @@
             hideDetails
             clearable
             v-model.trim="seachStream"
+            :disabled="disableStream"
             @keyup.native.enter="seachData"
           />
         </v-col>
@@ -48,7 +51,7 @@
       disable-pagination
       disable-sort
     >
-      <template v-slot:item.location="{ item }">
+      <template v-slot:item.queueIndexs="{ item }">
         <div class="index-box">
             <span>{{ item.queue_index || '-' }}</span>
             <div class="icon-box">
@@ -57,54 +60,133 @@
             </div>
           </div>
       </template>
-      <template v-slot:item.orderInfo="{ item }">
+      <template v-slot:item.retouchStandards="{ item }">
         <div>
-          <span class="s1">订单号:</span>{{ item.order && item.order.external_num || '-' }}<br />
-          <span class="s1">流水号:</span>{{ item.stream_num || '-' }}<br />
-          <!-- <span class="s2">拍摄产品:</span>{{ item.orderInfo.photoProduct }}<br /> -->
-          <!-- <span class="s2">照片数量:</span>{{ item.orderInfo.photoCount }} -->
+          {{ item.retouchType || '-' }}
         </div>
       </template>
-      <!-- <template v-slot:item.picFixer="{ item }">
-        {{ "修图师：" + item.picFixer.fixer }}
-        <br />
-        {{ "组长：" + item.picFixer.fixerLeader }}
-      </template> -->
+      <template v-slot:item.orderInfos="{ item }">
+        <div>
+          <span class="letter-space">订单号:</span>{{ item.order && item.order.external_num || '-' }}<br />
+          <span class="letter-space">流水号:</span>{{ item.stream_num || '-' }}<br />
+          <span>拍摄产品:</span>{{ item.product.name || '-' }}<br />
+          <span>照片数量:</span>{{ item.photos.length }}
+        </div>
+      </template>
+      <template v-slot:item.retouchers="{ item }">
+        <div>
+          {{ "修图师：" + item.retoucher.name || '-' }}<br />
+          {{ "组长：" + item.retoucher_leader.name || '-' }}
+        </div>
+      </template>
+      <template v-slot:item.reviewers="{ item }">
+        <div>
+          {{ item.reviewerName || '-' }}
+        </div>
+      </template>
+      <template v-slot:item.photographerOrgNames="{ item }">
+        <div>
+          {{ item.photographerOrgName || '-' }}
+        </div>
+      </template>
+      <template v-slot:item.retouchTimes="{ item }">
+        <div>
+          {{ item.retouchTime || '-' }}
+        </div>
+      </template>
+      <template v-slot:item.waitTimes="{ item }">
+        <div>
+          {{ item.waitTime || '-' }}
+        </div>
+      </template>
+      <template v-slot:item.states="{ item }">
+        <div>
+          {{ item.streamState || '-' }}
+        </div>
+      </template>
+      <template v-slot:item.operations="{ item }">
+        <div>
+          {{ item.operation || '-' }}
+        </div>
+      </template>
     </v-data-table>
   </div>
 </template>
 
 <script lang="ts">
 import * as SearchOrderApi from '@/api/searchOrderApi'
-import { Component, Vue } from "vue-property-decorator"
+import { flatten } from 'lodash'
+import { Component, Vue, Watch } from "vue-property-decorator"
 
 @Component
 export default class ReworkTableList extends Vue {
   private loading: boolean = false
+  private disableName: boolean = false
+  private disableOrder: boolean = false
+  private disableStream: boolean = false
   private seachOrder: string = ""
   private seachName: string = ""
   private seachStream: string = ""
-  private seachResult: boolean = false
-  private headerKeys: string[] = ["streamNum"]
   private headers: object[] = [
-    { text: "位置", value: "location" },
-    { text: "修图标准", value: "picStandard" },
-    { text: "订单信息", value: "orderInfo" },
-    { text: "修图师", value: "picFixer" },
-    { text: "审核人", value: "auditor" },
-    { text: "摄影机构", value: "photographyStudio" },
-    { text: "修图时间", value: "fixTime" },
-    { text: "等待时间", value: "waitTime" },
-    { text: "当前状态", value: "status" },
-    { text: "操作", value: "operation" },
+    { text: "位置", value: "queueIndexs" },
+    { text: "修图标准", value: "retouchStandards" },
+    { text: "订单信息", value: "orderInfos" },
+    { text: "修图师", value: "retouchers" },
+    { text: "审核人", value: "reviewers" },
+    { text: "摄影机构", value: "photographerOrgNames" },
+    { text: "修图时间", value: "retouchTimes" },
+    { text: "等待时间", value: "waitTimes" },
+    { text: "当前状态", value: "states" },
+    { text: "操作", value: "operations" },
     { text: "", value: "data-table-expand" },
   ]
   private tableData: any = []
 
   /**
+   * @description 只允许单一条件搜索
+   */
+  @Watch("seachName", { immediate: true })
+  private disableInputExcName () {
+    if (this.seachName) {
+      this.disableOrder = true
+      this.disableStream = true
+    }
+    else {
+      this.disableOrder = false
+      this.disableStream = false
+    }
+  }
+
+  @Watch("seachStream", { immediate: true })
+  private disableInputExcStream () {
+    if (this.seachStream) {
+      this.disableOrder = true
+      this.disableName = true
+    }
+    else {
+      this.disableOrder = false
+      this.disableName = false
+    }
+  }
+
+  @Watch("seachOrder", { immediate: true })
+  private disableInputExcOrder () {
+    if (this.seachOrder) {
+      this.disableName = true
+      this.disableStream = true
+    }
+    else {
+      this.disableName = false
+      this.disableStream = false
+    }
+  }
+  /**
    * @description 搜索表格
    */
   async seachData () {
+    this.disableName = false
+    this.disableStream = false
+    this.disableOrder = false
     if (!this.seachOrder && !this.seachName && !this.seachStream) return this.$message.warning('请输入参数')
 
     try {
@@ -136,7 +218,8 @@ span {
   margin: 0%;
   padding: 0%;
 }
-.s1 {
+
+.letter-space {
   letter-spacing: 0.345em;
 }
 
