@@ -12,7 +12,7 @@
             hideDetails
             clearable
             v-model.trim="seachName"
-            :disabled='disableName'
+            :disabled='Boolean(seachOrder || seachStream)'
             @keyup.native.enter="seachData"
           />
         </v-col>
@@ -22,7 +22,7 @@
             hideDetails
             clearable
             v-model.trim="seachOrder"
-            :disabled='disableOrder'
+            :disabled='Boolean(seachName || seachStream)'
             @keyup.native.enter="seachData"
           />
         </v-col>
@@ -32,7 +32,7 @@
             hideDetails
             clearable
             v-model.trim="seachStream"
-            :disabled="disableStream"
+            :disabled='Boolean(seachName || seachOrder)'
             @keyup.native.enter="seachData"
           />
         </v-col>
@@ -51,7 +51,7 @@
       disable-pagination
       disable-sort
     >
-      <template v-slot:item.queueIndexs="{ item }">
+      <template v-slot:[`item.queueIndexs`]="{ item }">
         <div class="index-box">
             <span>{{ item.queue_index || '-' }}</span>
             <div class="icon-box">
@@ -60,12 +60,12 @@
             </div>
           </div>
       </template>
-      <template v-slot:item.retouchStandards="{ item }">
+      <template v-slot:[`item.retouchStandards`]="{ item }">
         <div>
           {{ item.retouchType || '-' }}
         </div>
       </template>
-      <template v-slot:item.orderInfos="{ item }">
+      <template v-slot:[`item.orderInfos`]="{ item }">
         <div>
           <span class="letter-space">订单号:</span>{{ item.order && item.order.external_num || '-' }}<br />
           <span class="letter-space">流水号:</span>{{ item.stream_num || '-' }}<br />
@@ -73,40 +73,35 @@
           <span>照片数量:</span>{{ item.photos.length }}
         </div>
       </template>
-      <template v-slot:item.retouchers="{ item }">
+      <template v-slot:[`item.retouchers`]="{ item }">
         <div>
-          {{ "修图师：" + item.retoucher.name || '-' }}<br />
-          {{ "组长：" + item.retoucher_leader.name || '-' }}
+          {{ "修图师：" + item.retoucherName || '-' }}<br />
+          {{ "组长：" + item.retouchLeader || '-' }}
         </div>
       </template>
-      <template v-slot:item.reviewers="{ item }">
+      <template v-slot:[`item.reviewers`]="{ item }">
         <div>
           {{ item.reviewerName || '-' }}
         </div>
       </template>
-      <template v-slot:item.photographerOrgNames="{ item }">
+      <template v-slot:[`item.photographerOrgNames`]="{ item }">
         <div>
           {{ item.photographerOrgName || '-' }}
         </div>
       </template>
-      <template v-slot:item.retouchTimes="{ item }">
+      <template v-slot:[`item.retouchTimes`]="{ item }">
         <div>
           {{ item.retouchTime || '-' }}
         </div>
       </template>
-      <template v-slot:item.waitTimes="{ item }">
+      <template v-slot:[`item.waitTimes`]="{ item }">
         <div>
           {{ item.waitTime || '-' }}
         </div>
       </template>
-      <template v-slot:item.states="{ item }">
+      <template v-slot:[`item.states`]="{ item }">
         <div>
           {{ item.streamState || '-' }}
-        </div>
-      </template>
-      <template v-slot:item.operations="{ item }">
-        <div>
-          {{ item.operation || '-' }}
         </div>
       </template>
     </v-data-table>
@@ -115,14 +110,11 @@
 
 <script lang="ts">
 import * as SearchOrderApi from '@/api/searchOrderApi'
-import { Component, Vue, Watch } from "vue-property-decorator"
+import { Component, Vue } from "vue-property-decorator"
 
 @Component
 export default class ReworkTableList extends Vue {
   private loading: boolean = false
-  private disableName: boolean = false
-  private disableOrder: boolean = false
-  private disableStream: boolean = false
   private seachOrder: string = ""
   private seachName: string = ""
   private seachStream: string = ""
@@ -136,56 +128,13 @@ export default class ReworkTableList extends Vue {
     { text: "修图时间", value: "retouchTimes" },
     { text: "等待时间", value: "waitTimes" },
     { text: "当前状态", value: "states" },
-    { text: "操作", value: "operations" },
-    { text: "", value: "data-table-expand" },
   ]
   private tableData: any = []
 
   /**
-   * @description 只允许单一条件搜索
-   */
-  @Watch("seachName", { immediate: true })
-  private disableInputExcName () {
-    if (this.seachName) {
-      this.disableOrder = true
-      this.disableStream = true
-    }
-    else {
-      this.disableOrder = false
-      this.disableStream = false
-    }
-  }
-
-  @Watch("seachStream", { immediate: true })
-  private disableInputExcStream () {
-    if (this.seachStream) {
-      this.disableOrder = true
-      this.disableName = true
-    }
-    else {
-      this.disableOrder = false
-      this.disableName = false
-    }
-  }
-
-  @Watch("seachOrder", { immediate: true })
-  private disableInputExcOrder () {
-    if (this.seachOrder) {
-      this.disableName = true
-      this.disableStream = true
-    }
-    else {
-      this.disableName = false
-      this.disableStream = false
-    }
-  }
-  /**
    * @description 搜索表格
    */
   async seachData () {
-    this.disableName = false
-    this.disableStream = false
-    this.disableOrder = false
     if (!this.seachOrder && !this.seachName && !this.seachStream) return this.$message.warning('请输入参数')
 
     try {
