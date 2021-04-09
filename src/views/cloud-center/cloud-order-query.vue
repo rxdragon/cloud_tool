@@ -115,7 +115,6 @@
 
 <script lang="ts">
 import * as SearchOrderApi from '@/api/searchOrderApi'
-import { flatten } from 'lodash'
 import { Component, Vue, Watch } from "vue-property-decorator"
 
 @Component
