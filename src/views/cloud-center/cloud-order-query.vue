@@ -156,15 +156,14 @@ export default class OrderQueryList extends Vue {
    * @description 显示订单详情组件
    */
   async showDetail ( item: any ) {
-    if (!this.tableData.length) this.$message.warning('暂无数据')
-    if (this.tableData.length) {
-      this.$router.push({
-        name: 'OrderDetail',
-        query: {
-          seachStream: this.tableData[this.tableData.indexOf(item)].orderInfos.streamNum
-        }
-      })
-    }
+    console.log(item)
+    const seachStream = _.get(item, 'orderInfos.streamNum') || ''
+    if (!seachStream) return this.$message.warning('缺少流水信息')
+  
+    this.$router.push({
+      name: 'OrderDetail',
+      query: { seachStream }
+    })
   }
 
   /**

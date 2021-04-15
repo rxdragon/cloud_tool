@@ -3,13 +3,12 @@
     <v-overlay :value="loading">
       <v-progress-circular indeterminate size="64"></v-progress-circular>
     </v-overlay>
-    <v-container>
+    <v-container v-if="!loading && orderInfo">
       <!-- 照片信息显示区域 -->
       <v-row>
         <v-col>
           <v-card>
             <v-data-table
-              v-if="!loading"
               :headers="headers1"
               :items="[orderInfo]"
               hide-default-footer
@@ -81,7 +80,7 @@
         </v-col>
       </v-row>
       <!-- 修图要求 -->
-      <v-row v-if="!loading">
+      <v-row>
         <v-col>
           <v-card>
             <v-card-text>
@@ -91,7 +90,9 @@
               <v-chip class="ma-2" color="#edf0ff" label text-color="#4669FB">
                 {{ '瘦脸幅度：' + orderInfo.retouchClaims.face }}
               </v-chip>
+              <!-- TODO 缺少祛痣 -->
               <v-divider></v-divider>
+              <!-- TODO 更class名字 -->
               <div class="ordernote">
                 <span class="inline-subtitle">
                   修图备注：
@@ -103,7 +104,9 @@
           </v-card>
         </v-col>
       </v-row>
+
       <!-- 照片流 -->
+      <!-- TODO 预览 photobox组件 -->
       <v-row v-for="(val, index) in orderInfo.photoStreams" :key="index">
         <v-col>
           <v-card>
@@ -146,7 +149,7 @@ import { SettingModule } from '@/store/modules/setting'
 @Component
 export default class OrderDetail extends Vue {
   private loading: boolean = false
-  private orderInfo: any = {}
+  private orderInfo: any = null
   private headers1: object[] = [
     { text: '流水号', value: 'streamNun', width: 170 },
     { text: '所属机构', value: 'orgName', width: 170 },
@@ -167,10 +170,17 @@ export default class OrderDetail extends Vue {
   async created () {
     try {
       this.loading = true
-      const req: any = {}
-      if (this.$route.query.seachStream) req.streamNum = this.$route.query.seachStream
+      if (this.$route.query.seachStream) {
+        // TODO 报错后，返回之前页面
+      }
+      const req: any = {
+        streamNum: this.$route.query.seachStream
+      }
+      // TODO 更改接口
       const data = await SearchOrderApi.searchOrderDetailByStream(req)
-      if (!data) this.$message.warning('暂无数据')
+      console.log(data)
+      if (!data) return this.$message.warning('暂无数据')
+      // todo 延迟一定时间后返回 前面页面
       this.orderInfo = data
     } finally {
       this.loading = false
