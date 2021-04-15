@@ -37,7 +37,13 @@ const CloudCenter: RouteConfig = {
       name: 'CloudOrderQuery',
       component: () => import('@/views/cloud-center/cloud-order-query.vue'),
       meta: { title: '云端订单查询', icon: '' }
-    }
+    },
+    {
+      path: 'cloudOrderQuery/orderDetail',
+      name: 'OrderDetail',
+      component: () => import('@/views/cloud-center/components/order-detail.vue'),
+      meta: { hidden: true },
+    },
   ]
 }
 

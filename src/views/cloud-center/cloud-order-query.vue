@@ -36,7 +36,7 @@
             @keyup.native.enter="seachData"
           />
         </v-col>
-        <v-col cols="12" sm="1" md="3" lg="3" xl="3">
+        <v-col cols="12" sm="3" md="1" lg="1" xl="1">
           <v-btn color="primary" @click="seachData">查询</v-btn>
         </v-col>
       </v-row>
@@ -120,6 +120,9 @@
           {{ item.states }}
         </div>
       </template>
+      <template v-slot:[`item.operation`]="{ item }">
+            <v-btn color="success" @click="showDetail(item)">流水详情</v-btn>
+      </template>
     </v-data-table>
   </div>
 </template>
@@ -128,9 +131,10 @@
 import * as SearchOrderApi from '@/api/searchOrderApi'
 import { Component, Vue } from 'vue-property-decorator'
 
-@Component
-export default class ReworkTableList extends Vue {
-  private loading: boolean = false
+@Component({
+})
+export default class OrderQueryList extends Vue {
+  private loading: any = false
   private seachOrder: string = ''
   private seachName: string = ''
   private seachStream: string = ''
@@ -144,15 +148,30 @@ export default class ReworkTableList extends Vue {
     { text: '修图时间', value: 'retouchTime' },
     { text: '等待时间', value: 'waitTime' },
     { text: '当前状态', value: 'state' },
+    { text: '操作', value: 'operation' }
   ]
-  private tableData:any = []
+  private tableData: any = []
+
+  /**
+   * @description 显示订单详情组件
+   */
+  async showDetail ( item: any ) {
+    if (!this.tableData.length) this.$message.warning('暂无数据')
+    if (this.tableData.length) {
+      this.$router.push({
+        name: 'OrderDetail',
+        query: {
+          seachStream: this.tableData[this.tableData.indexOf(item)].orderInfos.streamNum
+        }
+      })
+    }
+  }
 
   /**
    * @description 搜索表格
    */
   async seachData () {
     if (!this.seachOrder && !this.seachName && !this.seachStream) return this.$message.warning('请输入参数')
-
     try {
       this.loading = true
       const req: any = {
@@ -162,17 +181,15 @@ export default class ReworkTableList extends Vue {
       if (this.seachOrder) req.orderNum = this.seachOrder
       if (this.seachName) req.customerName = this.seachName
       if (this.seachStream) req.streamNum = this.seachStream
-      console.log(this.tableData);
       
       const data = await SearchOrderApi.searchOrderByNameOrderStream(req)
-
-      console.log(data)
       if (!data.length) this.$message.warning('暂无数据')
       this.tableData = data
     } finally {
       this.loading = false
     }
   }
+
 }
 </script>
 
@@ -203,7 +220,7 @@ export default class ReworkTableList extends Vue {
   padding: 0%;
 }
 
-.standard-icon{
+.standard-icon {
   display: inline-block;
   width: 16px;
   height: 17px;
@@ -214,7 +231,7 @@ export default class ReworkTableList extends Vue {
 .retouch-standard-manto {
   height: 100%;
   overflow: hidden;
-  background-image: url(../../../src/assets/sprites.png);
+  background-image: url(../../assets/sprites.png);
   background-position: -319px -76px;
   background-size: 660px 260px;
 }
@@ -222,7 +239,7 @@ export default class ReworkTableList extends Vue {
 .retouch-standard-blue {
   height: 100%;
   overflow: hidden;
-  background-image: url(../../../src/assets/sprites.png);
+  background-image: url(../../assets/sprites.png);
   background-position: -296px -76px;
   background-size: 660px 260px;
 }
@@ -230,7 +247,7 @@ export default class ReworkTableList extends Vue {
 .retouch-standard-master {
   height: 100%;
   overflow: hidden;
-  background-image: url(../../../src/assets/sprites.png);
+  background-image: url(../../assets/sprites.png);
   background-position: -273px -76px;
   background-size: 660px 260px;
 }

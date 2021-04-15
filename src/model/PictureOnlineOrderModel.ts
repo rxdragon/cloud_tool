@@ -90,7 +90,7 @@ export default class PictureOnlineOrderModel implements PictureOnlineOrderInterf
 
     // 获取门店信息
     const storeInfo = _.get(pictureOnlineOrderData, 'outside_order.extends.store_info') || {}
-    this.storeInfo = { id: storeInfo.id, name: storeInfo.name }
+    this.storeInfo = { id: storeInfo.id, name: storeInfo.name } || '-'
 
     // 获取看片审核人信息
     const checkerInfo = _.get(pictureOnlineOrderData, 'outside_order.extends.checker_info') || {}

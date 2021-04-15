@@ -52,6 +52,8 @@ export const constantRoutes: Array<RouteConfig> = [
     meta: { hidden: true },
     component: () => import('@/views/error-page/404.vue'),
   },
+  
+
   ...asyncRoutes
 ]
 
