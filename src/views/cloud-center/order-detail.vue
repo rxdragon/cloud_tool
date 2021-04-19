@@ -48,7 +48,6 @@ export default class OrderDetail extends Vue {
         streamId: this.$route.query.streamId
       }
       const data = await SearchOrderApi.searchOrderDetailByStream(req)
-      console.log(data)
       if (!data) {
         this.$message.warning('此流水号暂无数据！')
         setTimeout(() => {

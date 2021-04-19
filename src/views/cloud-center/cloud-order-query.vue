@@ -156,7 +156,6 @@ export default class OrderQueryList extends Vue {
    * @description 显示订单详情组件
    */
   async showDetail ( item: any ) {
-    console.log(item)
     const streamId = item.id || ''
     if (!streamId) return this.$message.warning('缺少流水信息')
   

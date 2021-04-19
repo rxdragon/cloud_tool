@@ -57,13 +57,8 @@ import ImgPreview from '@/components/ImgPreview/ImgPreview.vue'
   components: { ImgPreview },
 })
 export default class PhotoBox extends Vue {
-  private breviary: string = '!thumb.small.50'
   private imgLoading: boolean = true
-  private errorReplaceUrl: any = '' // 重新加载图片
-  private linkTag: any = null
-  private limitSize: any = 20 * 1024 * 1024
   private loading: boolean = false
-  private errorCount: number = 0
   private viewerVisible: boolean = false; // 子组件中viewer的可见性
   private imgIndex: number = 100; // 图片的索引
   private imgDataList: any[] = []; // 得到的img的数据

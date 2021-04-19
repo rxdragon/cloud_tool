@@ -2,7 +2,6 @@
 
 import { waitTime } from "@/utils/timeUtil"
 import { RetouchStandard, StreamState, RetouchOrder, PhotoEnumName } from '@/utils/Enumerate'
-import { version } from "vue/types/umd"
 import { SettingModule } from "@/store/modules/setting"
 
 export interface OrderDetailInterface {
