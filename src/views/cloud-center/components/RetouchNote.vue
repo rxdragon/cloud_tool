@@ -13,9 +13,7 @@
             <v-chip v-if="orderInfo.requireLabel.pimples" class="ma-2" color="#edf0ff" label text-color="#4669FB">
               祛痣
             </v-chip>
-            <!-- TODO 缺少祛痣 -->
             <v-divider></v-divider>
-            <!-- TODO 更class名字 -->
             <div class="order-note">
               <span class="inline-subtitle">
                 修图备注：

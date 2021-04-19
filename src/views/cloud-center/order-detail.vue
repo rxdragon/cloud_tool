@@ -11,7 +11,6 @@
       <retouch-note :order-info="orderInfo"></retouch-note>
 
       <!-- 照片流 -->
-      <!-- TODO 预览 photobox组件 -->
       <photo-list :order-info="orderInfo"></photo-list>
     </v-container>
   </div>
@@ -39,7 +38,6 @@ export default class OrderDetail extends Vue {
     try {
       this.loading = true
       if (!this.$route.query.streamId) {
-        // TODO 报错后，返回之前页面
         this.$message.warning('请重新输入流水号！')
         setTimeout(() => {
           this.$router.push('/cloud-center/cloudOrderQuery')
@@ -49,7 +47,6 @@ export default class OrderDetail extends Vue {
       const req: any = {
         streamId: this.$route.query.streamId
       }
-      // TODO 更改接口
       const data = await SearchOrderApi.searchOrderDetailByStream(req)
       console.log(data)
       if (!data) {
