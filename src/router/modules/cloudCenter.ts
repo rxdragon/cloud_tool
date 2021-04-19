@@ -41,7 +41,7 @@ const CloudCenter: RouteConfig = {
     {
       path: 'cloudOrderQuery/orderDetail',
       name: 'OrderDetail',
-      component: () => import('@/views/cloud-center/components/order-detail.vue'),
+      component: () => import('@/views/cloud-center/order-detail.vue'),
       meta: { hidden: true },
     },
   ]

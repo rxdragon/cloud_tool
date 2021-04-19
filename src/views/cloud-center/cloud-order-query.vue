@@ -157,12 +157,12 @@ export default class OrderQueryList extends Vue {
    */
   async showDetail ( item: any ) {
     console.log(item)
-    const seachStream = _.get(item, 'orderInfos.streamNum') || ''
-    if (!seachStream) return this.$message.warning('缺少流水信息')
+    const streamId = item.id || ''
+    if (!streamId) return this.$message.warning('缺少流水信息')
   
     this.$router.push({
       name: 'OrderDetail',
-      query: { seachStream }
+      query: { streamId }
     })
   }
 

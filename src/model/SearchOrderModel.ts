@@ -1,70 +1,7 @@
 /* eslint-disable no-unused-vars */
 
 import { waitTime } from "@/utils/timeUtil"
-
-/**
- * @description 修图标准
- */
-export const RETOUCH_STANDARDS = {
-  MANTO: 'mainto', // 缦图
-  BLUE: 'blue', // 蓝标
-  MASTER: 'master', // 等待审核
-}
-
-/**
- * @description 修图状态中文
- */
-export const RetouchStandard = {
-  [RETOUCH_STANDARDS.MANTO]: '缦图',
-  [RETOUCH_STANDARDS.BLUE]: '蓝标',
-  [RETOUCH_STANDARDS.MASTER]: '大师',
-}
-
-/**
- * @description 流水状态
- */
-export const STREAM_STATE = {
-  WAIT_RETOUCH: 'wait_retouch', // 待修图
-  RETOUCHING: 'retouching', // 修图中
-  REVIEW_RETURN_RETOUCH: 'review_return_retouch', // 审核退回修图中
-  WAIT_REVIEW: 'wait_review', // 等待审核
-  REVIEWING: 'reviewing', // 审核中
-  FINISH: 'finish', // 审核完成
-  STORE_RETURN_RETOUCH: 'store_return_retouch', // 门店退回
-  HANGING: 'hanging' // 挂起中
-}
-
-/**
- * @description 流水状态中文
- */
-export const StreamState = {
-  [STREAM_STATE.WAIT_RETOUCH]: '待修图',
-  [STREAM_STATE.RETOUCHING]: '修图中',
-  [STREAM_STATE.REVIEW_RETURN_RETOUCH]: '审核退回修图中',
-  [STREAM_STATE.WAIT_REVIEW]: '等待审核',
-  [STREAM_STATE.REVIEWING]: '审核中',
-  [STREAM_STATE.FINISH]: '审核完成',
-  [STREAM_STATE.STORE_RETURN_RETOUCH]: '门店退回',
-  [STREAM_STATE.HANGING]: '挂起中'
-}
-
-/**
- * @description 修图要求
- */
-export const RETOUCH_ORDER = {
-  SMALL: 'small', // 缦图
-  MIDDLE: 'middle', // 蓝标
-  BIG: 'big', // 等待审核
-}
-
-/**
- * @description 修图状态中文
- */
-export const RetouchOrder = {
-  [RETOUCH_ORDER.SMALL]: '小',
-  [RETOUCH_ORDER.MIDDLE]: '中',
-  [RETOUCH_ORDER.BIG]: '大',
-}
+import { RetouchStandard, StreamState, RetouchOrder } from "@/utils/Enumerate"
 
 export interface SearchOrderInterface {
   base: {},
@@ -91,6 +28,7 @@ export interface SearchOrderInterface {
 
 export default class SearchOrderModel implements SearchOrderInterface {
   base = {}
+  id = '' // 流水id
   queueIndexs = '' // 订单在队列中的位置
   retouchStandards = '' // 修图标准
   orderInfos = { externalNum: '', streamNum: '', producName: '', photoCount: '' } // 订单信息
@@ -108,6 +46,7 @@ export default class SearchOrderModel implements SearchOrderInterface {
 
   constructor (searchOrderData: any) {
     this.base = searchOrderData
+    this.id = searchOrderData.id
     // 获取位置和修图标准信息
     this.queueIndexs = _.get(searchOrderData, 'queue_index') || '-'
     this.retouchStandards = RetouchStandard[_.get(searchOrderData, 'product.retouch_standard')] || '-'
