@@ -3,61 +3,43 @@
     <v-row>
       <v-col>
         <v-card>
-          <v-data-table :headers="headers1" :items="[orderInfo]" hide-default-footer disable-pagination disable-sort>
-            <template v-slot:[`item.streamNun`]="{ item }">
-              <div>
-                {{ item.orderInfos.streamNum }}
-              </div>
-            </template>
-            <template v-slot:[`item.orgName`]="{ item }">
-              <div>
-                {{ item.photographerOrgNames }}
-              </div>
-            </template>
-            <template v-slot:[`item.orderInfo`]="{ item }">
-              <div>
-                {{ item.orderInfos.producName }}
-              </div>
-            </template>
-            <template v-slot:[`item.photographer`]="{ item }">
-              <div>
-                {{ item.photographers }}
-              </div>
-            </template>
-            <template v-slot:[`item.storeName`]="{ item }">
-              <div>
-                {{ item.storeNames }}
-              </div>
-            </template>
-            <template v-slot:[`item.photoNum`]="{ item }">
-              <div>
-                {{ item.orderInfos.photoCount }}
-              </div>
-            </template>
-          </v-data-table>
-          <v-divider></v-divider>
-          <v-data-table :headers="headers2" :items="[orderInfo]" hide-default-footer disable-pagination disable-sort>
-            <template v-slot:[`item.retouchStandard`]="{ item }">
-              <div>
-                {{ item.retouchStandards }}
+          <div class="table-panel panel-order">
+            <div class="content-title">流水号</div>
+            <div class="content-title">所属机构</div>
+            <div class="content-title">拍摄产品</div>
+            <div class="content-title">摄影师</div>
+            <div class="content-title">门店</div>
+            <div class="content-title">照片数量</div>
+          </div>
+          <div class="table-panel panel-order">
+            <div class="panel-content">{{ orderInfo.orderInfos.streamNum }}</div>
+            <div class="panel-content">{{ orderInfo.photographerOrgNames }}</div>
+            <div class="panel-content">{{ orderInfo.orderInfos.producName }}</div>
+            <div class="panel-content">{{ orderInfo.photographers }}</div>
+            <div class="panel-content">{{ orderInfo.storeNames }}</div>
+            <div class="panel-content">{{ orderInfo.orderInfos.photoCount }}</div>
+          </div>
+          <div class="table-panel panel-grade">
+            <div class="content-title">修图标准</div>
+            <div class="content-title">当前状态</div>
+            <div v-if="orderInfo.retouchers.retoucher" class="content-title">修图师</div>
+            <div v-if="orderInfo.reviewers" class="content-title">审核人</div>
+          </div>
+          <div class="table-panel panel-grade">
+            <div class="panel-content">
+              <div class="standard-box">
+                {{ orderInfo.retouchStandards }}
                 <div class="standard-icon">
-                  <div v-if="item.retouchStandards == '缦图'" class="retouch-standard-manto"></div>
-                  <div v-if="item.retouchStandards == '蓝标'" class="retouch-standard-blue"></div>
-                  <div v-if="item.retouchStandards == '大师'" class="retouch-standard-master"></div>
+                  <div v-if="orderInfo.retouchStandards == '缦图'" class="retouch-standard-manto"></div>
+                  <div v-if="orderInfo.retouchStandards == '蓝标'" class="retouch-standard-blue"></div>
+                  <div v-if="orderInfo.retouchStandards == '大师'" class="retouch-standard-master"></div>
                 </div>
               </div>
-            </template>
-            <template v-slot:[`item.state`]="{ item }">
-              <div>
-                {{ item.states }}
-              </div>
-            </template>
-            <template v-slot:[`item.retoucher`]="{ item }">
-              <div>
-                {{ item.retouchers.retoucher }}
-              </div>
-            </template>
-          </v-data-table>
+            </div>
+            <div class="panel-content">{{ orderInfo.states }}</div>
+            <div v-if="orderInfo.retouchers.retoucher" class="panel-content">{{ orderInfo.retouchers.retoucher }}</div>
+            <div v-if="orderInfo.reviewers" class="panel-content">{{ orderInfo.reviewers }}</div>
+          </div>
         </v-card>
       </v-col>
     </v-row>
@@ -67,27 +49,54 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
 
-@Component
+@Component({
+})
 export default class PhotoDetail extends Vue {
-  private headers1: object[] = [
-    { text: '流水号', value: 'streamNun', width: 170 },
-    { text: '所属机构', value: 'orgName', width: 170 },
-    { text: '拍摄产品', value: 'orderInfo', width: 170 },
-    { text: '摄影师', value: 'photographer', width: 170 },
-    { text: '门店', value: 'storeName', width: 170 },
-    { text: '照片数量', value: 'photoNum', width: 170 },
-  ]
-  private headers2: object[] = [
-    { text: '修图标准', value: 'retouchStandard', width: 340 },
-    { text: '当前状态', value: 'state', width: 340 },
-    { text: '修图师', value: 'retoucher', width: 340 },
-  ]
-
   @Prop({ type: Object, required: true }) orderInfo!: any
 }
 </script>
 
 <style lang="less" scoped>
+.table-panel {
+  display: grid;
+  justify-items: center;
+}
+
+.panel-order {
+  grid-template-columns: repeat(6, 1fr);
+}
+
+.panel-order-retoucher {
+  grid-template-columns: repeat(6, 1fr);
+}
+
+.panel-grade {
+  display: flex;
+}
+
+.content-title {
+  width: 100%;
+  padding: 17px 3px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 22px;
+  color: #303133;
+  text-align: center;
+  background-color: #fafafa;
+}
+
+.panel-content {
+  width: 100%;
+  padding: 21px 3px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 14px;
+  color: #606266;
+  text-align: center;
+  word-break: break-word;
+  border-bottom: 1px solid #f2f6fc;
+}
+
 .standard-icon {
   display: inline-block;
   width: 16px;

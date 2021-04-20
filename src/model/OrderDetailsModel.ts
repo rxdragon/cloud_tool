@@ -137,12 +137,12 @@ export default class OrderDetailModel implements OrderDetailInterface {
     
     // 获取修图师和组长和机构信息
     this.retouchers.retoucher = _.get(orderDetailData, 'retoucher.name') || _.get(orderDetailData, 'retoucher.real_name') ||
-    _.get(orderDetailData, 'tags.values.retoucher_name') || '-'
+    _.get(orderDetailData, 'tags.values.retoucher_name') || ''
     this.retouchers.retoucherLeader = _.get(orderDetailData, 'retoucher.retoucher_leader.nickname') || _.get(orderDetailData, 'retoucher.retoucher_leader.name') || '-'
     this.retouchers.OrgName = _.get(orderDetailData, 'retoucher_org.name') || '-'
 
     // 获取审核人和摄影机构信息
-    this.reviewers = _.get(orderDetailData, 'reviewer.name') || _.get(orderDetailData, 'reviewer.real_name') || '-'
+    this.reviewers = _.get(orderDetailData, 'reviewer.name') || _.get(orderDetailData, 'reviewer.real_name') || ''
     this.photographerOrgNames = _.get(orderDetailData, 'order.photographer_org.name') || '-'
 
     // 获取修图和等待时间信息

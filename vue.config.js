@@ -68,7 +68,8 @@ module.exports = {
     'style-resources-loader': {
       preProcessor: 'less',
       patterns: [
-        resolve('src/assets/styles/variables.less')
+        '/Volumes/code/cloud_tool/src/styles/variables.less',
+        '/Volumes/code/cloud_tool/src/assets/styles/index.less',
       ]
     }
   },
