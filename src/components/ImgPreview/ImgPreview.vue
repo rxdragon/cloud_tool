@@ -2,57 +2,35 @@
   <div>
     <transition name="main">
       <div id="ImgPreview" ref="ImgPreview" v-show="viewerVisibleShow">
-        <!-- 预览窗的title-->
-        <div class="titleBar" ref="titleBar">
-          <div class="imgName">{{ imgName }}</div>
-          <div>
-            <v-icon large dark class="closeBtn" @click="visible()">
-              mdi-close-circle-outline
-            </v-icon>
-          </div>
-        </div>
-        <!--左右按钮-->
-        <div class="pre" ref="preCover">
-          <v-icon large dark @click="prevImg">
-            mdi-arrow-left-thin-circle-outline
-          </v-icon>
-        </div>
-
-        <div class="next" ref="nextCover">
-          <v-icon large dark @click="nextImg">
-            mdi-arrow-right-thin-circle-outline
-          </v-icon>
-        </div>
-
         <!-- 预览的图片区域-->
-        <div id="imgPreview">
-          <!--加载动画-->
-          <div class="loading" v-if="loading">
-            <v-progress-circular
-              indeterminate
-              size="64"
-            ></v-progress-circular>
-          </div>
-          <v-img
-            contain
-            min-height='700'
-            max-height="900"
-            class="img"
-            ref="img"
-            :src="imgSrc"
-          ></v-img>
-        </div>
-        <!--预览窗的功能区-->
-        <div class="toolBar" ref="toolBar">
-          <div class="btnGroup">
-            <div>
-              <v-icon large dark @click="download(imgIndex)">
-                mdi-download
-              </v-icon>
-            </div>
-          </div>
-        </div>
-        <!--end-->
+        <v-carousel height="100%" hide-delimiters hide-delimiter-background show-arrows-on-hover>
+          <v-carousel-item v-for="(item, i) in imgDataList" :key="i">
+            <v-sheet height="100%">
+              <v-row class="fill-height" align="center" justify="center">
+                <div class="img-display">
+                  <!--加载动画-->
+                  <div v-if="loading">
+                    <v-progress-circular indeterminate size="64"></v-progress-circular>
+                  </div>
+                  {{ item.title || imgName}}
+                  <v-img
+                    contain
+                    @click="visible()"
+                    max-height="900px"
+                    class="img"
+                    ref="img"
+                    :src="item.url"
+                  ></v-img>
+                  <div class="download-img">
+                    <v-icon large color="blue darken-2" @click="download(item)">
+                      mdi-download
+                    </v-icon>
+                  </div>
+                </div>
+              </v-row>
+            </v-sheet>
+          </v-carousel-item>
+        </v-carousel>
       </div>
     </transition>
   </div>
@@ -61,8 +39,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
 
-@Component({
-})
+@Component({})
 export default class ImgPreview extends Vue {
   @Prop() public viewerVisible!: boolean
   @Prop() public imgDataList!: any[]
@@ -110,74 +87,7 @@ export default class ImgPreview extends Vue {
 
   // 预览窗viewer的显示
   public visible () {
-    this.cleanData()
     this.viewerVisibleShow = false
-  }
-
-  // 清除数据
-  public cleanData () {
-    const arr = this.$data
-    for (const key in arr) {
-      if (arr.hasOwnProperty(key)) {
-        if (typeof arr[key] !== 'object') {
-          if (typeof arr[key] === 'string' && key !== 'imgName') {
-            this.changeData(key, 'string', this)
-          }
-          if (key === 'imgName') {
-            this.changeData(key, 'imgName', this)
-          }
-          if (typeof arr[key] === 'number') {
-            this.changeData(key, 'number', this)
-          }
-        }
-      }
-    }
-  }
-
-  // 修改值
-  public changeData (key: any, type: any, that: any) {
-    if (type === 'string') {
-      that[key] = ''
-    }
-    if (type === 'number') {
-      that[key] = 0
-    }
-    if (type === 'imgName') {
-      that[key] = 'loading error'
-    }
-  }
-
-  //  上一张图
-  public prevImg () {
-    if (this.imgI === 0) {
-      return
-    } else {
-      this.cleanData()
-      this.changeLoading(true)
-      setTimeout(() => {
-        this.imgDataListLength = this.imgData.length
-        this.imgI -= 1
-        const indexNext: number = this.imgI
-        this.init(indexNext - 1)
-      }, 120)
-    }
-  }
-
-  // 下一张图
-  public nextImg () {
-    let imgDataLength: number = this.imgData.length
-    if (this.imgI === imgDataLength - 1) {
-      return
-    } else {
-      this.cleanData()
-      this.changeLoading(true)
-      setTimeout(() => {
-        this.imgDataListLength = this.imgData.length
-        this.imgI += 1
-        const indexNext: number = this.imgI
-        this.init(indexNext + 1)
-      }, 120)
-    }
   }
 
   // 初始化
@@ -203,8 +113,8 @@ export default class ImgPreview extends Vue {
   }
 
   // 下载图片
-  public download (index: any) {
-    window.location.href = `${this.imgData[index].url}?attname=`
+  public download (item: any) {
+    window.location.href = `${item.url}?attname=`
   }
 
   // 改变loading状态
@@ -214,13 +124,15 @@ export default class ImgPreview extends Vue {
 
   // 设置预览图片
   public setPreviewImg (index: number) {
-    this.preloadImg(index).then((s) => {
-      this.initImgMsg(index)
-      this.changeLoading(false)
-    }).catch((f) => {
-      this.initImgMsg(index)
-      this.changeLoading(false)
-    })
+    this.preloadImg(index)
+      .then((s) => {
+        this.initImgMsg(index)
+        this.changeLoading(false)
+      })
+      .catch((f) => {
+        this.initImgMsg(index)
+        this.changeLoading(false)
+      })
   }
 
   // 预加载
@@ -264,13 +176,45 @@ export default class ImgPreview extends Vue {
 
   // 加载重试
   public retry () {
-    this.cleanData()
     this.imgElement.addEventListener('click', this.handleRetry)
   }
 }
 </script>
 
 <style lang="less" scoped>
+#ImgPreview {
+  position: fixed;
+  z-index: 2015;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: rgb(0, 0, 0, 0.55);
+}
+
+.img-version{
+  text-align: center;
+  font-weight: 400;
+  font-size: 17px;
+}
+
+.img-display{
+  width:auto;
+  height:auto;
+  max-width:100%;
+  max-height:100%;
+  text-align: center;
+  font-size: 17px;
+  font-weight: 400;
+}
+
+.download-img{
+  z-index: 2019;
+  padding-top: 10px;
+  display: block;
+}
+
 .main-enter,
 .main-leave-to {
   opacity: 0;

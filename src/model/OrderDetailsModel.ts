@@ -49,7 +49,7 @@ export default class OrderDetailModel implements OrderDetailInterface {
   storeNames = '' // 门店
   photographers = '' // 摄影师
   orderNotes = '' // 修图要求
-  photoStreams = '' // 照片流
+  photoStreams = [] // 照片流
   reviewers = '' // 审核人
   photographerOrgNames = '' // 摄影机构
   retouchTimes = '' // 修图时间

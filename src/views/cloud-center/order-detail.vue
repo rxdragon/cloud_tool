@@ -63,6 +63,3 @@ export default class OrderDetail extends Vue {
   }
 }
 </script>
-
-<style lang="less" scoped>
-</style>

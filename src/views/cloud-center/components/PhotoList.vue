@@ -31,7 +31,6 @@ export default class PhotoList extends Vue {
 </script>
 
 <style lang="less" scoped>
-@import '../../../styles/variables.less';
 .show-info {
   display: flex;
   justify-content: space-between;

@@ -903,21 +903,6 @@
     cssnano-preset-default "^4.0.0"
     postcss "^7.0.0"
 
-"@jamescoyle/vue-icon@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.npmjs.org/@jamescoyle/vue-icon/-/vue-icon-0.1.0.tgz"
-  integrity sha512-GMqRMlifaSV0mZgD2qBSAi+QsQSibdUHtJ40GoaC4C1nyX4pLGrFBS3Qhz9JTvEMqEXFJTtuDBQTsX9kj+3m3g==
-
-"@mdi/font@^5.9.55":
-  version "5.9.55"
-  resolved "https://npm.code.hzmantu.com/@mdi%2ffont/-/font-5.9.55.tgz"
-  integrity sha512-jswRF6q3eq8NWpWiqct6q+6Fg/I7nUhrxYJfiEM8JJpap0wVJLQdbKtyS65GdlK7S7Ytnx3TTi/bmw+tBhkGmg==
-
-"@mdi/js@^5.9.55":
-  version "5.9.55"
-  resolved "https://npm.code.hzmantu.com/@mdi%2fjs/-/js-5.9.55.tgz"
-  integrity sha512-BbeHMgeK2/vjdJIRnx12wvQ6s8xAYfvMmEAVsUx9b+7GiQGQ9Za8jpwp17dMKr9CgKRvemlAM4S7S3QOtEbp4A==
-
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
   resolved "https://registry.npm.taobao.org/@mrmlnc/readdir-enhanced/download/@mrmlnc/readdir-enhanced-2.2.1.tgz"
@@ -2978,11 +2963,6 @@ core-js@^2.4.0:
   version "2.6.11"
   resolved "https://registry.npm.taobao.org/core-js/download/core-js-2.6.11.tgz?cache=0&sync_timestamp=1592843203000&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fcore-js%2Fdownload%2Fcore-js-2.6.11.tgz"
   integrity sha1-OIMUafmSK97Y7iHJ3EaYXgOZMIw=
-
-core-js@^2.6.5:
-  version "2.6.12"
-  resolved "https://npm.code.hzmantu.com/core-js/-/core-js-2.6.12.tgz"
-  integrity sha512-Kb2wC0fvsWfQrgk8HU5lW6U/Lcs8+9aaYcy4ZFc6DDlo4nZ7n70dEgE5rtR0oG6ufKDUnrwfWL1mXR5ljDatrQ==
 
 core-js@^3.6.5:
   version "3.6.5"
@@ -8689,11 +8669,6 @@ uglify-js@3.4.x:
     commander "~2.19.0"
     source-map "~0.6.1"
 
-unauthorized@^0.1.0:
-  version "0.1.0"
-  resolved "https://npm.code.hzmantu.com/unauthorized/-/unauthorized-0.1.0.tgz"
-  integrity sha1-ewZWQlw9jvP0a6eCGCKt063JjVY=
-
 unicode-canonical-property-names-ecmascript@^1.0.4:
   version "1.0.4"
   resolved "https://registry.npm.taobao.org/unicode-canonical-property-names-ecmascript/download/unicode-canonical-property-names-ecmascript-1.0.4.tgz"
@@ -8930,7 +8905,7 @@ vm-browserify@^1.0.1:
   resolved "https://registry.npm.taobao.org/vm-browserify/download/vm-browserify-1.1.2.tgz"
   integrity sha1-eGQcSIuObKkadfUR56OzKobl3aA=
 
-vue-class-component@^7.0.2, vue-class-component@^7.1.0, vue-class-component@^7.2.3:
+vue-class-component@^7.1.0, vue-class-component@^7.2.3:
   version "7.2.6"
   resolved "https://registry.npm.taobao.org/vue-class-component/download/vue-class-component-7.2.6.tgz?cache=0&sync_timestamp=1601818949255&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fvue-class-component%2Fdownload%2Fvue-class-component-7.2.6.tgz"
   integrity sha1-hHHgN7jkdi9aRkaG4Z5a/HCFAuQ=
@@ -8971,17 +8946,6 @@ vue-hot-reload-api@^2.3.0:
   resolved "https://registry.npm.taobao.org/vue-hot-reload-api/download/vue-hot-reload-api-2.3.4.tgz"
   integrity sha1-UylVzB6yCKPZkLOp+acFdGV+CPI=
 
-vue-img-previewer@^0.2.3:
-  version "0.2.3"
-  resolved "https://npm.code.hzmantu.com/vue-img-previewer/-/vue-img-previewer-0.2.3.tgz"
-  integrity sha512-C1UzrhOdY2o9Y8Z39rYsdtLhfQPqqcLHpvrCM4f9El3Ps8a5EA7S2LpojL8f6YhjiKMkWYRkJiVsJbrqdbMCZg==
-  dependencies:
-    core-js "^2.6.5"
-    unauthorized "^0.1.0"
-    vue "^2.6.10"
-    vue-class-component "^7.0.2"
-    vue-property-decorator "^8.1.0"
-
 "vue-loader-v16@npm:vue-loader@^16.0.0-beta.7":
   version "16.0.0-beta.8"
   resolved "https://registry.npm.taobao.org/vue-loader/download/vue-loader-16.0.0-beta.8.tgz?cache=0&sync_timestamp=1600850430217&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fvue-loader%2Fdownload%2Fvue-loader-16.0.0-beta.8.tgz"
@@ -9002,7 +8966,7 @@ vue-loader@^15.9.2:
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
 
-vue-property-decorator@^8.1.0, vue-property-decorator@^8.4.2:
+vue-property-decorator@^8.4.2:
   version "8.5.1"
   resolved "https://registry.npm.taobao.org/vue-property-decorator/download/vue-property-decorator-8.5.1.tgz"
   integrity sha1-VxqRz40rUH9TfXm/gnWvMYRXL/8=
@@ -9035,7 +8999,7 @@ vue-template-es2015-compiler@^1.9.0:
   resolved "https://registry.npm.taobao.org/vue-template-es2015-compiler/download/vue-template-es2015-compiler-1.9.1.tgz"
   integrity sha1-HuO8mhbsv1EYvjNLsV+cRvgvWCU=
 
-vue@^2.6.10, vue@^2.6.11:
+vue@^2.6.11:
   version "2.6.12"
   resolved "https://registry.npm.taobao.org/vue/download/vue-2.6.12.tgz?cache=0&sync_timestamp=1602778277162&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fvue%2Fdownload%2Fvue-2.6.12.tgz"
   integrity sha1-9evU+mvShpQD4pqJau1JBEVskSM=
