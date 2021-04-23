@@ -5,13 +5,13 @@
     </v-overlay>
     <v-container v-if="!loading && orderInfo">
       <!-- 照片信息显示区域 -->
-      <photo-detail :order-info="orderInfo"></photo-detail>
+      <PhotoDetail :order-info="orderInfo" />
 
       <!-- 修图要求 -->
-      <retouch-note :order-info="orderInfo"></retouch-note>
+      <RetouchNote :order-info="orderInfo" />
 
       <!-- 照片流 -->
-      <photo-list :order-info="orderInfo"></photo-list>
+      <PhotoList :order-info="orderInfo" />
     </v-container>
   </div>
 </template>
@@ -39,9 +39,8 @@ export default class OrderDetail extends Vue {
       this.loading = true
       if (!this.$route.query.streamId) {
         this.$message.warning('请重新输入流水号！')
-        setTimeout(() => {
-          this.$router.push('/cloud-center/cloudOrderQuery')
-        }, 700)
+        await this.$delayLoading()
+        this.$router.push('/cloud-center/cloudOrderQuery')
         return
       }
       const req: any = {
@@ -50,12 +49,10 @@ export default class OrderDetail extends Vue {
       const data = await SearchOrderApi.searchOrderDetailByStream(req)
       if (!data) {
         this.$message.warning('此流水号暂无数据！')
-        setTimeout(() => {
-          this.$router.push('/cloud-center/cloudOrderQuery')
-        }, 700)
+        await this.$delayLoading()
+        this.$router.push('/cloud-center/cloudOrderQuery')
         return
       }
-      // todo 延迟一定时间后返回 前面页面
       this.orderInfo = data
     } finally {
       this.loading = false
