@@ -6,7 +6,6 @@
           contain
           :src="versionItem.url"
           :lazy-src="versionItem.url"
-          @click="imgPreview(location)"
           @load="onLoadImageSuccess"
           @error="onLoadImageError"
         >
@@ -38,7 +37,6 @@ import { Component, Vue, Prop } from 'vue-property-decorator'
 export default class SinglePhoto extends Vue {
   private imgLoading: boolean = true
   @Prop({ type: Object, required: true }) versionItem!: any
-  @Prop({ type: Number, required: true }) location!: number
   @Prop({ type: Object, required: true }) photoItem!: any
 
   downloadImg (val: { url: any }) {
@@ -58,11 +56,6 @@ export default class SinglePhoto extends Vue {
   onLoadImageError () {
     this.imgLoading = true
   }
-
-  imgPreview (location: any) {
-    this.$emit('showViewer', location)
-  }
-
 }
 </script>
 
