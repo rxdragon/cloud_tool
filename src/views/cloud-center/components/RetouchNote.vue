@@ -70,8 +70,6 @@ export default class RetouchNote extends Vue {
 </script>
 
 <style lang="less" scoped>
-@borderColor: #ebeef5;
-
 .panel-require {
   .panel-main {
     padding: 20px;

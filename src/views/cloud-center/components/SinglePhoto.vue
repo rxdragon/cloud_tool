@@ -1,7 +1,7 @@
 <template>
   <div class="single-photo">
     <div>
-      <v-avatar class="photo" tile size="243" height="253">
+      <v-avatar class="photo" tile size="100%">
         <v-img
           contain
           :src="versionItem.url"
@@ -21,10 +21,6 @@
           </template>
         </v-img>
       </v-avatar>
-    </div>
-    <div class="beneath-photo">
-      <v-btn text class="download-img" @click="downloadImg(versionItem)">下载照片</v-btn>
-      <span class="photo-type">{{ versionItem.title }}</span>
     </div>
   </div>
 </template>
@@ -58,38 +54,3 @@ export default class SinglePhoto extends Vue {
   }
 }
 </script>
-
-<style lang="less" scoped>
-.above-photo {
-  display: flex;
-  position: relative;
-  overflow: hidden;
-  margin: 0;
-  padding: 10px 10px;
-}
-
-.beneath-photo {
-  display: flex;
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 17px;
-}
-
-.photo-type {
-  display: flex;
-  padding: 9.5px 6px 0 0;
-  margin-left: auto;
-  justify-content: flex-end;
-}
-
-/deep/ .v-btn:not(.v-btn--round).v-size--default {
-  padding: 0 0;
-}
-
-.download-img {
-  color: #4669fb;
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 17px;
-}
-</style>
