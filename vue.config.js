@@ -68,7 +68,7 @@ module.exports = {
     'style-resources-loader': {
       preProcessor: 'less',
       patterns: [
-        resolve('src/assets/styles/variables.less')
+        resolve('src/styles/variables.less'),
       ]
     }
   },

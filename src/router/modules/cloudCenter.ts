@@ -31,7 +31,19 @@ const CloudCenter: RouteConfig = {
       name: 'EpibolyFix',
       component: () => import('@/views/cloud-center/epiboly-fix.vue'),
       meta: { title: '卡单修复', icon: '' }
-    }
+    },
+    {
+      path: 'cloudOrderQuery',
+      name: 'CloudOrderQuery',
+      component: () => import('@/views/cloud-center/cloud-order-query.vue'),
+      meta: { title: '云端订单查询', icon: '' }
+    },
+    {
+      path: 'cloudOrderQuery/orderDetail',
+      name: 'OrderDetail',
+      component: () => import('@/views/cloud-center/order-detail.vue'),
+      meta: { hidden: true },
+    },
   ]
 }
 
