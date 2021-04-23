@@ -9,6 +9,12 @@ const CloudCenter: RouteConfig = {
   meta: { title: '云端系统模块', icon: 'mdi-account-search' },
   children: [
     {
+      path: 'cloudOrderQuery',
+      name: 'CloudOrderQuery',
+      component: () => import('@/views/cloud-center/cloud-order-query.vue'),
+      meta: { title: '云端订单查询', icon: '' }
+    },
+    {
       path: 'levelSearch',
       name: 'LevelSearch',
       component: () => import('@/views/cloud-center/level-search.vue'),
@@ -31,12 +37,6 @@ const CloudCenter: RouteConfig = {
       name: 'EpibolyFix',
       component: () => import('@/views/cloud-center/epiboly-fix.vue'),
       meta: { title: '卡单修复', icon: '' }
-    },
-    {
-      path: 'cloudOrderQuery',
-      name: 'CloudOrderQuery',
-      component: () => import('@/views/cloud-center/cloud-order-query.vue'),
-      meta: { title: '云端订单查询', icon: '' }
     },
     {
       path: 'cloudOrderQuery/orderDetail',
