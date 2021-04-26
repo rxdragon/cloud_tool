@@ -10,7 +10,7 @@
           </v-card-title>
           <v-card-text>
             <!-- 操作记录时间线 -->
-            <v-card class="timeline-operation-record">
+            <v-card class="ma-3">
               <v-card-title>
                 <span>操作记录：</span>
               </v-card-title>
@@ -32,7 +32,7 @@
               </v-card-text>
             </v-card>
             <!-- 流水记录时间线 -->
-            <v-card v-if="orderInfo.record[stateIndex].streamRecord" class="timeline-stream-record">
+            <v-card v-if="orderInfo.record[stateIndex].streamRecord" class="ma-3">
               <v-card-title>
                 <span>流水记录：</span>
               </v-card-title>
@@ -61,7 +61,7 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
 
-@Component({})
+@Component
 export default class ProductList extends Vue {
   @Prop({ type: Object, required: true }) orderInfo!: any
 }
@@ -71,17 +71,5 @@ export default class ProductList extends Vue {
 .operation-record-content {
   padding: 15px;
   line-height: 29px;
-}
-
-.timeline-title {
-  margin: 12px;
-}
-
-.timeline-operation-record {
-  margin: 12px;
-}
-
-.timeline-stream-record {
-  margin: 12px;
 }
 </style>

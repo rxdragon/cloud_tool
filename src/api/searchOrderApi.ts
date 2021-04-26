@@ -45,7 +45,7 @@ export async function searchOrderDetailByStream (params: any): Promise<any> {
 }
 
 /**
- * 获取时间线数据
+ * @description 获取时间线数据
  */
 export async function searchOrderTimeLineByOrderNo (params: any): Promise<any> {
   const msg: any = await axios({
@@ -53,12 +53,5 @@ export async function searchOrderTimeLineByOrderNo (params: any): Promise<any> {
     method: 'GET',
     params
   })
-  const searchData = [msg].map((item: any) => {
-    // 初始化模型数据
-    const searchOrderDatas = new ProductDetailModel(item)
-    return {
-      ...searchOrderDatas,
-    }
-  })
-  return searchData ? searchData[0] : null
+  return new ProductDetailModel(msg)
 }

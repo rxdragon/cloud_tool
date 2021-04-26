@@ -12,7 +12,7 @@
             hideDetails
             clearable
             v-model.trim="seachOrder"
-            @keyup.native.enter="seachData"
+            @keyup.native.enter="getData"
           />
         </v-col>
         <v-col cols="12" sm="3" md="4" lg="4" xl="4">
@@ -20,7 +20,7 @@
         </v-col>
       </v-row>
     </v-container>
-    <v-container class="timeline" v-if="!loading && orderInfo">
+    <v-container class="pa-0" v-if="!loading && orderInfo">
       <!-- 产品信息显示区域 -->
       <ProductDetail :order-info="orderInfo" />
 
@@ -58,21 +58,13 @@ export default class OrderTimeLineQuery extends Vue{
         orderNo: this.seachOrder
       }
       const data = await SearchOrderApi.searchOrderTimeLineByOrderNo(req)
-      if (!data) {
-        this.$message.warning('此订单号暂无数据！')
-        return
-      }
       this.orderInfo = data
+    } catch {
+      this.$message.warning('此订单号暂无数据！')
+      this.orderInfo = {}
     } finally {
       this.loading = false
     }
   }
-  
 }
 </script>
-
-<style lang="less" scoped>
-.timeline{
-  padding: 0;
-}
-</style>

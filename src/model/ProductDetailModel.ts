@@ -53,13 +53,12 @@ export default class ProductDetailModel implements ProductDetailInterface {
       }
     }
     else {
-      this.record = _.get(searchOrderData, '订单状态分析.分析原因.产品详情').map((item: any) => {
+      const productInfo = _.get(searchOrderData, '订单状态分析.分析原因.产品详情') || []
+      this.record = productInfo.map((item: any) => {
         let operationRecord: any = null
-        if (!item.操作记录) {
-          operationRecord = null
-        }
-        else {
-          operationRecord = item.操作记录.map((item: any) => {
+
+        if (item['操作记录']) {
+          operationRecord = item['操作记录'].map((item: any) => {
             const recordState = item.split(/:\s+?/)[0].replace(/\[[^\[\]\n]*\]/, '') || '-'
             const recordTime = item.replace(recordState, '').replace(/:+?/, '')
             return {
@@ -68,11 +67,9 @@ export default class ProductDetailModel implements ProductDetailInterface {
             }
           })
         }
+
         let streamRecord: any = null
-        if (!item.流水记录) {
-          streamRecord = null
-        }
-        else {
+        if (item['流水记录']) {
           streamRecord = item.流水记录.map((item: any) => {
             const recordState = item.split(/(\([^\)]*\))/)[0] || '-'
             const recordTime = item.replace(recordState, '')
@@ -82,9 +79,10 @@ export default class ProductDetailModel implements ProductDetailInterface {
             }
           })
         }
+        
         return {
           operationRecord,
-          streamRecord,
+          streamRecord
         }
       })
     }

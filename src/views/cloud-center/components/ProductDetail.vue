@@ -1,19 +1,15 @@
 <template>
   <div class="product-detail">
-    <v-row>
-      <v-col>
-        <v-container>
-          <div class="detail-title">检查订单：</div>
-          <div class="detail-content">{{ orderInfo.checkOrder }}</div>
-          <div class="detail-title">订单状态：</div>
-          <div class="detail-content">{{ orderInfo.reasonAnalyze.orderState }}</div>
-          <div class="detail-title">接单：</div>
-          <div class="detail-content">{{ orderInfo.reasonAnalyze.receive }}</div>
-          <div class="detail-title">指派：</div>
-          <div class="detail-content">{{ orderInfo.reasonAnalyze.pointAt }}</div>
-        </v-container>
-      </v-col>
-    </v-row>
+    <v-container>
+      <div class="detail-title">检查订单：</div>
+      <div class="detail-content">{{ orderInfo.checkOrder }}</div>
+      <div class="detail-title">订单状态：</div>
+      <div class="detail-content">{{ orderInfo.reasonAnalyze.orderState }}</div>
+      <div class="detail-title">接单：</div>
+      <div class="detail-content">{{ orderInfo.reasonAnalyze.receive }}</div>
+      <div class="detail-title">指派：</div>
+      <div class="detail-content">{{ orderInfo.reasonAnalyze.pointAt }}</div>
+    </v-container>
   </div>
 </template>
 
