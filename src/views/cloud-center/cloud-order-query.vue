@@ -1,5 +1,5 @@
 <template>
-  <div class="rework-table-list">
+  <div class="oeder-query">
     <v-overlay :value="loading">
       <v-progress-circular indeterminate size="64"></v-progress-circular>
     </v-overlay>
@@ -55,7 +55,14 @@
         <div>
           <span>{{ item.queueIndexs }}</span>
           <div class="urgent-return-state">
-            <v-chip v-if="item.staticsUrgent" class="urgent-state" color="pink lighten-4" label text-color="red darken-1" x-small>
+            <v-chip
+              v-if="item.staticsUrgent"
+              class="urgent-state"
+              color="pink lighten-4"
+              label
+              text-color="red darken-1"
+              x-small
+            >
               急
             </v-chip>
             <v-chip v-if="item.isReturn" color="pink lighten-4" label text-color="red darken-1" x-small>
@@ -121,7 +128,7 @@
         </div>
       </template>
       <template v-slot:[`item.operation`]="{ item }">
-            <v-btn color="success" @click="showDetail(item)">流水详情</v-btn>
+        <v-btn color="success" @click="showDetail(item)">流水详情</v-btn>
       </template>
     </v-data-table>
   </div>
@@ -131,8 +138,7 @@
 import * as SearchOrderApi from '@/api/searchOrderApi'
 import { Component, Vue } from 'vue-property-decorator'
 
-@Component({
-})
+@Component({})
 export default class OrderQueryList extends Vue {
   private loading: any = false
   private seachOrder: string = ''
@@ -148,20 +154,20 @@ export default class OrderQueryList extends Vue {
     { text: '修图时间', value: 'retouchTime' },
     { text: '等待时间', value: 'waitTime' },
     { text: '当前状态', value: 'state' },
-    { text: '操作', value: 'operation' }
+    { text: '操作', value: 'operation' },
   ]
   private tableData: any = []
 
   /**
-   * @description 显示订单详情组件
+   * @description 显示订单详页面组件
    */
-  async showDetail ( item: any ) {
+  async showDetail (item: any) {
     const streamId = item.id || ''
     if (!streamId) return this.$message.warning('缺少流水信息')
-  
+
     this.$router.push({
       name: 'OrderDetail',
-      query: { streamId }
+      query: { streamId },
     })
   }
 
@@ -179,7 +185,7 @@ export default class OrderQueryList extends Vue {
       if (this.seachOrder) req.orderNum = this.seachOrder
       if (this.seachName) req.customerName = this.seachName
       if (this.seachStream) req.streamNum = this.seachStream
-      
+
       const data = await SearchOrderApi.searchOrderByNameOrderStream(req)
       if (!data.length) this.$message.warning('暂无数据')
       this.tableData = data
@@ -187,7 +193,6 @@ export default class OrderQueryList extends Vue {
       this.loading = false
     }
   }
-
 }
 </script>
 

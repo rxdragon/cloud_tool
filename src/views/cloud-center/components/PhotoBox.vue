@@ -9,7 +9,7 @@
             <span class="iseffects">{{ photoItem.special_efficacy }}</span>
           </div>
           <v-container>
-            <row>
+            <v-row>
               <v-col xs="6" sm="6" md="6" lg="4" xl="4" class="photobox" v-for="(versionItem, versionIndex) in photoItem.photoList" :key="versionIndex">
                 <v-container class="single-photo">
                   <SinglePhoto :versionItem='versionItem' :photoItem="photoItem" @click.native="showViewer(versionIndex)" />
@@ -20,7 +20,7 @@
                 </v-container>
                 <v-divider></v-divider>
               </v-col>
-            </row>
+            </v-row>
           </v-container>
           <ImgPreview
             :viewerVisible.sync="viewerVisible"
