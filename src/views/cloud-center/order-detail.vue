@@ -5,13 +5,13 @@
     </v-overlay>
     <v-container v-if="!loading && orderInfo">
       <!-- 照片信息显示区域 -->
-      <PhotoDetail :order-info="orderInfo" />
+      <photo-detail :order-info="orderInfo"></photo-detail>
 
       <!-- 修图要求 -->
-      <RetouchNote :order-info="orderInfo" />
+      <retouch-note :order-info="orderInfo"></retouch-note>
 
       <!-- 照片流 -->
-      <PhotoList :order-info="orderInfo" />
+      <photo-list :order-info="orderInfo"></photo-list>
     </v-container>
   </div>
 </template>
@@ -19,12 +19,13 @@
 <script lang="ts">
 import * as SearchOrderApi from '@/api/searchOrderApi'
 import { Component, Vue } from 'vue-property-decorator'
+import PhotoBox from './components/PhotoBox.vue'
 import PhotoList from './components/PhotoList.vue'
 import PhotoDetail from './components/PhotoDetail.vue'
 import RetouchNote from './components/RetouchNote.vue'
 
 @Component({
-  components: { PhotoDetail, RetouchNote, PhotoList }
+  components: { PhotoBox, PhotoDetail, RetouchNote, PhotoList }
 })
 export default class OrderDetail extends Vue {
   private loading: boolean = false
@@ -54,6 +55,7 @@ export default class OrderDetail extends Vue {
         }, 700)
         return
       }
+      // todo 延迟一定时间后返回 前面页面
       this.orderInfo = data
     } finally {
       this.loading = false

@@ -44,12 +44,6 @@ const CloudCenter: RouteConfig = {
       component: () => import('@/views/cloud-center/order-detail.vue'),
       meta: { hidden: true },
     },
-    {
-      path: 'orderTimeLineQuery',
-      name: 'OrderTimeLineQuery',
-      component: () => import('@/views/cloud-center/order-timeline-query.vue'),
-      meta: { title: '云端订单时间线查询', icon: '' }
-    }
   ]
 }
 

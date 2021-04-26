@@ -1,25 +1,27 @@
 <template>
   <div class="single-photo">
-    <v-avatar class="photo" tile size="100%">
-      <v-img
-        contain
-        :src="versionItem.url"
-        :lazy-src="versionItem.url"
-        @load="onLoadImageSuccess"
-        @error="onLoadImageError"
-      >
-        <template v-slot:default>
-          <v-row class="fill-height ma-0" align="center" justify="center">
-            <v-progress-circular v-show="imgLoading" indeterminate color="primary lighten-5"></v-progress-circular>
-            <div v-show="imgLoading" slot="error" class="image-slot">
-              <i class="el-icon-picture-outline" />
-              <span class="image-error-tip">加载失败...</span>
-              <v-btn text class="debug-network-button">诊断网络</v-btn>
-            </div>
-          </v-row>
-        </template>
-      </v-img>
-    </v-avatar>
+    <div>
+      <v-avatar class="photo" tile size="100%">
+        <v-img
+          contain
+          :src="versionItem.url"
+          :lazy-src="versionItem.url"
+          @load="onLoadImageSuccess"
+          @error="onLoadImageError"
+        >
+          <template v-slot:default>
+            <v-row class="fill-height ma-0" align="center" justify="center">
+              <v-progress-circular v-show="imgLoading" indeterminate color="primary lighten-5"></v-progress-circular>
+              <div v-show="imgLoading" slot="error" class="image-slot">
+                <i class="el-icon-picture-outline" />
+                <span class="image-error-tip">加载失败...</span>
+                <v-btn text class="debug-network-button">诊断网络</v-btn>
+              </div>
+            </v-row>
+          </template>
+        </v-img>
+      </v-avatar>
+    </div>
   </div>
 </template>
 
