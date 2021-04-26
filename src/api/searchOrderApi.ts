@@ -44,6 +44,9 @@ export async function searchOrderDetailByStream (params: any): Promise<any> {
   return searchData ? searchData[0] : null
 }
 
+/**
+ * 获取时间线数据
+ */
 export async function searchOrderTimeLineByOrderNo (params: any): Promise<any> {
   const msg: any = await axios({
     url: '/project_paperless/debug/debug',
@@ -51,6 +54,7 @@ export async function searchOrderTimeLineByOrderNo (params: any): Promise<any> {
     params
   })
   const searchData = [msg].map((item: any) => {
+    // 初始化模型数据
     const searchOrderDatas = new ProductDetailModel(item)
     return {
       ...searchOrderDatas,

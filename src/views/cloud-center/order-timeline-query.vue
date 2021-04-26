@@ -16,43 +16,63 @@
           />
         </v-col>
         <v-col cols="12" sm="3" md="4" lg="4" xl="4">
-          <v-btn color="primary" @click="showTimeLine(seachOrder)">查询</v-btn>
+          <v-btn color="primary" @click="getData">查询</v-btn>
         </v-col>
       </v-row>
     </v-container>
-    <v-container>
-      <TimeLine v-if="timeLineDetail" :seach-order="seachOrder"/>
+    <v-container class="timeline" v-if="!loading && orderInfo">
+      <!-- 产品信息显示区域 -->
+      <ProductDetail :order-info="orderInfo" />
+
+      <!-- 时间线 -->
+      <ProductList :order-info="orderInfo" />
     </v-container>
   </div>
 </template>
 
 <script lang="ts">
+import * as SearchOrderApi from '@/api/searchOrderApi'
 import { Component, Vue } from 'vue-property-decorator'
-import TimeLine from './components/TimeLine.vue'
+import ProductDetail from './components/ProductDetail.vue'
+import ProductList from './components/ProductList.vue'
 
 @Component({
-  components: { TimeLine }
+  components: { ProductList, ProductDetail }
 })
 export default class OrderTimeLineQuery extends Vue{
-  private loading: any = false
-  private timeLineDetail: boolean = false
+  private loading: boolean = false
+  private orderInfo: any = null
   private seachOrder: string = ''
 
   /**
-   * @description 显示订单详情组件
+   * @description 获取数据
    */
-  async showTimeLine (orderId: any) {
-    const orderNo = orderId || ''
-    this.loading = true
-    if (!orderNo){
+  async getData () {
+    try {
+      this.loading = true
+      if (!this.seachOrder) {
+        this.$message.warning('请输入订单号！')
+        return
+      }
+      const req: any = {
+        orderNo: this.seachOrder
+      }
+      const data = await SearchOrderApi.searchOrderTimeLineByOrderNo(req)
+      if (!data) {
+        this.$message.warning('此订单号暂无数据！')
+        return
+      }
+      this.orderInfo = data
+    } finally {
       this.loading = false
-      return this.$message.warning('缺少订单信息')
-    }
-    else {
-      this.loading = false
-      this.timeLineDetail = true
     }
   }
   
 }
 </script>
+
+<style lang="less" scoped>
+.timeline{
+  padding: 0;
+}
+</style>
