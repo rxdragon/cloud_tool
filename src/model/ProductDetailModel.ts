@@ -13,7 +13,7 @@ export default class ProductDetailModel implements ProductDetailInterface {
   record = {} // 操作记录
   constructor (searchOrderData: any) {
     this.base = searchOrderData
-    this.checkOrder = searchOrderData.检查接单
+    this.checkOrder = searchOrderData['检查接单']
     this.reasonAnalyze.productDetail = _.get(searchOrderData, '订单状态分析.分析原因.产品详情').map((item: any) => {
       const productState = item['产品状态'] || '-'
       const operationRecord = item['操作记录'] || '-'

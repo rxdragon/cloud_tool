@@ -1,15 +1,23 @@
 <template>
   <div class="product-detail">
-    <v-container>
-      <div class="detail-title">检查订单：</div>
-      <div class="detail-content">{{ orderInfo.checkOrder }}</div>
-      <div class="detail-title">订单状态：</div>
-      <div class="detail-content">{{ orderInfo.reasonAnalyze.orderState }}</div>
-      <div class="detail-title">接单：</div>
-      <div class="detail-content">{{ orderInfo.reasonAnalyze.receive }}</div>
-      <div class="detail-title">指派：</div>
-      <div class="detail-content">{{ orderInfo.reasonAnalyze.pointAt }}</div>
-    </v-container>
+    <v-row>
+      <v-col class="detail-row" cols="12" sm="6">
+        <div class="detail-title">检查订单：</div>
+        <div class="detail-content">{{ orderInfo.checkOrder }}</div>
+      </v-col>
+      <v-col class="detail-row" cols="12" sm="6">
+        <div class="detail-title">订单状态：</div>
+        <div class="detail-content">{{ orderStateInfo }}</div>
+      </v-col>
+      <v-col class="detail-row" cols="12" sm="6">
+        <div class="detail-title">接单：</div>
+        <div class="detail-content">{{ receiveInfo }}</div>
+      </v-col>
+      <v-col class="detail-row" cols="12" sm="6">
+        <div class="detail-title">指派：</div>
+        <div class="detail-content">{{ orderInfo.reasonAnalyze.pointAt }}</div>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
@@ -19,31 +27,46 @@ import { Component, Vue, Prop } from 'vue-property-decorator'
 @Component({})
 export default class ProductDetail extends Vue {
   @Prop({ type: Object, required: true }) orderInfo!: any
+
+  get receiveInfo () {
+    let receive = this.orderInfo.reasonAnalyze.receive
+    receive = receive.replace(/;/g, '\n')
+    return receive
+  }
+
+  get orderStateInfo () {
+    let orderStateInfo = this.orderInfo.reasonAnalyze.orderState
+    orderStateInfo = orderStateInfo.replace(/[\(, \[, \]]/g, '')
+    orderStateInfo = orderStateInfo.replace(/\)/g, '\n')
+    return orderStateInfo
+  }
 }
 </script>
 
 <style lang="less" scoped>
-.detail-title {
-  display: inline-block;
-  width: 10%;
-  padding: 17px 3px 8px 3px;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 16px;
-  color: #303133;
-  text-align: left;
+.product-detail {
+  padding: 20px;
 }
 
-.detail-content {
-  display: inline-block;
-  width: 90%;
+.detail-row {
+  display: flex;
   padding: 17px 3px 8px 3px;
-  font-size: 14px;
-  font-weight: 500;
   line-height: 16px;
   color: #303133;
   text-align: left;
-  word-break: break-all;
-  border-bottom: 1px solid #0b0d0f;
+  font-weight: 500;
+  font-size: 14px;
+
+  .detail-title {
+    flex-shrink: 0;
+    width: 80px;
+  }
+
+  .detail-content {
+    width: 100%;
+    word-break: break-all;
+    border-bottom: 1px solid #0b0d0f;
+    white-space: pre-wrap;
+  }
 }
 </style>
