@@ -15,9 +15,9 @@ export default class ProductDetailModel implements ProductDetailInterface {
     this.base = searchOrderData
     this.checkOrder = searchOrderData.检查接单
     this.reasonAnalyze.productDetail = _.get(searchOrderData, '订单状态分析.分析原因.产品详情').map((item: any) => {
-      const productState = item.产品状态 || '-'
-      const operationRecord = item.操作记录 || '-'
-      const streamRecord = item.流水记录 || '-'
+      const productState = item['产品状态'] || '-'
+      const operationRecord = item['操作记录'] || '-'
+      const streamRecord = item['流水记录'] || '-'
       return {
         productState,
         operationRecord,
@@ -26,7 +26,7 @@ export default class ProductDetailModel implements ProductDetailInterface {
     })
 
     /**
-     * 增加了对数据时候存在的校验，提高了前端视图的稳定性 
+     * 增加了对数据不存在时的校验，提高了前端视图的稳定性 
      */
     if (!_.get(searchOrderData, '订单状态分析.分析原因.产品详情')) {
       this.record = () => {
@@ -61,21 +61,37 @@ export default class ProductDetailModel implements ProductDetailInterface {
           operationRecord = item['操作记录'].map((item: any) => {
             const recordState = item.split(/:\s+?/)[0].replace(/\[[^\[\]\n]*\]/, '') || '-'
             const recordTime = item.replace(recordState, '').replace(/:+?/, '')
+            let color = 'primary'
+            if (recordState.indexOf('中') !== -1){
+              color = 'red'
+            }
+            else if (recordState.indexOf('待') !== -1) {
+              color = 'yellow'
+            }
             return {
               recordState,
               recordTime,
+              color
             }
           })
         }
 
         let streamRecord: any = null
         if (item['流水记录']) {
-          streamRecord = item.流水记录.map((item: any) => {
+          streamRecord = item['流水记录'].map((item: any) => {
             const recordState = item.split(/(\([^\)]*\))/)[0] || '-'
             const recordTime = item.replace(recordState, '')
+            let color = 'primary'
+            if (recordState.indexOf('中') !== -1){
+              color = 'red'
+            }
+            else if (recordState.indexOf('待') !== -1) {
+              color = 'yellow'
+            }
             return {
               recordState,
               recordTime,
+              color
             }
           })
         }
@@ -86,7 +102,7 @@ export default class ProductDetailModel implements ProductDetailInterface {
         }
       })
     }
-
+    
     this.reasonAnalyze.pointAt = _.get(searchOrderData, '订单状态分析.分析原因.指派') || '-'
     this.reasonAnalyze.receive = _.get(searchOrderData, '订单状态分析.分析原因.接单') || '-'
     this.reasonAnalyze.orderState = _.get(searchOrderData, '订单状态分析.分析原因.订单状态') || '-'

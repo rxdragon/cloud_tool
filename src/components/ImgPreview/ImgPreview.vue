@@ -13,9 +13,9 @@
                     <v-progress-circular indeterminate size="64"></v-progress-circular>
                   </div>
                   {{ item.title }}
-                  <v-img contain @click="visible" max-height="900px" class="img" ref="img" :src="item.url"></v-img>
+                  <v-img contain @click="visible" class="img-content" ref="img" :src="item.url"></v-img>
                   <div class="download-img">
-                    <v-icon large color="blue darken-2" @click="download(imgSrc)">
+                    <v-icon large color="blue darken-2" @click="download(item)">
                       mdi-download
                     </v-icon>
                   </div>
@@ -38,7 +38,6 @@ export default class ImgPreview extends Vue {
   @Prop() public imgDataList!: any[]
   @Prop() public imgIndex!: number
 
-  public imgSrc: string = '' // 预览图片的src
   public imgName: string = 'loading error' // 图片名
   public loading: boolean = false // 加载动画
   public error: boolean = false // 错误图片的加载状态
@@ -64,8 +63,8 @@ export default class ImgPreview extends Vue {
   }
 
   // 下载图片
-  public download (src: any) {
-    window.location.href = `${src}?attname=`
+  public download (item: any) {
+    window.location.href = `${item.url}?attname=`
   }
 }
 </script>
@@ -86,11 +85,11 @@ export default class ImgPreview extends Vue {
   height: 100%;
 }
 
-.v-window .prev-img{
+.v-window .prev-img {
   display: none;
 }
 
-.v-window:hover .prev-img{
+.v-window:hover .prev-img {
   display: block;
   z-index: 2030;
   position: absolute;
@@ -99,11 +98,11 @@ export default class ImgPreview extends Vue {
   top: 50%;
 }
 
-.v-window .next-img{
+.v-window .next-img {
   display: none;
 }
 
-.v-window:hover .next-img{
+.v-window:hover .next-img {
   display: block;
   z-index: 2030;
   position: absolute;
@@ -127,19 +126,21 @@ export default class ImgPreview extends Vue {
 }
 
 .img-display {
-  width: auto;
-  height: auto;
-  max-width: 100%;
-  max-height: 100%;
+  width: 100%;
+  height: 80%;
   text-align: center;
   font-size: 17px;
   font-weight: 400;
-}
 
-.download-img {
-  z-index: 2019;
-  padding-top: 10px;
-  display: block;
+  .img-content {
+    height: 100%;
+  }
+
+  .download-img {
+    z-index: 2019;
+    padding-top: 10px;
+    display: block;
+  }
 }
 
 .main-enter,

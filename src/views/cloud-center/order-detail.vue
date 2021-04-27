@@ -4,6 +4,7 @@
       <v-progress-circular indeterminate size="64"></v-progress-circular>
     </v-overlay>
     <v-container v-if="!loading && orderInfo">
+      <v-btn color='primary' @click="goback">返回</v-btn>
       <!-- 照片信息显示区域 -->
       <PhotoDetail :order-info="orderInfo" />
 
@@ -58,6 +59,13 @@ export default class OrderDetail extends Vue {
     } finally {
       this.loading = false
     }
+  }
+
+  /**
+   * @description 返回搜索页面
+   */
+  goback () {
+    this.$router.push('/cloud-center/cloudOrderQuery')
   }
 }
 </script>

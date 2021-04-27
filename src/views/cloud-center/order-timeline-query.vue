@@ -61,7 +61,6 @@ export default class OrderTimeLineQuery extends Vue{
       this.orderInfo = data
     } catch {
       this.$message.warning('此订单号暂无数据！')
-      this.orderInfo = {}
     } finally {
       this.loading = false
     }
