@@ -39,9 +39,8 @@ export default class OrderDetail extends Vue {
       this.loading = true
       if (!this.$route.query.streamId) {
         this.$message.warning('请重新输入流水号！')
-        setTimeout(() => {
-          this.$router.push('/cloud-center/cloudOrderQuery')
-        }, 700)
+        await this.$delayLoading()
+        this.$router.push('/cloud-center/cloudOrderQuery')
         return
       }
       const req: any = {
@@ -50,9 +49,8 @@ export default class OrderDetail extends Vue {
       const data = await SearchOrderApi.searchOrderDetailByStream(req)
       if (!data) {
         this.$message.warning('此流水号暂无数据！')
-        setTimeout(() => {
-          this.$router.push('/cloud-center/cloudOrderQuery')
-        }, 700)
+        await this.$delayLoading()
+        this.$router.push('/cloud-center/cloudOrderQuery')
         return
       }
       this.orderInfo = data

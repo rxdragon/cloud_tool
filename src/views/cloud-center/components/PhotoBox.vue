@@ -2,7 +2,7 @@
   <div class="photo-box">
     <v-row>
       <v-col>
-        <v-card>
+        <v-card elevation="0">
           <div class="above-photo">
             <span>｜</span>
             {{ '照片  ' + (index + 1) }}
@@ -10,15 +10,14 @@
           </div>
           <v-container>
             <v-row>
-              <v-col xs="6" sm="6" md="6" lg="4" xl="4" class="photobox" v-for="(versionItem, versionIndex) in photoItem.photoList" :key="versionIndex">
-                <v-container class="single-photo">
+              <v-col cols="12" xs="12" sm="6" md="6" lg="4" xl="3" class="photo-version-list" v-for="(versionItem, versionIndex) in photoItem.photoList" :key="versionIndex">
+                <v-container class="photo-version-item">
                   <SinglePhoto :versionItem='versionItem' :photoItem="photoItem" @click.native="showViewer(versionIndex)" />
                   <div class="beneath-photo">
                     <v-btn text class="download-img" @click="downloadImg(versionItem)">下载照片</v-btn>
                     <span class="photo-type">{{ versionItem.title }}</span>
                   </div>
                 </v-container>
-                <v-divider></v-divider>
               </v-col>
             </v-row>
           </v-container>
@@ -73,14 +72,15 @@ export default class PhotoBox extends Vue {
 </script>
 
 <style lang="less" scoped>
-.photobox {
+.photo-version-list {
   display: inline-block;
-  padding: 6px;
-  background-color: #f5f7fa;
 }
 
-.single-photo{
+.photo-version-item {
   padding: 0;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  overflow: hidden;
 }
 
 .above-photo {
@@ -92,8 +92,9 @@ export default class PhotoBox extends Vue {
 }
 
 .beneath-photo {
-  padding-top: 7px;
   display: flex;
+  background-color: #fff;
+  padding-top: 7px;
   font-size: 12px;
   font-weight: 400;
   line-height: 17px;

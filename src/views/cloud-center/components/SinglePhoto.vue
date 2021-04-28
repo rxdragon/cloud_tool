@@ -1,7 +1,8 @@
 <template>
   <div class="single-photo">
-    <v-avatar class="photo" tile size="100%">
+    <div class="image-box" tile>
       <v-img
+        class="image-content"
         contain
         :src="versionItem.url"
         :lazy-src="versionItem.url"
@@ -19,7 +20,7 @@
           </v-row>
         </template>
       </v-img>
-    </v-avatar>
+    </div>
   </div>
 </template>
 
@@ -52,3 +53,24 @@ export default class SinglePhoto extends Vue {
   }
 }
 </script>
+
+<style lang="less" scoped>
+.single-photo {
+  background-color: #f5f7fa;
+}
+
+.image-box {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 100%;
+  overflow: hidden;
+  border-radius: 4px;
+
+  .image-content {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+}
+</style>

@@ -2,7 +2,7 @@
   <div class="photo-detail">
     <v-row>
       <v-col>
-        <v-card>
+        <v-card elevation="0">
           <div class="detail-table">
             <div class="table-panel">
               <div class="content-title">流水号</div>

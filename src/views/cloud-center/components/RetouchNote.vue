@@ -2,7 +2,7 @@
   <div class="retouch-note">
     <v-row>
       <v-col>
-        <v-card>
+        <v-card elevation="0">
           <v-card-text>
             <v-chip class="ma-2" color="#edf0ff" label text-color="#4669FB">
               {{ '眼睛增大幅度：' + orderInfo.retouchClaims.eye }}
