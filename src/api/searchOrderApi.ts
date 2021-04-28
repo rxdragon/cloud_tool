@@ -1,6 +1,7 @@
 import axios from '@/plugins/axios'
 import SearchOrderModel, { SearchOrderInterface } from '@/model/SearchOrderModel'
 import OrderDetailModel from '@/model/OrderDetailsModel'
+import ProductDetailModel from '@/model/ProductDetailModel'
 
 export async function searchOrderByNameOrderStream (params: any): Promise<SearchOrderInterface[]> {
   const msg: any = await axios({
@@ -32,7 +33,6 @@ export async function searchOrderDetailByStream (params: any): Promise<any> {
   })
   const searchData = [msg].map((item: any) => {
     const searchOrderDatas = new OrderDetailModel(item)
-    
     const isReceipted = Boolean(_.get(item, 'receipt_at'))
     const isReturn = item.state === 'review_return_retouch'
     return {
@@ -42,4 +42,16 @@ export async function searchOrderDetailByStream (params: any): Promise<any> {
     }
   })
   return searchData ? searchData[0] : null
+}
+
+/**
+ * @description 获取时间线数据
+ */
+export async function searchOrderTimeLineByOrderNo (params: any): Promise<any> {
+  const msg: any = await axios({
+    url: '/project_paperless/debug/debug',
+    method: 'GET',
+    params
+  })
+  return new ProductDetailModel(msg)
 }

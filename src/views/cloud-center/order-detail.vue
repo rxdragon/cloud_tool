@@ -4,6 +4,7 @@
       <v-progress-circular indeterminate size="64"></v-progress-circular>
     </v-overlay>
     <v-container v-if="!loading && orderInfo">
+      <v-btn color='primary' @click="goback">返回</v-btn>
       <!-- 照片信息显示区域 -->
       <PhotoDetail :order-info="orderInfo" />
 
@@ -19,13 +20,12 @@
 <script lang="ts">
 import * as SearchOrderApi from '@/api/searchOrderApi'
 import { Component, Vue } from 'vue-property-decorator'
-import PhotoBox from './components/PhotoBox.vue'
 import PhotoList from './components/PhotoList.vue'
 import PhotoDetail from './components/PhotoDetail.vue'
 import RetouchNote from './components/RetouchNote.vue'
 
 @Component({
-  components: { PhotoBox, PhotoDetail, RetouchNote, PhotoList }
+  components: { PhotoDetail, RetouchNote, PhotoList }
 })
 export default class OrderDetail extends Vue {
   private loading: boolean = false
@@ -57,6 +57,13 @@ export default class OrderDetail extends Vue {
     } finally {
       this.loading = false
     }
+  }
+
+  /**
+   * @description 返回搜索页面
+   */
+  goback () {
+    this.$router.push('/cloud-center/cloudOrderQuery')
   }
 }
 </script>

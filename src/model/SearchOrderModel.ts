@@ -75,7 +75,7 @@ export default class SearchOrderModel implements SearchOrderInterface {
         special_efficacy,
         origin_photo_path
       }
-    })
+    }) || {}
 
     // 获取修图师和组长和机构信息
     this.retouchers.retoucher = _.get(searchOrderData, 'retoucher.name') || _.get(searchOrderData, 'retoucher.real_name') ||

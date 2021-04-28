@@ -17,13 +17,17 @@ export function joinTimeSpan (time: any, addDay = 0) {
  * @param {*} time
  */
 export function waitTime (time: string | number | Date, passTime: string | number | Date) {
+  time = time.toString()
+  passTime = passTime.toString()
   const nowTime = new Date().getTime()
-  const valueTime = new Date(time).getTime()
+  const valueTime = new Date(Date.parse(time.replace(/-/g, "/"))).getTime()
+  
   let passAtTime: any
   if (passTime) {
-    passAtTime = new Date(passTime).getTime()
+    passAtTime = new Date(Date.parse(passTime.replace(/-/g, "/"))).getTime()
   }
   let differ: any = passTime ? (passAtTime - valueTime) : (nowTime - valueTime)
   differ = (differ / 1000 / 60).toFixed(0) + 'min'
+  
   return differ
 }
