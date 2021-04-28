@@ -231,3 +231,34 @@ export function fixShowPicStream (params: any) {
     params
   })
 }
+
+
+/**
+ * @description 发送修图师wsId
+ */
+ type sendStaffWsParams = {
+  staffId: string | number,
+  type?: string,
+  content?: string[]
+}
+export function sendStaffWs (params: sendStaffWsParams) {
+  params.type = 'sendStaffWs'
+  params.content = ['cloud_tool-network']
+
+  return axios({
+    url: 'https://api.dev.hzmantu.com/project_cloud/temple/testSendWsByStaffId',
+    method: 'POST',
+    data: params
+  })
+}
+
+type getStaffInfoParams = {
+  staffId: string | number,
+}
+export function getStaffNetworkInfo (params: getStaffInfoParams) {
+  return axios({
+    url: 'https://api.dev.hzmantu.com/project_cloud/temple/getSendWsByStaffIdCache',
+    method: 'GET',
+    params
+  })
+}

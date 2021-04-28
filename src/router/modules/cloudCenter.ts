@@ -15,6 +15,18 @@ const CloudCenter: RouteConfig = {
       meta: { title: '云端订单查询', icon: '' }
     },
     {
+      path: 'orderTimeLineQuery',
+      name: 'OrderTimeLineQuery',
+      component: () => import('@/views/cloud-center/order-timeline-query.vue'),
+      meta: { title: '云端订单时间线查询', icon: '' }
+    },
+    {
+      path: 'networkTest',
+      name: 'NetworkTest',
+      component: () => import('@/views/cloud-center/network-test.vue'),
+      meta: { title: '云端网络测速', icon: '' }
+    },
+    {
       path: 'levelSearch',
       name: 'LevelSearch',
       component: () => import('@/views/cloud-center/level-search.vue'),
@@ -43,12 +55,6 @@ const CloudCenter: RouteConfig = {
       name: 'OrderDetail',
       component: () => import('@/views/cloud-center/order-detail.vue'),
       meta: { hidden: true },
-    },
-    {
-      path: 'orderTimeLineQuery',
-      name: 'OrderTimeLineQuery',
-      component: () => import('@/views/cloud-center/order-timeline-query.vue'),
-      meta: { title: '云端订单时间线查询', icon: '' }
     }
   ]
 }
