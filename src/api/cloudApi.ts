@@ -243,7 +243,10 @@ export function fixShowPicStream (params: any) {
 }
 export function sendStaffWs (params: sendStaffWsParams) {
   params.type = 'sendStaffWs'
-  params.content = ['cloud_tool-network']
+
+  if (!params.content) {
+    params.content = ['cloud_tool-network']
+  }
 
   return axios({
     url: 'https://api.dev.hzmantu.com/project_cloud/temple/testSendWsByStaffId',

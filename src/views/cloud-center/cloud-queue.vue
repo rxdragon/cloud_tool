@@ -18,7 +18,7 @@
     <div class="input-box">
       <div class="time-date">{{ timeDate }}</div>
       <div class="history-code" v-for="(item, index) in historyValue" :key="index">➜ ~ {{ item.code }} {{ `\n` }}{{ item.result }}</div>
-      <div class="row-code">➜ ~ <input type="text" contenteditable v-model.trim="inputValue" @keydown.enter="submitDate" /></div>
+      <div class="row-code">➜ ~ <input type="textarea" contenteditable v-model.trim="inputValue" @keydown.enter.stop="submitDate" /><p class="spinner" v-show="loading">[/]</p></div>
     </div>
   </div>
 </template>
@@ -36,6 +36,8 @@ export default class CloudQueue extends Vue {
   private timeDate: string = ''
   private inputValue: string = ''
   private historyValue: any[] = []
+  private loading: boolean = false
+  private getCount: number = 0
 
   created () {
     let date = new Date().toString()
@@ -172,7 +174,10 @@ export default class CloudQueue extends Vue {
     this.ShowAll([spinners, glitches, rebootingText])
   }
 
-  async submitDate () {
+  async submitDate (): Promise<void> {
+    if (this.loading) return
+    const isExec = /^link\s\d{6}\s/g
+    const isWsCloud = this.inputValue.match(isExec)
     if (this.inputValue === 'sudo fix') {
       this.historyValue.push({
         code: this.inputValue,
@@ -185,12 +190,63 @@ export default class CloudQueue extends Vue {
       setTimeout(() => {
         this.resetAnmiton()
       }, 2000)
+    } else if (isWsCloud) {
+      let staffId = isWsCloud[0].replace('link', '')
+      staffId = staffId.trim()
+      let exec = this.inputValue.replace(isWsCloud[0], '')
+      exec = exec.trim()
+      this.sendWsToCloud(staffId, exec)
     } else {
       this.historyValue.push({
         code: this.inputValue,
         result: 'zsh: can not find zhangzhiguo'
       })
       this.inputValue = ''
+    }
+  }
+
+  /**
+   * @description 发送消息到ws
+   */
+  async sendWsToCloud (staffId: string, exec: string) {
+    this.loading = true
+    const req = {
+      staffId,
+      content: ['cloud_tool_exce', exec]
+    }
+    await CloudApi.sendStaffWs(req)
+    this.getStaffNetworkInfo(staffId)
+  }
+
+  async getStaffNetworkInfo (staffId: string) {
+    const req = { staffId }
+    const res: any = await CloudApi.getStaffNetworkInfo(req)
+    if (!res) {
+      if (this.getCount > 5) {
+        this.loading = false
+        this.getCount = 0
+        this.historyValue.push({
+          code: this.inputValue,
+          result: '请求超时'
+        })
+        this.inputValue = ''
+        return
+      } else {
+        setTimeout(() => {
+          this.getStaffNetworkInfo(staffId)
+          this.getCount++
+        }, 2000)
+        return
+      }
+    } else {
+      const { message } = res.message
+      this.historyValue.push({
+        code: this.inputValue,
+        result: message
+      })
+      this.inputValue = ''
+      this.loading = false
+      this.getCount = 0
     }
   }
 }
@@ -207,7 +263,7 @@ export default class CloudQueue extends Vue {
   height: calc(100% + 12px);
   width: calc(100% + 24px);
   margin: -12px 0 0 -12px;
-
+  display: grid;
   font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier,
     monospace;
   font-size: 3vw;
@@ -218,8 +274,9 @@ export default class CloudQueue extends Vue {
   background-size: 100px;
   color: #ff6666;
   text-align: center;
-  display: grid;
   overflow: hidden;
+  grid-template-columns: 100%;
+  grid-template-rows: 30% 70%;
 }
 
 .terminal {
@@ -277,14 +334,12 @@ export default class CloudQueue extends Vue {
   padding: 4px;
   background-color: black;
   opacity: 0.7;
+  height: 100%;
 
   font-weight: 200;
   font-size: 14px;
 
   white-space: pre-wrap;
-  white-space: -moz-pre-wrap;
-  white-space: -pre-wrap;
-  white-space: -o-pre-wrap;
   word-wrap: break-word;
 
   border-bottom-left-radius: 5px;
@@ -302,6 +357,10 @@ export default class CloudQueue extends Vue {
 
   .row-code {
     display: flex;
+  }
+
+  .history-code {
+    white-space: pre-line;
   }
 
   input {

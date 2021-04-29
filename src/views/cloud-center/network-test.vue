@@ -67,7 +67,7 @@ export default class NetworkTest extends Vue {
       if (this.getCount > 5) {
         this.loading = false
         this.getCount = 0
-        this.$message.warning('请求超市')
+        this.$message.warning('请求超时')
         return
       } else {
         setTimeout(() => {
