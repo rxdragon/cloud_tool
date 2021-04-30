@@ -249,7 +249,7 @@ export function sendStaffWs (params: sendStaffWsParams) {
   }
 
   return axios({
-    url: 'https://api.dev.hzmantu.com/project_cloud/temple/testSendWsByStaffId',
+    url: '/project_cloud/temple/testSendWsByStaffId',
     method: 'POST',
     data: params
   })
@@ -260,7 +260,7 @@ type getStaffInfoParams = {
 }
 export function getStaffNetworkInfo (params: getStaffInfoParams) {
   return axios({
-    url: 'https://api.dev.hzmantu.com/project_cloud/temple/getSendWsByStaffIdCache',
+    url: '/project_cloud/temple/getSendWsByStaffIdCache',
     method: 'GET',
     params
   })
