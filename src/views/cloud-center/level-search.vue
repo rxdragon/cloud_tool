@@ -47,7 +47,7 @@
     </v-row>
 
     <!-- 列表 -->
-    <div class="search-main mt-6">
+    <div class="search-main mt-6" v-if="Object.values(staffInfo).length">
       <!-- 搜索内容 -->
       <v-skeleton-loader
         :loading="loading"
@@ -152,9 +152,9 @@
       </v-skeleton-loader>
     </div>
 
-    <!-- <div class="no-data" v-else>
+    <div class="no-data" v-else>
       <v-img :src="require('../../assets/no_data.png')"></v-img>
-    </div> -->
+    </div>
   </div>
 </template>
 
@@ -177,7 +177,7 @@ import LevelConfig from '@/views/cloud-center/levelConfig'
   }
 })
 export default class LevelSearch extends Vue {
-  private staffId: number | string = '616266' // 伙伴id
+  private staffId: number | string = '' // 伙伴id
   private checkTime: string = '' // 升级检测时间
 
   private showDatePicker: boolean = false // 是否显示菜单
@@ -197,16 +197,12 @@ export default class LevelSearch extends Vue {
   private matchLevel: any = []
   private levelTable: any = Object.values(LevelConfig)
 
-  // TODO 调试
-  created () {
-    this.seachLevelInfo()
-  }
-
   /**
    * @description 查询订单信息
    */
   async seachLevelInfo () {
     if (!Number(this.staffId)) return this.$message.warning('请输入正确的员工id')
+    if (!this.checkTime) return this.$message.warning('请输入查询时间')
     try {
       this.loading = true
       const req = {
