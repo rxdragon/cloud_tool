@@ -19,21 +19,25 @@ export function getSaleInfo () {
   }).then((msg: any) => {
     const { paidFeeGroupByDays } = msg
     const neer7Days: any[] = []
-    let monthInfo: { month: any; sum: any }[] = []
+    let monthInfo: { index: string, month: any; sum: any }[] = []
     paidFeeGroupByDays.forEach((dayItem: any, dayIndex: number) => {
       dayItem.sum = Number(dayItem.Sum)
+      const year = moment(dayItem.Day).get('year')
       dayItem.month = moment(dayItem.Day).get('month') + 1
+      dayItem.index = `${year}-${dayItem.month}`
       dayItem.day = moment(dayItem.Day).get('date')
       // 过去近7天数据
       if (paidFeeGroupByDays.length - dayIndex < 8) {
         neer7Days.push(dayItem)
       }
+
       // 获取月相关数据
-      const findMonth = monthInfo.find(item => item.month === dayItem.month)
+      const findMonth = monthInfo.find(item => item.index === dayItem.index)
       if (findMonth) {
         findMonth.sum = (findMonth.sum * 100 + dayItem.sum * 100) / 100
       } else {
         monthInfo.push({
+          index: dayItem.index,
           month: dayItem.month,
           sum: dayItem.sum
         })

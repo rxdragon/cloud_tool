@@ -78,39 +78,11 @@ type getStaffLevelParams = {
 }
 export async function getStaffLevel (params: getStaffLevelParams) {
   // TODO 调试接口
-  // const msg: any = await axios({
-  //   // url: '/staff/levelCheckLog',
-  //   url: 'https://cfcf2.run.hzmantu.com/project_cloud/temple/getStaffLevel',
-  //   method: 'GET',
-  //   params
-  // })
-  const msg: any = {
-    log: {
-      id: 14,
-      staff_id: 613911,
-      before_level: 5,
-      after_level: 6,
-      checked_exp: "15000.00",
-      checked_level_up_avg_score: "85.00",
-      checked_level_up_num: 30,
-      checked_level_down_avg_score: "85.00",
-      checked_level_down_num: 30,
-      created_at: "1998-01-01 12:00:00",
-      updated_at: "1998-01-01 12:00:00"
-    },
-    staff_info: {
-      id: 613911,
-      retoucher_class_id: 15,
-      role: 460,
-      level: 6,
-      exp: "0.00",
-      promote_at: null,
-      identity: "blue",
-      entry_tag: "staffEntryTagOneMonth",
-      name: "ABC",
-      nickname: "好兄弟"
-    }
-  }
+  const msg: any = await axios({
+    url: '/project_cloud/staff/levelCheckLog',
+    method: 'GET',
+    params
+  })
 
   const checkLevel = _.get(msg, 'log.before_level') || 1
   msg.log.checkLevel = checkLevel
